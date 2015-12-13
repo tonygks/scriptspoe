@@ -645,7 +645,7 @@ Show
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
 
 #Disabled Block Start
-#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
 #    ItemLevel >= 83
 #    Rarity = Normal
 #    Class "Rings" "Amulet" "Belts"
@@ -1353,9 +1353,4 @@ Hide # Minimize junk instead of hiding (if "Show")
     Rarity = Normal
     SetBackgroundColor 0 0 0 100
     SetFontSize 20
-
-#Disabled Block Start
-#Hide
-#    SetFontSize 45
-#Disabled Block End
 

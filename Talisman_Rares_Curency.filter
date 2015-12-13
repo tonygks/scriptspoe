@@ -377,7 +377,7 @@ Show
     PlayAlertSound 3 300
 
 Show
-    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel"
+    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel" "Orb of Chance"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 0 0 0

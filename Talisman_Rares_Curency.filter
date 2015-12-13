@@ -569,7 +569,7 @@ Show
 Show
     ItemLevel >= 75
     Rarity = Rare
-    Class "Rings" "Amulets" "Jewel" "Belts"
+    Class "Rings" "Amulets" "Belts"
     SetTextColor 0 0 0
     SetBackgroundColor 180 96 0
     SetBorderColor 255 0 0
@@ -579,7 +579,7 @@ Show
 Show
     ItemLevel >= 60
     Rarity = Rare
-    Class "Rings" "Amulets" "Belts" "Jewel"
+    Class "Rings" "Amulets" "Belts"
     SetTextColor 0 0 0
     SetBackgroundColor 180 96 0
     SetBorderColor 0 0 0
@@ -622,7 +622,7 @@ Show
 Show
     ItemLevel >= 75
     Rarity = Rare
-    Class "One Hand Swords" "Two Hand Swords" "One Hand Maces" "Two Hand Maces" "One Hand Axes" "Two Hand Axes" "Sceptres" "Claws" "Bows" "Staves" "Thrusting One Hand Swords" "Wands" "Quivers"
+    Class "One Hand Swords" "Two Hand Swords" "One Hand Maces" "Two Hand Maces" "One Hand Axes" "Two Hand Axes" "Sceptres" "Claws" "Bows" "Staves" "Thrusting One Hand Swords" "Wands" "Quivers" "Daggers"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 210 0 0
@@ -631,7 +631,7 @@ Show
 Show
     ItemLevel >= 60
     Rarity = Rare
-    Class "One Hand Swords" "Two Hand Swords" "One Hand Maces" "Two Hand Maces" "One Hand Axes" "Two Hand Axes" "Sceptres" "Claws" "Bows" "Staves" "Thrusting One Hand Swords" "Wands" "Quivers" "Shields"
+    Class "One Hand Swords" "Two Hand Swords" "One Hand Maces" "Two Hand Maces" "One Hand Axes" "Two Hand Axes" "Sceptres" "Claws" "Bows" "Staves" "Thrusting One Hand Swords" "Wands" "Quivers" "Shields" "Daggers"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
@@ -645,7 +645,7 @@ Show
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
 
 #Disabled Block Start
-#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
 #    ItemLevel >= 83
 #    Rarity = Normal
 #    Class "Rings" "Amulet" "Belts"

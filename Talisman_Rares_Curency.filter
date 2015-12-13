@@ -565,6 +565,32 @@ Show
 #    SetBorderColor 0 0 0
 #Disabled Block End
 
+Show
+    Rarity = Rare
+    Class "Amulets"
+    BaseType "Talisman"
+    SetTextColor 0 0 0
+    SetBackgroundColor 107 117 130
+    SetBorderColor 255 255 0
+    SetFontSize 38
+
+Show
+    Rarity = Magic
+    Class "Amulets"
+    BaseType "Talisman"
+    SetTextColor 0 0 0
+    SetBackgroundColor 107 117 130
+    SetBorderColor 0 0 255
+    SetFontSize 38
+
+Show
+    Class "Amulets"
+    BaseType "Talisman"
+    SetTextColor 0 0 0
+    SetBackgroundColor 107 117 130
+    SetBorderColor 255 255 255
+    SetFontSize 38
+
 # 2 regals jews
 Show
     ItemLevel >= 75
@@ -586,18 +612,19 @@ Show
     SetFontSize 38
 
 Show
+    Rarity = Rare
     Class "Jewel"
     SetTextColor 0 0 0
-    SetBackgroundColor 204 151 62
-    SetBorderColor 0 0 0
+    SetBackgroundColor 163 109 154
+    SetBorderColor 255 255 0
     SetFontSize 38
 
 Show
-    Class "Amulets"
-    BaseType "Talisman"
+    Rarity <= Magic
+    Class "Jewel"
     SetTextColor 0 0 0
-    SetBackgroundColor 107 117 130
-    SetBorderColor 210 0 0
+    SetBackgroundColor 163 109 154
+    SetBorderColor 0 0 255
     SetFontSize 38
 
 # 2 regals armours
@@ -645,7 +672,7 @@ Show
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
 
 #Disabled Block Start
-#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
 #    ItemLevel >= 83
 #    Rarity = Normal
 #    Class "Rings" "Amulet" "Belts"

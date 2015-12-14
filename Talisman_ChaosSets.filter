@@ -528,7 +528,7 @@ Show
     SetBorderColor 30 150 180 155
     SetFontSize 38
 
-Show
+Hide
     Class "Gems"
 
 # Section: 0600 # RARE ITEM HIGHLIGHTING

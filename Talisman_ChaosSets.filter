@@ -382,7 +382,7 @@ Show
     SetBackgroundColor 213 159 15
     SetBorderColor 0 0 0
     SetFontSize 38
-    PlayAlertSound 4 79
+    PlayAlertSound 4 300
 
 Show
     BaseType "Orb of Chance" "Orb of Alteration" "Chromatic Orb" "Jeweller's Orb"
@@ -418,7 +418,7 @@ Show
     SetBackgroundColor 235 15 200
     SetBorderColor 0 0 0
     SetFontSize 42
-    PlayAlertSound 1 300
+    PlayAlertSound 4 250
 
 Show
     Class "Divination"
@@ -427,9 +427,9 @@ Show
     SetBackgroundColor 220 35 225
     SetBorderColor 0 0 0
     SetFontSize 39
-    PlayAlertSound 1 300
+    PlayAlertSound 4 150
 
-Show
+Hide
     Class "Divination"
     BaseType "Carrion Crow"
     SetTextColor 0 0 0
@@ -443,7 +443,7 @@ Show
     SetBackgroundColor 200 50 250
     SetBorderColor 0 0 0
     SetFontSize 37
-    PlayAlertSound 1 300
+    PlayAlertSound 4 150
 
 Show
     Class "Currency"
@@ -599,6 +599,7 @@ Show
     SetBackgroundColor 180 96 0
     SetBorderColor 0 0 0
     SetFontSize 38
+    PlayAlertSound 5 33
 
 Show
     Rarity = Rare
@@ -646,7 +647,7 @@ Show
 Show
     ItemLevel >= 75
     Rarity = Rare
-    Class "Body Armours" "Gloves" "Boots" "Helmets"
+    Class "Gloves" "Boots" "Helmets"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 210 0 0
@@ -655,7 +656,27 @@ Show
 Show
     ItemLevel >= 60
     Rarity = Rare
-    Class "Body Armours" "Gloves" "Boots" "Helmets"
+    Class "Gloves" "Boots" "Helmets"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 0 0 0
+
+# 2 regals armours
+Show
+    ItemLevel >= 75
+    DropLevel >= 53
+    Rarity = Rare
+    Class "Body Armours"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 210 0 0
+
+# 2 chaos armours
+Show
+    ItemLevel >= 60
+    DropLevel >= 53
+    Rarity = Rare
+    Class "Body Armours"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
@@ -689,41 +710,33 @@ Hide
 
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
 
-#Disabled Block Start
-#Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
-#    ItemLevel >= 83
-#    Rarity = Normal
-#    Class "Rings" "Amulet" "Belts"
-#    BaseType "Onyx" "Ruby" "Sapphire" "Topaz" "Two-Stone" "Diamond" "Prismatic" "Unset" "Gold" "Citrine" "Turquoise" "Agate" "Coral Ring" "Moonstone" "Leather" "Heavy" "Amber" "Jade" "Lapis"
-#    SetTextColor 255 255 255
-#    SetBorderColor 255 255 0
-#    SetFontSize 38
-#Disabled Block End
+Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+    ItemLevel >= 83
+    Rarity = Normal
+    Class "Rings" "Amulet" "Belts"
+    BaseType "Onyx" "Ruby" "Sapphire" "Topaz" "Two-Stone" "Diamond" "Prismatic" "Unset" "Gold" "Citrine" "Turquoise" "Agate" "Coral Ring" "Moonstone" "Leather" "Heavy" "Amber" "Jade" "Lapis"
+    SetTextColor 255 255 255
+    SetBorderColor 255 255 0
+    SetFontSize 38
 
-#Disabled Block Start
-#Show
-#    ItemLevel >= 83
-#    BaseType "Imbued Wand" "Lion Sword" "Vaal Greatsword" "Vaal Axe" "Coronal Maul" "Exquisite Blade" "Fleshripper" "Harbinger Bow" "Gemini Claw" "Ambusher" "Platinum Kris"
-#    SetBorderColor 255 255 0
-#    SetFontSize 38
-#Disabled Block End
+Show
+    ItemLevel >= 83
+    BaseType "Imbued Wand" "Lion Sword" "Vaal Greatsword" "Vaal Axe" "Coronal Maul" "Exquisite Blade" "Fleshripper" "Harbinger Bow" "Gemini Claw" "Ambusher" "Platinum Kris"
+    SetBorderColor 255 255 0
+    SetFontSize 38
 
-#Disabled Block Start
-#Show
-#    ItemLevel >= 83
-#    BaseType "Demon Dagger" "Imperial Skean" "Vaal Hatchet" "Runic Hatchet" "Behemoth Mace" "Eternal Sword" "Tiger Hook" "Sambar Sceptre" "Eclipse Staff" "Maelstr" "Judgement Staff" "Jewelled Foil" "Dragoon Sword"
-#    SetBorderColor 255 255 0
-#    SetFontSize 38
-#Disabled Block End
+Show
+    ItemLevel >= 83
+    BaseType "Demon Dagger" "Imperial Skean" "Vaal Hatchet" "Runic Hatchet" "Behemoth Mace" "Eternal Sword" "Tiger Hook" "Sambar Sceptre" "Eclipse Staff" "Maelstr" "Judgement Staff" "Jewelled Foil" "Dragoon Sword"
+    SetBorderColor 255 255 0
+    SetFontSize 38
 
-#Disabled Block Start
-#Show
-#    ItemLevel >= 83
-#    Class "Daggers"
-#    BaseType "Sai"
-#    SetBorderColor 255 255 0
-#    SetFontSize 38
-#Disabled Block End
+Show
+    ItemLevel >= 83
+    Class "Daggers"
+    BaseType "Sai"
+    SetBorderColor 255 255 0
+    SetFontSize 38
 
 #Disabled Block Start
 #Show

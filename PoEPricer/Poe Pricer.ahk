@@ -1853,12 +1853,11 @@ CheckPhysAccuracyRating()
 		MaxAccLight := 40
 		MinAccLight := 21
 	}
-	If (Item.LightRadius == 10)
+	If (Item.LightRadius == 5)
 	{
 		MaxAccLight := 20
 		MinAccLight := 10
 	}
-	
 	If (Item.IsAccuracyRating == False) and (Item.IsLocalPhys <> False)
 	{
 		Item.IsLocalPhysAff := True

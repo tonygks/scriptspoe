@@ -43,38 +43,38 @@ FileRead, affixes, %A_ScriptDir%\Data\Affixes\affixes.txt
 SetFormat, Float, 0.2
 ;считывание прототипов доспеxов
 
-BaseHelmets:= new BaseArmours_("Helmets")
-BaseBodyArmours := new BaseArmours_("BodyArmour")
-BaseWeapons := new BaseWeapons_("Weapon")
-BaseBoots := new BaseArmours_("Boots")
-BaseGloves := new BaseArmours_("Gloves")
-BaseSpiritShields := new BaseArmours_("SpiritShields")
+Global BaseHelmets:= new BaseArmours_("Helmets")
+Global BaseBodyArmours := new BaseArmours_("BodyArmour")
+Global BaseWeapons := new BaseWeapons_("Weapon")
+Global BaseBoots := new BaseArmours_("Boots")
+Global BaseGloves := new BaseArmours_("Gloves")
+Global BaseSpiritShields := new BaseArmours_("SpiritShields")
 
 ;массивы с таблицей тиров для аффиксов
-Affix_ComboPhys := new ComboAffixBracket_("ComboLocalPhysAcc")
-Affix_Acc := new AffixBracket_("AccuracyRating")
-Affix_Phys := new AffixBracket_("LocalPhys")
-Affix_SP := new AffixBracket_("SpellDamage")
-Affix_ComboSP := new ComboAffixBracket_("ComboSpellMana")
-Affix_SP_Staff := new AffixBracket_("StaffSpellDamage")
-Affix_ComboSP_Staf := new ComboAffixBracket_("StaffComboSpellMana")
-Affix_Mana := new AffixBracket_("MaxMana")
-Affix_ComboArmourStun := new ComboAffixBracket_("ComboArmourStun")
-Affix_StunRecovery := new AffixBracket_("StunRecovery")
-Affix_Armour := new AffixBracket_("Armour")
+Global Affix_ComboPhys := new ComboAffixBracket_("ComboLocalPhysAcc")
+Global Affix_Acc := new AffixBracket_("AccuracyRating")
+Global Affix_Phys := new AffixBracket_("LocalPhys")
+Global Affix_SP := new AffixBracket_("SpellDamage")
+Global Affix_ComboSP := new ComboAffixBracket_("ComboSpellMana")
+Global Affix_SP_Staff := new AffixBracket_("StaffSpellDamage")
+Global Affix_ComboSP_Staff := new ComboAffixBracket_("StaffComboSpellMana")
+Global Affix_Mana := new AffixBracket_("MaxMana")
+Global Affix_ComboArmourStun := new ComboAffixBracket_("ComboArmourStun")
+Global Affix_StunRecovery := new AffixBracket_("StunRecovery")
+Global Affix_Armour := new AffixBracket_("Armour")
 
-Filter_Boots := new Filter_("Boots")
-Filter_Gloves := new Filter_("Gloves")
-Filter_Helmets := new Filter_("Helmets")
-Filter_BodyArmours := new Filter_("BodyArmours")
-Filter_Belts := new Filter_("Belts")
-Filter_Amulets := new Filter_("Amulets")
-Filter_Rings := new Filter_("Rings")
-Filter_Quivers := new Filter_("Quivers")
-Filter_1h_spell := new Filter_("1h_spell")
-Filter_Spirit_Shields := new Filter_("Spirit_Shields")
-Filter_2h_skill := new Filter_("2h_skill")
-Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
+Global Filter_Boots := new Filter_("Boots")
+Global Filter_Gloves := new Filter_("Gloves")
+Global Filter_Helmets := new Filter_("Helmets")
+Global Filter_BodyArmours := new Filter_("BodyArmours")
+Global Filter_Belts := new Filter_("Belts")
+Global Filter_Amulets := new Filter_("Amulets")
+Global Filter_Rings := new Filter_("Rings")
+Global Filter_Quivers := new Filter_("Quivers")
+Global Filter_1h_spell := new Filter_("1h_spell")
+Global Filter_Spirit_Shields := new Filter_("Spirit_Shields")
+Global Filter_2h_skill := new Filter_("2h_skill")
+Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 Global CounterBefore, CounterAfter
@@ -265,7 +265,7 @@ class Item_ {
 	Accuracy := 0
 	LocalAccuracyRating := 0
 	MaxMana := 0
-	
+	DOT := 0
 	
 	TotalRes := 0
 	AllRes := 0
@@ -339,6 +339,7 @@ class Item_ {
 	IsLocalAccuracyRating := False
 	IsMaxMana := False
 	
+	IsDOT := False
 	IsInt := False
 	IsStr := False
 	IsDex := False
@@ -584,7 +585,7 @@ Class Filter_ {
 				}
 				
 				
-				If (element == "CraftTotalSpellDamage")
+				If (element == "CraftTotalSpellDamage") and (Item.CraftTotalSpellDamage > Item.SpellDamage)
 					t_CraftFlag := True
 				
 				
@@ -744,6 +745,7 @@ Class ComboAffixBracket_ {
 	
 	__New(FileName) {
 		FileRead, t_text, %A_ScriptDir%\Data\AffixBrackets\%FileName%.txt
+		
 		Loop, Parse, t_text, `n, `r
 		{
 			If ((SubStr(A_LoopField,1,1) == ";") or (RegExMatch(A_LoopField,"^$")))
@@ -756,6 +758,7 @@ Class ComboAffixBracket_ {
 			StringSplit, accrange, t_bracketline3, -
 			this.Value2Lo.Insert(accrange1)
 			this.Value2Hi.Insert(accrange2)
+			
 		}
 	}
 	
@@ -779,10 +782,12 @@ Class ComboAffixBracket_ {
 		{
 			If (iLevel < this.iLevel[i])
 			{
-				return this.ValueHi[i-1]
+				value := this.ValueHi[i-1]
+				return value
 			}
 		}	
-		return this.ValueHi[i]
+		value := this.ValueHi[i]
+		return value
 	}
 	
 	MaxValue2FromiLevel(iLevel)
@@ -791,10 +796,12 @@ Class ComboAffixBracket_ {
 		{
 			If (iLevel < this.iLevel[i])
 			{
-				return this.Value2Hi[i-1]
+				value := this.Value2Hi[i-1]
+				return value
 			}
 		}	
-		return this.Value2Hi[i]
+		value := this.Value2Hi[i]
+		return value
 	}
 	
 }
@@ -1865,33 +1872,38 @@ CheckPhysAccuracyRating()
 	}
 	If (Item.IsAccuracyRating <> False) and (Item.IsLocalPhys == False)
 	{
-		Item.Affixes--
 		If (Item.IsLightRadius <> False)
 		{
 			If Item.Accuracy > MaxAccLight
 			{
+				Item.Affixes--
 				Item.Suffixes++
 				return
 			}
 			return
-		}	
+		}
+		Item.Affixes--
 		Item.Suffixes++
 		return
 	}
 	
 	If (Item.LocalPhys > MaxComboPhys)
 	{
-		Item.Affixes--
 		Item.IsLocalPhysAff := True
 		If Item.LocalPhys > MaxPhys
+		{
+			Item.Affixes--
 			Item.Prefixes++
+		}
 		If Item.Accuracy > (MaxComboAcc + MaxAccLight)
 		{
+			Item.Affixes--
 			Item.Suffixes++
 			return
 		}
 		If Item.Accuracy < MinAcc + MinAccLight
 		{
+			Item.Affixes--
 			Item.Prefixes++
 			return
 		}
@@ -1899,11 +1911,13 @@ CheckPhysAccuracyRating()
 	}
 	
 	Affix_ComboPhys.Value2FromValue(Item.LocalPhys, AccFromPhys_Lo, AccFromPhys_Hi)
-	If Item.LocalPhys <= MaxComboPhys and (Item.LightRadius <15) and (Item.LightRadius > 0)
+	
+	If (Item.LocalPhys <= MaxComboPhys) and (Item.LightRadius < 15) and (Item.LightRadius > 0)
 	{
-		Item.Affixes--
+		
 		If Item.Accuracy > (AccFromPhys_Hi + MaxAccLight)
 		{
+			Item.Affixes--
 			Item.Suffixes++
 			Item.IsAccuracyAff := true
 			return
@@ -1911,13 +1925,13 @@ CheckPhysAccuracyRating()
 		
 		If Item.Accuracy < (MinAcc + MinAccLight)
 		{
+			Item.Affixes--
 			If Item.LocalPhys < 40
 				return
 			Item.Prefixes++
 			Item.IsLocalPhysAff := True
 			return
 		}
-		
 		return	
 	}
 	
@@ -1958,14 +1972,13 @@ CheckSpellDamageMana()
 	If (Item.ClassType == "Staff")
 	{
 		ComboMana_Hi := Affix_ComboSP_Staff.MaxValue2FromiLevel(Item.iLevel)
-		ManaFromSp_Hi := Affix_ComboSP_Staff.MaxValue2FromValue(Item.SpellDamage)
-		ManaFromSp_Lo := Affix_ComboSP_Staff.MaxValue2FromValue(Item.SpellDamage)
+		Affix_ComboSP_Staff.Value2FromValue(Item.SpellDamage, ManaFromSp_Hi, ManaFromSp_Lo)
 		Sp_Hi := Affix_SP_Staff.MaxValueFromiLevel(Item.iLevel)
 		ComboSp_Hi := Affix_ComboSP_Staff.MaxValueFromiLevel(Item.iLevel)
 	}
 	else {
 		ComboMana_Hi := Affix_ComboSP.MaxValue2FromiLevel(Item.iLevel)
-		Affix_ComboSP.Value2FromValue(ManaFromSp_Hi,ManaFromSp_Lo)
+		Affix_ComboSP.Value2FromValue(Item.SpellDamage, ManaFromSp_Hi, ManaFromSp_Lo)
 		Sp_Hi := Affix_SP.MaxValueFromiLevel(Item.iLevel)
 		ComboSp_Hi := Affix_ComboSP.MaxValueFromiLevel(Item.iLevel)
 	}
@@ -1974,18 +1987,19 @@ CheckSpellDamageMana()
 	
 	If Item.SpellDamage > Sp_Hi
 	{
-		Item.Affixes--
+		
 		Item.IsSpellDamageAff := True
 		Item.Prefixes++
 		If Item.MaxMana > ComboMana_Hi
 		{
 			Item.IsMaxManaAff := True
 			Item.Prefixes++
+			Item.Affixes--
 			return
 		}
 		If Item.MaxMana < 15
 		{
-			Item.Prefixes++
+			Item.Affixes--
 			return
 		}
 		return
@@ -1993,38 +2007,51 @@ CheckSpellDamageMana()
 	
 	If Item.SpellDamage > ComboSp_Hi
 	{
-		Item.Affixes--
 		Item.IsSpellDamageAff := True
 		Item.Prefixes++
 		If Item.MaxMana > ComboMana_Hi
 		{
 			Item.IsMaxManaAff := True
 			Item.Prefixes++
+			Item.Affixes--
 			return		
 		}
+		If Item.MaxMana < 15
+		{
+			Item.Affixes--
+			return
+		}		
 		return
 	}
 	
 	Affix_ComboSP.Value2FromValue(Item.SpellDamage, ManaFromSp_Hi,ManaFromSp_Lo)
 	If Item.SpellDamage <= ComboSp_Hi
 	{
-		Item.Affixes--
 		If Item.MaxMana > ManaFromSp_Hi
 		{
 			Item.Pefixes++
 			Item.IsMaxManaAff := True
+			Item.Affixes--
 			return
 		}
-		If Item.MaxMana => ManaFromSp_Lo
+		If Item.MaxMana >= ManaFromSp_Lo
 		{
+			Item.Affixes--
 			return
 		}
 		If Item.MaxMana < 15
 		{
 			If (Item.SpellDamage < 15 and Item.ClassType == "Staff")
+			{
+				Item.Affixes--
 				return
+			}
+			
 			If (Item.SpellDamage < 10)
+			{
+				Item.Affixes--
 				return
+			}
 			Item.IsSpellDamageAff := True
 			Item.Prefixes++
 			return
@@ -2059,6 +2086,7 @@ CheckArmourStun()
 	
 	ComboArmour_Hi :=Affix_ComboArmourStun.MaxValueFromiLevel(Item.iLevel)
 	ComboStun_Hi := Affix_ComboArmourStun.MaxValue2FromiLevel(Item.iLevel)
+	
 	Armour_Hi := Affix_Armour.MaxValueFromiLevel(Item.iLevel)
 	Stun_Hi := Affix_StunRecovery.MaxValueFromiLevel(Item.iLevel)
 	Affix_ComboArmourStun.Value2FromValue(Item.LocalArmour, StunFromAr_Lo, StunFromAr_Hi)
@@ -2066,18 +2094,19 @@ CheckArmourStun()
 	
 	If Item.LocalArmour > Armour_Hi
 	{
-		Item.Affixes--
+		
 		Item.IsLocalArmourAff := True
 		Item.Prefixes++
 		If Item.StunRecovery > ComboStun_Hi
 		{
 			Item.IsStunRecoveryAff := True
 			Item.Suffixes++
-			
+			Item.Affixes--
 			return
 		}
 		If Item.StunRecovery < 11
 		{
+			Item.Affixes--
 			Item.Prefixes++
 			return
 		}
@@ -2086,18 +2115,18 @@ CheckArmourStun()
 	
 	If Item.LocalArmour > ComboArmour_Hi
 	{
-		Item.Affixes--
 		Item.IsLocalArmourAff := True
-		
 		If Item.StunRecovery > ComboStun_Hi
 		{
 			Item.IsStunRecoveryAff := True
 			Item.Suffixes++
+			Item.Affixes--
 			return		
 		}
 		If Item.StunRecovery < 11
 		{
 			Item.Prefixes++
+			Item.Affixes--
 			return
 		}
 		return
@@ -2105,23 +2134,24 @@ CheckArmourStun()
 	
 	If Item.LocalArmour <= ComboArmour_Hi
 	{
-		
-		Item.Affixes--
-		If Item.StunRecovery > StunFromAr_Hi
+		If (Item.StunRecovery > StunFromAr_Hi)
 		{
 			Item.Suffixes++
+			Item.Affixes--
 			Item.IsStunRecoveryAff := True
 			return
 		}
-		If Item.StunRecovery => StunFromAr_Lo
+		If (Item.StunRecovery >= StunFromAr_Lo)
 		{
+			Item.Affixes--
 			return
 		}
-		If Item.StunRecovery < 11
+		If (Item.StunRecovery < 11)
 		{
 			If Item.LocalArmour < 23
 				return
 			Item.IsLocalArmourAff := True
+			Item.Affixes--
 			Item.Prefixes++
 			return
 		}

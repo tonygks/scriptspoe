@@ -668,8 +668,9 @@ Show
     Rarity = Rare
     Class "Body Armours"
     SetTextColor 0 0 0
-    SetBackgroundColor 0 128 0
+    SetBackgroundColor 0 128 0 128
     SetBorderColor 210 0 0
+    SetFontSize 25
 
 # 2 chaos armours
 Show
@@ -678,8 +679,9 @@ Show
     Rarity = Rare
     Class "Body Armours"
     SetTextColor 0 0 0
-    SetBackgroundColor 0 128 0
+    SetBackgroundColor 0 128 0 128
     SetBorderColor 0 0 0
+    SetFontSize 25
 
 #Disabled Block Start
 # crit multi affix  all weapons quivers

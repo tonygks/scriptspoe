@@ -568,6 +568,7 @@ Class Filter_ {
 			}
 			
 			
+			
 			If (t_value >= this.ValueTarget[i])
 			{
 				If (element == "TotalRes")
@@ -604,7 +605,7 @@ Class Filter_ {
 					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value)
 					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  [" . Round(t_Score) . "]"
 				}
-				
+				;msgbox, % element "-" t_value "-" this.ValueTarget[i] t_Score
 				FilterHits++
 			}
 		}
@@ -709,7 +710,7 @@ Class WeaponFilter_ {
 					return True
 				}
 				
-				t_Gems := Item.ColdGem + Item.FireGem + Item.LevelGem + Item.BowGem + Item.LightningGem + Item.ChaosGem + Item.MeleGem 
+				t_Gems := Item.ColdGem + Item.FireGem + Item.LevelGem + Item.BowGem + Item.LightningGem + Item.ChaosGem + Item.MeleeGem 
 				
 				If (this.Gems[i]) and (t_Gems >= this.Gems[i])
 				{
@@ -874,7 +875,6 @@ class BaseWeapons_ {
 			t_weaponlines4 :=
 			t_weaponlines5 :=
 			StringSplit, t_weaponlines, A_LoopField, `t
-			StrReplace(t_weaponlines1, "ö", t_weaponlines1)
 			this.BaseName.Insert(t_weaponlines1)
 			this.BaseDamageLo.Insert(t_weaponlines2)
 			this.BaseDamageHi.Insert(t_weaponlines3)
@@ -886,6 +886,12 @@ class BaseWeapons_ {
 	
 	SetItem(BaseType, ByRef DamageLo, ByRef DamageHi, ByRef CC, ByRef APS)
 	{
+		StringReplace, BaseType, BaseType, "ö", "o"
+		
+		
+		
+		If (RegExMatch(BaseType, "Maelstr.m Staff"))
+			BaseType := "Maelstrom Staff"
 		For i, element in this.BaseName
 		{
 			If (element == BaseType)
@@ -1159,10 +1165,10 @@ ParseItemData(ItemDataText)
 	Filter_Spirit_Shields.Scoring()
 	Filter_Belts.Scoring()
 	Filter_Quivers.Scoring()
+	
 	Filter_2h_skill.Scoring()
 	If Item.Success
 		goto, ParseItemDataEnd
-	
 	
 	
 	Filter_1h_spell.Scoring()

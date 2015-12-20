@@ -237,6 +237,7 @@ class Item_ {
 	CraftedAPS := 0
 	WeaponCrit := 0
 	CraftTotalSpellDamage := 0
+	Links := 0
 	
 	FlatAR := 0
 	FlatES := 0
@@ -873,6 +874,7 @@ class BaseWeapons_ {
 			t_weaponlines4 :=
 			t_weaponlines5 :=
 			StringSplit, t_weaponlines, A_LoopField, `t
+			StrReplace(t_weaponlines1, "ö", t_weaponlines1)
 			this.BaseName.Insert(t_weaponlines1)
 			this.BaseDamageLo.Insert(t_weaponlines2)
 			this.BaseDamageHi.Insert(t_weaponlines3)
@@ -948,6 +950,45 @@ IfNotExist, %A_ScriptDir%\data
 	exit
 }
 
+ParseLinks(ItemDataText)
+{
+	Loop, Parse, ItemDataText, `n, `r
+	{
+		IfInString, A_LoopField, Sockets
+		{
+			Sockets:
+			
+			If (RegExMatch(A_LoopField, ".-.-.-.-.-."))
+			{
+				Item.Links := 6
+				Break
+			}
+			If (RegExMatch(A_LoopField, ".-.-.-.-."))
+			{
+				Item.Links := 5
+				Break
+			}
+			If (RegExMatch(A_LoopField, ".-.-.-."))
+			{
+				Item.Links := 4
+				Break
+			}
+			If (RegExMatch(A_LoopField, ".-.-."))
+			{
+				Item.Links := 3
+				Break
+			}
+			If (RegExMatch(A_LoopField, ".-."))
+			{
+				Item.Links := 2
+				Break
+			}
+		}
+	}
+	return
+}
+
+
 
 ParseItemData(ItemDataText)
 {    
@@ -1010,7 +1051,9 @@ ParseItemData(ItemDataText)
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterStringSplit)
 	;DllCall("QueryPerformanceFrequency", "Int64*", Frequency1)
 	;перебор прототипов для определения типа предмета
+	ParseLinks(ItemDataText)
 	ParseClassType(Item.BaseType, ItemStatLine)
+	
 	
 	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseClass)
@@ -1148,7 +1191,7 @@ ParseItemData(ItemDataText)
 	;TT_Result := TT_Result . TT_Affixes
 	;TT_ResultExt := TT_ResultExt . TT_Affixes
 	
-	
+	;TT_Result := TT_Result . "`nLinks:	" . Item.Links
 	
 	DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
 	DllCall("QueryPerformanceFrequency", "Int64*", Frequency)

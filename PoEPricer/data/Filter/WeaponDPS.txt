@@ -5,9 +5,9 @@ Dagger	200
 Claw	200		
 Wand	160		
 Sceptre	150		
-One Handed Mace	220		
-Two Handed Axe	350		
-Two Handed Mace	370		
-Two Handed Sword	370		
+One Handed Mace	220	300	
+Two Handed Axe	350	300	
+Two Handed Mace	370	300	
+Two Handed Sword	370	300	
 Bow	220	170	2
 Staff	350		2

@@ -168,9 +168,12 @@ ShowToolTip()
 	{
 		ToolTipEx(t_string,X-40 ,Y+70 , ,, "yellow", "black")
 	}
-	else
+	else 
 	{
-		ToolTipEx(t_string, X-40, Y+70,,,"white","black")
+		If (Item.Unidentified)
+			ToolTipEx(t_string, X-40, Y+70,,,"yellow","black")
+		else
+			ToolTipEx(t_string, X-40, Y+70,,,"white","black")
 	}
 }
 return
@@ -191,6 +194,7 @@ class Item_ {
 	GripType := ""
 	Implicit := ""
 	iLevel := 0
+	Unidentified := False
 	
 	Affixes := 0
 	Suffixes := 0
@@ -1027,15 +1031,24 @@ ParseItemData(ItemDataText)
 	ItemDataNamePlate := ItemDataParts1
 	ItemDataIndexLast := ItemDataParts0
 	ItemDataLastPart := ItemDataParts%ItemDataParts0%
+	
+	ParseLinks(ItemDataText)
+	
 	IfNotInString, ItemDataNamePlate, Rarity: Rare
 	{
-		
+		If (Item.Links > 4)
+		{
+			TT_Result := "`n`n	Links: " . Item.Links . "		`n`n "
+			Item.Success := True
+		}
 		return False
 		;Goto, ParseItemDataEnd
 	}
 	
 	IfInString, ItemDataText, Unidentified
 	{
+		TT_Result := "`n`n     Unidentified	`n`n "
+		Item.Unidentified := True
 		return False
 	}
 	IfInString, ItemDataText, Corrupted
@@ -1057,7 +1070,7 @@ ParseItemData(ItemDataText)
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterStringSplit)
 	;DllCall("QueryPerformanceFrequency", "Int64*", Frequency1)
 	;перебор прототипов для определения типа предмета
-	ParseLinks(ItemDataText)
+	
 	ParseClassType(Item.BaseType, ItemStatLine)
 	
 	

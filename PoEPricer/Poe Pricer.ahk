@@ -16,7 +16,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\Data\ToolTipEx.ahk
 
 #MaxThreadsPerHotkey 1
-#MaxThreads 2
+;#MaxThreads 2
 
 
 #IfWinActive,  ahk_exe PathOfExile.exe
@@ -90,16 +90,12 @@ IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 
 
 
-
-
 ;control hotkey
 ~vkA2::
 {
+	clip_saved := Clipboard
+	clip_parsed := Clipboard
 	
-	clip_parsed := "ggg"
-	clip_private_message := False
-	If (SubStr(Clipboard,1,1) == "@")
-		clip_private_message := Clipboard
 	
 	MouseGetPos, X, Y
 	
@@ -109,19 +105,37 @@ IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 		{
 			goto, ScanEnd
 		}
-		
+			
 		MouseGetPos, CurrX, CurrY
 		MouseMoved := (CurrX - X) ** 2 + (CurrY - Y) ** 2 > 60 ** 2
 		If (MouseMoved)
 			ToolTipEx()
 		
+		If (GetKeyState("C", "P") == 1)
+		{
+			sleep, 10
+			If (SubStr(Clipboard,StrLen(Clipboard), 1 ) == " ")
+				clip_saved := Clipboard
+			else
+				clip_saved := Clipboard . A_Space
+			goto, Scanend
+		}
+		
 		DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
-		t_clip := "ggg"
 		Send, ^{VK43}
 		Loop, 10
 		{
+			If (GetKeyState("C", "P") == 1)
+			{
+				sleep, 10
+				If (SubStr(Clipboard,StrLen(Clipboard), 1 ) == " ")
+					clip_saved := Clipboard
+				else
+					clip_saved := Clipboard . A_Space
+				goto, Scanend
+			}
 			
-			If (Clipboard <> clip_parsed) and (Clipboard <> t_clip) and (Clipboard)
+			If (Clipboard <> clip_parsed) and Clipboard
 			{
 				clip_parsed := Clipboard
 				ParseItemData(Clipboard)
@@ -130,22 +144,13 @@ IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 				break
 			}
 			sleep, 1
-			
 		}
-		sleep, 1
-		
 	}
-	
+	sleep, 10
 	
 	ScanEnd:
 	ToolTipEx()
-	;If (SubStr(Clipboard,1,1) == "@")
-	;{
-	;	Clipboard := clip_private_message
-	;	return
-	;}
-	Clipboard := False
-	
+	Clipboard := clip_saved
 }
 return
 

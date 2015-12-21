@@ -114,7 +114,8 @@ CoordMode, ToolTip, Screen
 ; To modify these, you will need to modify the function call headers below
 ; see http://www.autohotkey.com/docs/Hotkeys.htm for hotkey options
 
-F8::
+;F8 hotkey
+~vk77::
 {
   BlockInput On
   SendMode Input
@@ -136,7 +137,9 @@ F8::
 }
 return
 ; Price check w/ auto filters
-F5::
+
+;F5 hotkey
+~vk74::
 IfWinActive, Path of Exile ahk_class Direct3DWindowClass 
 {
   FunctionReadItemFromClipboard()

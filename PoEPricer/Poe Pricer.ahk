@@ -19,7 +19,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxThreads 2
 
 
-
 #IfWinActive,  ahk_exe PathOfExile.exe
 
 
@@ -93,8 +92,8 @@ IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 
 
 
-
-~LControl::
+;control hotkey
+~vkA2::
 {
 	
 	clip_parsed := "ggg"

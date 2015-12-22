@@ -114,6 +114,14 @@ CoordMode, ToolTip, Screen
 ; To modify these, you will need to modify the function call headers below
 ; see http://www.autohotkey.com/docs/Hotkeys.htm for hotkey options
 
+
+; `/~ hotkey
+~vkC0::
+	Send {Enter}
+	Send /remaining
+	Send {Enter}
+return
+
 ;F8 hotkey
 ~vk77::
 {

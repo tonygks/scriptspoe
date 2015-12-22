@@ -105,7 +105,7 @@ IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 		{
 			goto, ScanEnd
 		}
-			
+		
 		MouseGetPos, CurrX, CurrY
 		MouseMoved := (CurrX - X) ** 2 + (CurrY - Y) ** 2 > 60 ** 2
 		If (MouseMoved)
@@ -1055,6 +1055,7 @@ ParseItemData(ItemDataText)
 		Item.Unidentified := True
 		return False
 	}
+	
 	IfInString, ItemDataText, Corrupted
 	{
 		TT := TT . "`n" . "Corrupted"

@@ -4,6 +4,7 @@
 !Score	350
 !ScoreHits4	300
 !ScoreHits5	250
+Crit	12	16	16	Suffixes	1	12
 MaxLife	1	79	44	Prefixes	1	30
 FlatES	1	47	23	Prefixes	1	20
 TotalRes	23	144	25	Suffixes	3	40

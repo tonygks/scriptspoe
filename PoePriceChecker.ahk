@@ -106,7 +106,7 @@ Global URL = "http://api.exiletools.com/item-report-text"
 MouseMoveThreshold := 40
 CoordMode, Mouse, Screen
 CoordMode, ToolTip, Screen
-
+#IfWinActive, ahk_exe PathOfExile.exe
 ; There are multiple hotkeys to run this script now, defaults set as follows:
 ; ^p (CTRL-p) - Sends the item information to my server, where a price check is performed. Levels and quality will be automatically processed.
 ; ^i (CTRL-i) - Pulls up an interactive search box that goes away after 30s or when you hit enter/ok

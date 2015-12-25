@@ -88,7 +88,7 @@ Global t_clip
 IniRead, f_AutoScan, PoePricer.ini, Flags, opt_AutoScan, 0
 IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
 
-
+;f_ShowScore := True
 
 ;control hotkey
 ~vkA2::
@@ -163,7 +163,7 @@ return
 
 ShowToolTip()
 {
-	If (ShowScore == 1)
+	If (f_ShowScore == 1)
 		t_string := TT_ResultExt
 	else
 		t_string := TT_Result
@@ -772,7 +772,7 @@ Class ComboAffixBracket_ {
 		}
 	}
 	
-	Value2FromValue(Var, ByRef ValueLo, ByRef ValueHi)
+	Value2FromValue(Var, ByRef ValueHi, ByRef ValueLo)
 	{
 		For i, element in this.iLevel
 		{
@@ -1941,7 +1941,7 @@ CheckPhysAccuracyRating()
 	{
 		If (Item.IsLightRadius <> False)
 		{
-			If Item.Accuracy > MaxAccLight
+			If (Item.Accuracy > MaxAccLight)
 			{
 				Item.Affixes--
 				Item.Suffixes++
@@ -1949,6 +1949,7 @@ CheckPhysAccuracyRating()
 			}
 			return
 		}
+		
 		Item.Affixes--
 		Item.Suffixes++
 		return
@@ -1957,18 +1958,20 @@ CheckPhysAccuracyRating()
 	If (Item.LocalPhys > MaxComboPhys)
 	{
 		Item.IsLocalPhysAff := True
-		If Item.LocalPhys > MaxPhys
+		If (Item.LocalPhys > MaxPhys)
 		{
 			Item.Affixes--
 			Item.Prefixes++
+			
 		}
-		If Item.Accuracy > (MaxComboAcc + MaxAccLight)
+		If (Item.Accuracy > (MaxComboAcc + MaxAccLight))
 		{
 			Item.Affixes--
 			Item.Suffixes++
+			
 			return
 		}
-		If Item.Accuracy < MinAcc + MinAccLight
+		If (Item.Accuracy < MinAcc + MinAccLight)
 		{
 			Item.Affixes--
 			Item.Prefixes++
@@ -1977,12 +1980,12 @@ CheckPhysAccuracyRating()
 		return
 	}
 	
-	Affix_ComboPhys.Value2FromValue(Item.LocalPhys, AccFromPhys_Lo, AccFromPhys_Hi)
+	Affix_ComboPhys.Value2FromValue(Item.LocalPhys, AccFromPhys_Hi, AccFromPhys_Lo)
 	
 	If (Item.LocalPhys <= MaxComboPhys) and (Item.LightRadius < 15) and (Item.LightRadius > 0)
 	{
 		
-		If Item.Accuracy > (AccFromPhys_Hi + MaxAccLight)
+		If (Item.Accuracy > (AccFromPhys_Hi + MaxAccLight))
 		{
 			Item.Affixes--
 			Item.Suffixes++
@@ -1990,7 +1993,7 @@ CheckPhysAccuracyRating()
 			return
 		}
 		
-		If Item.Accuracy < (MinAcc + MinAccLight)
+		If (Item.Accuracy < (MinAcc + MinAccLight))
 		{
 			Item.Affixes--
 			If Item.LocalPhys < 40
@@ -2029,7 +2032,7 @@ CheckSpellDamageMana()
 		return
 	}
 	
-	If Item.ClassType == "Amulet"
+	If (Item.ClassType == "Amulet")
 	{
 		Item.Prefixes++
 		return
@@ -2057,14 +2060,14 @@ CheckSpellDamageMana()
 		
 		Item.IsSpellDamageAff := True
 		Item.Prefixes++
-		If Item.MaxMana > ComboMana_Hi
+		If (Item.MaxMana > ComboMana_Hi)
 		{
 			Item.IsMaxManaAff := True
 			Item.Prefixes++
 			Item.Affixes--
 			return
 		}
-		If Item.MaxMana < 15
+		If (Item.MaxMana < 15)
 		{
 			Item.Affixes--
 			return
@@ -2076,14 +2079,14 @@ CheckSpellDamageMana()
 	{
 		Item.IsSpellDamageAff := True
 		Item.Prefixes++
-		If Item.MaxMana > ComboMana_Hi
+		If (Item.MaxMana > ComboMana_Hi)
 		{
 			Item.IsMaxManaAff := True
 			Item.Prefixes++
 			Item.Affixes--
 			return		
 		}
-		If Item.MaxMana < 15
+		If (Item.MaxMana < 15)
 		{
 			Item.Affixes--
 			return
@@ -2094,19 +2097,19 @@ CheckSpellDamageMana()
 	Affix_ComboSP.Value2FromValue(Item.SpellDamage, ManaFromSp_Hi,ManaFromSp_Lo)
 	If Item.SpellDamage <= ComboSp_Hi
 	{
-		If Item.MaxMana > ManaFromSp_Hi
+		If (Item.MaxMana > ManaFromSp_Hi)
 		{
 			Item.Pefixes++
 			Item.IsMaxManaAff := True
 			Item.Affixes--
 			return
 		}
-		If Item.MaxMana >= ManaFromSp_Lo
+		If (Item.MaxMana >= ManaFromSp_Lo)
 		{
 			Item.Affixes--
 			return
 		}
-		If Item.MaxMana < 15
+		If (Item.MaxMana < 15)
 		{
 			If (Item.SpellDamage < 15 and Item.ClassType == "Staff")
 			{
@@ -2156,7 +2159,7 @@ CheckArmourStun()
 	
 	Armour_Hi := Affix_Armour.MaxValueFromiLevel(Item.iLevel)
 	Stun_Hi := Affix_StunRecovery.MaxValueFromiLevel(Item.iLevel)
-	Affix_ComboArmourStun.Value2FromValue(Item.LocalArmour, StunFromAr_Lo, StunFromAr_Hi)
+	Affix_ComboArmourStun.Value2FromValue(Item.LocalArmour, StunFromAr_Hi, StunFromAr_Lo)
 	
 	
 	If Item.LocalArmour > Armour_Hi
@@ -2164,14 +2167,14 @@ CheckArmourStun()
 		
 		Item.IsLocalArmourAff := True
 		Item.Prefixes++
-		If Item.StunRecovery > ComboStun_Hi
+		If (Item.StunRecovery > ComboStun_Hi)
 		{
 			Item.IsStunRecoveryAff := True
 			Item.Suffixes++
 			Item.Affixes--
 			return
 		}
-		If Item.StunRecovery < 11
+		If (Item.StunRecovery < 11)
 		{
 			Item.Affixes--
 			Item.Prefixes++
@@ -2183,14 +2186,14 @@ CheckArmourStun()
 	If Item.LocalArmour > ComboArmour_Hi
 	{
 		Item.IsLocalArmourAff := True
-		If Item.StunRecovery > ComboStun_Hi
+		If (Item.StunRecovery > ComboStun_Hi)
 		{
 			Item.IsStunRecoveryAff := True
 			Item.Suffixes++
 			Item.Affixes--
 			return		
 		}
-		If Item.StunRecovery < 11
+		If (Item.StunRecovery < 11)
 		{
 			Item.Prefixes++
 			Item.Affixes--
@@ -2229,7 +2232,7 @@ return
 
 CheckItemRarity()
 {
-	If Item.IsItemRarity == False
+	If (Item.IsItemRarity == False)
 	{
 		return
 	}
@@ -2238,7 +2241,7 @@ CheckItemRarity()
 	
 	maxSuffixValue := GetItemRaritySuffix(Item.iLevel)
 	maxPrefixValue := GetItemRarityPrefix(Item.iLevel)
-	If Item.ItemRarity > maxSuffixValue
+	If (Item.ItemRarity > maxSuffixValue)
 	{
 		Item.Suffixes++
 		Item.Prefixes++
@@ -2246,9 +2249,9 @@ CheckItemRarity()
 		return
 	}
 	
-	If Item.Prefixes > 2
+	If (Item.Prefixes > 2)
 	{
-		If Item.Suffixes > 2
+		If (Item.Suffixes > 2)
 		{
 			msgbox, ItemRarityPref : WTF with affixes and suffixes quantity?
 		}
@@ -2256,9 +2259,9 @@ CheckItemRarity()
 		Item.Affixes--
 		return
 	}
-	If Item.Suffixes > 2
+	If (Item.Suffixes > 2)
 	{
-		If Item.Prefixes > 2
+		If (Item.Prefixes > 2)
 		{
 			msgbox, ItemRaritySuff : WTF with affixes and suffixes quantity?
 		}
@@ -2267,14 +2270,14 @@ CheckItemRarity()
 		return
 	}
 	
-	If Item.ItemRarity < 8
+	If (Item.ItemRarity < 8)
 	{
 		Item.Affixes--
 		Item.Prefixes++
 		return
 	}
 	
-	If Item.ItemRarity < 14
+	If (Item.ItemRarity < 14)
 	{
 		Item.SPAffixes++
 		Item.Affixes--

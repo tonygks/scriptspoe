@@ -4,7 +4,8 @@
 !Score	300					
 !ScoreHits4	250					
 !ScoreHits5	200					
-ES	4	530			10	200
+ES	4	530			20	200
+ES	4	530			4	100
 ;MaxLife	3	89	64	Prefixes	500	80
 MaxLife	3	89	64	Prefixes	2	30
 TotalRes	23	144	30	Suffixes	3	40

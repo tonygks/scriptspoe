@@ -155,7 +155,7 @@ IfWinActive, Path of Exile ahk_class Direct3DWindowClass
 return
 
 ; Custom Input String Search
-^i::
+!^i::
 IfWinActive, Path of Exile ahk_class Direct3DWindowClass 
 {
   ; This grabs a text message from my server so that I can add functionality

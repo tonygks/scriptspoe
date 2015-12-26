@@ -114,7 +114,10 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 		MouseGetPos, CurrX, CurrY
 		MouseMoved := (CurrX - X) ** 2 + (CurrY - Y) ** 2 > 60 ** 2
 		If (MouseMoved)
+		{
 			ToolTipEx()
+		}
+		
 		
 		If (GetKeyState("C", "P") == 1)
 		{
@@ -128,7 +131,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 		
 		DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
 		Send, ^{VK43}
-		Loop, 10
+		Loop, 20
 		{
 			If (GetKeyState("C", "P") == 1)
 			{
@@ -140,7 +143,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 				goto, Scanend
 			}
 			
-			If (Clipboard <> clip_parsed) and Clipboard
+			If (Clipboard <> clip_parsed) and (Clipboard <> False)
 			{
 				clip_parsed := Clipboard
 				ParseItemData(Clipboard)
@@ -508,7 +511,7 @@ Class Filter_ {
 	
 	Scoring()
 	{
-		PadWords := "(ChaosRes|FlatSpellFire|LightningRes|ItemRarity|SpellDamage|MoveSpeed|LocalPhys|FlatPhysDamage|GlobalCrit|CritDamage|CastSpeed|LocalElem|TotalRes|FlatElem)"
+		PadWords := "(ChaosRes|FlatSpellFire|LightningRes|ItemRarity|SpellDamage|MoveSpeed|LocalPhys|FlatPhysDamage|GlobalCrit|CritDamage|CastSpeed|LocalElem|TotalRes|FlatElem|FlatSpellCold)"
 		PadWords2 := "(CraftTotalSpellDamage|FlatSpellLightning)"
 		
 		
@@ -573,6 +576,17 @@ Class Filter_ {
 				If ((element == "CastSpeed") and (Item.ClassType == "Dagger"))
 					continue
 				
+				
+				If (element == "FlatSpellCold") or (element == "FlatSpellLightning") or (element == "FlatSpellFire")
+				{
+					
+					If (Item.IsFlatSpellCold <> False) or (Item.IsFlatSpellLightning <> False) or (Item.IsFlatSpellFire <> False)
+					{
+						continue
+					}
+					
+				}
+				
 				t_value := Item.Get(element) + this.ValueCraft[i]
 				;FilterHits++
 				t_craftFlag := True
@@ -601,6 +615,8 @@ Class Filter_ {
 				
 				If (element == "CraftTotalSpellDamage") and (Item.CraftTotalSpellDamage > Item.SpellDamage)
 					t_CraftFlag := True
+				
+				
 				
 				
 				If (Value > 20)
@@ -1303,31 +1319,31 @@ ParseClassType(BaseType, ItemStatLine)
 	IfInString, ItemStatLine, Map Tier:
 	{
 		Item.IsMap := True
-		Item.ClassType := "Map$"
+		Item.ClassType := "Map"
 		return
 	}
 	IfInString, BaseType, Quiver
 	{
 		Item.IsQuiver := True
-		Item.ClassType := "Quiver$"
+		Item.ClassType := "Quiver"
 		return
 	}	
 	IfInString, BaseType, Jewel
 	{
 		Item.IsJewel := True
-		Item.ClassType := "Jewel$"
+		Item.ClassType := "Jewel"
 		return
 	}	
 	IfInString, BaseType, Amulet
 	{
 		Item.IsAmulet := True
-		Item.ClassType := "Amulet$"
+		Item.ClassType := "Amulet"
 		return
 	}	
 	IfInString, BaseType, Talisman
 	{
 		Item.IsTalisman := True
-		Item.ClassType := "Talisman$"
+		Item.ClassType := "Talisman"
 		return
 	}	
 	If (RegExMatch(BaseType, "Ring$"))
@@ -2181,12 +2197,6 @@ CheckArmourStun()
 			Item.IsStunRecoveryAff := True
 			Item.Suffixes++
 			Item.Affixes--
-			return
-		}
-		If (Item.StunRecovery < 11)
-		{
-			Item.Affixes--
-			Item.Prefixes++
 			return
 		}
 		return

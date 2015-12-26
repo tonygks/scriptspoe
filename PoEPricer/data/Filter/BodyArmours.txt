@@ -1,12 +1,15 @@
 ;Boots minvalue maxvalue craftvalue prefixes/suffixes weight target						
 ;						
 !ClassType	BodyArmour					
-!Score	300					
+!Score	200					
 !ScoreHits4	250					
 !ScoreHits5	200					
-Links	1	6			20	5
-ES	4	900			8	300
-MaxLife	3	89	64	Prefixes	1.2	40
-TotalRes	23	144	30	Suffixes	3	40
-EV	10	2850			4	700
-AR	10	2950			4	700
+;Links	0	6			20	5
+ES	1	900			20	500
+EV	1	2850			20	1700
+AR	1	2950			20	1500
+MaxLife	1	119	64	Prefixes	1	1
+TotalRes	1	144	30	Suffixes	3	1
+EV	1	2850			1	1
+AR	1	2950			1	1
+ES	1	900			1	1

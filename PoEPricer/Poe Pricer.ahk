@@ -26,7 +26,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
 Global prefixes, suffixes, implicit, affixes
-Global TT, TT_Affixes
+Global TT, TT_Affixes , TT_PhysCraftMods, TT_ElemCraftMods
 Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
@@ -695,72 +695,63 @@ Class WeaponFilter_ {
 			t_CraftFlag := False
 			If (t_ClassType == element)
 			{
-				
+				TT_PhysDPS := Item.PhysDPS
+				TT_APS := "`nAttSpeed:	" . Item.APS
 				If (this.PhysDPS[i])
 				{
-					TT_PhysDPS := "`nPhysDPS:	"
 					If (Item.CraftPhysDPS > this.PhysDPS[i])
 					{
 						If (Item.CraftPhysDPS > Item.PhysDPS)
 						{
-							TT_PhysDPS := TT_PhysDPS . Item.CraftPhysDPS . "  [CRAFT]"
+							msgbox, % Item.CraftPhysDPS Item.PhysDPS
+							TT_PhysDPS := Item.CraftPhysDPS . "  [CRAFT]" . TT_PhysCraftMods
+							TT_APS := "`nAttSpeed:	" . Item.CraftedAPS
 							t_CraftFlag := True
 						}
 						Item.Success := True
 					}
 					else
 					{
-						TT_PhysDPS := TT_PhysDPS . Item.PhysDPS
+						TT_PhysDPS := Item.PhysDPS
 					}
 				}
+				TT_PhysDPS := "`nPhysDPS:	" . TT_PhysDPS
 				
 				TT_ElemDPS := Item.ElemDPS
-				
 				If (this.ElemDPS[i])
 				{
-					TT_ElemDPS := "`nElemDPS:	"
 					If (Item.CraftElemDPS > this.ElemDPS[i]) and (t_CraftFlag == False)
 					{
 						If (Item.CraftElemDPS > Item.ElemDPS)
 						{
-							TT_ElemDPS := TT_ElemDPS . Item.CraftElemDPS . "  [CRAFT]"
+							TT_ElemDPS := Item.CraftElemDPS . "  [CRAFT]" . TT_ElemCraftMods
 							t_CraftFlag := True
 						}
 						Item.Success := True
 					}
 					else
 					{
-						TT_ElemDPS := TT_ElemDPS . Item.ElemDPS
+						TT_ElemDPS := Item.ElemDPS
 					}
 				}
+				TT_ElemDPS := "`nElemDPS:	" . TT_ElemDPS
 				
-				
-				TT_Crit := "`nCrit:		"
+				TT_Crit := Item.WeaponCrit
 				If (Item.CraftWeaponCrit > Item.WeaponCrit) and (t_CraftFlag == False)
 				{
-					TT_Crit := TT_Crit . Item.CraftWeaponCrit . "%  [CRAFT]"
+					TT_Crit := Item.CraftWeaponCrit . "%  [CRAFT]"
 					t_CraftFlag := True
 				}
 				else
 				{
-					TT_Crit := TT_Crit . Item.WeaponCrit . "%"
+					TT_Crit := Item.WeaponCrit . "%"
 				}
+				TT_Crit := "`nCrit:		" . TT_Crit
 				
 				
-				t_Gems := Item.ColdGem + Item.FireGem + Item.LevelGem + Item.BowGem + Item.LightningGem + Item.ChaosGem + Item.MeleeGem 
-				TT_Gems := t_Gems
-				If (this.Gems[i]) 
-				{
-					If (t_Gems >= this.Gems[i])
-					{
-						TT_Gems := "`nGems:		" . t_Gems
-						Item.Success := True
-					}
-				}
 				
-				TT_APS := "`nAttSpeed:	" . Item.CraftedAPS
 				
-				TT_Result := "`n--------------------------------------" . TT_Gems . TT_PhysDPS . TT_ElemDPS . TT_Crit . TT_APS . "`n--------------------------------------"
+				TT_Result := "`n--------------------------------------" . TT_PhysDPS . TT_ElemDPS . TT_Crit . TT_APS . "`n--------------------------------------"
 				TT_ResultExt := TT_Result
 				TT_ResultExt := TT_Result
 				return 
@@ -1585,7 +1576,7 @@ CalcPhysDPS()
 	t_Prefixes := Item.Prefixes
 	t_Suffixes := Item.Suffixes
 	t_Multi := False
-	Item.PhysDPS := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage)/2*(120+Item.LocalPhys)/100*(Item.APS + Item.IAS/100)
+	Item.PhysDPS := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage)/2*(120+Item.LocalPhys)/100*Item.APS*(100 + Item.IAS)/100
 	If (Item.IsFlatPhysDamage == False) and (t_Prefixes < 3)
 	{
 		If Item.GripType == "1h"
@@ -1628,6 +1619,7 @@ CalcPhysDPS()
 	Item.CraftPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamage)/2*(120+Item.LocalPhys+t_CraftPhysDamage)/100*Item.APS * (100 + Item.IAS + t_CraftIAS)/100
 	Item.MultiPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamage)/2*(120+Item.LocalPhys+t_MultiPhysDamage)/100*Item.APS * (100 + Item.IAS + t_MultiIAS)/100
 	Item.CraftedAPS := Item.APS * (100 + Item.IAS + t_CraftIAS)/100
+	TT_PhysCraftMods := t_TTcraft
 }
 return
 
@@ -1708,6 +1700,7 @@ CalcSpellDPS()
 	Item.CraftTotalSpellDamage := Item.SpellDamage + Item.LocalElem + t_CraftLocalElem + t_CraftSpellDamage
 	Item.CraftSpellDamage := Item.SpellDamage + t_CraftSpellDamage
 	Item.MulticraftSpellDamage := Item.SpellDamage + t_MultiSpellDamage
+	
 }
 return
 
@@ -1802,6 +1795,7 @@ CalcElemDPS()
 	
 	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_CraftIAS)/100)
 	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_MultiIAS)/100)
+	TT_ElemCraftMods := t_TTcraft
 }
 return
 
@@ -1990,12 +1984,6 @@ CheckPhysAccuracyRating()
 			Item.Affixes--
 			Item.Suffixes++
 			
-			return
-		}
-		If (Item.Accuracy < MinAcc + MinAccLight)
-		{
-			Item.Affixes--
-			Item.Prefixes++
 			return
 		}
 		return

@@ -26,11 +26,28 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
 Global prefixes, suffixes, implicit, affixes
-Global TT, TT_Affixes, TT_PhysDPS, TT_SpellDPS, TT_ElemDPS , TT_Armour
+Global TT, TT_Affixes
 Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
 Global Item, Filter_Boots, Filter_Gloves, Filter_Helmets, Filter_BodyArmours, Filter_Belts, Filter_Amulets, Filter_Rings, Filter_Quivers, Filter_Spirit_Shields, Filter_1h_spell, Filter_WeaponDPS, Filter_2h_skill
+Global CounterBefore, CounterAfter
+Global f_ShowScore := False
+Global f_AutoScan := True
+Global f_ToolTip := False
+Global path_FilterFolder := "Filter"
+Global ScanToggle := False
+Global SingleScanToggle := False
+
+Global X, Y
+Global t_clip
+
+
+IniRead, f_AutoScan, PoePricer.ini, Flags, opt_AutoScan, 0
+IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
+IniRead, path_FilterFolder, PoePricer.ini, Path, opt_FilterFolder, "Filter"
+
+;f_ShowScore := True
 
 
 ; считывание префиксов/суффиксов/имплисит в регексп виде
@@ -76,19 +93,7 @@ Global Filter_2h_skill := new Filter_("2h_skill")
 Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
-Global CounterBefore, CounterAfter
-Global f_ShowScore := False
-Global f_AutoScan := True
-Global f_ToolTip := False
-Global ScanToggle := False
-Global SingleScanToggle := False
 
-Global X, Y
-Global t_clip
-IniRead, f_AutoScan, PoePricer.ini, Flags, opt_AutoScan, 0
-IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
-
-;f_ShowScore := True
 
 ;control hotkey
 ~vkA2::
@@ -244,6 +249,7 @@ class Item_ {
 	BaseCrit := 0
 	CraftedAPS := 0
 	WeaponCrit := 0
+	CraftWeaponCrit := 0
 	CraftTotalSpellDamage := 0
 	Links := 0
 	
@@ -396,10 +402,10 @@ class Item_ {
 	IsBow := False
 	IsAmulet := False
 	IsTalisman := False
-	IsBoots := false
-	IsBodyArmour := false
-	IsHelm := false
-	IsGloves := false	
+	IsBoots := False
+	IsBodyArmour := False
+	IsHelm := False
+	IsGloves := False	
 	IsJewel := False
 	IsMap := False
 	IsMirrored := False
@@ -469,7 +475,7 @@ Class Filter_ {
 	
 	
 	__New(FileName) {
-		FileRead, t_text, %A_ScriptDir%\Data\Filter\%FileName%.txt
+		FileRead, t_text, %A_ScriptDir%\Data\%path_FilterFolder%\%FileName%.txt
 		Loop, Parse, t_text, `n, `r
 		{
 			If ((SubStr(A_LoopField,1,1) == ";") or (RegExMatch(A_LoopField,"^$")))
@@ -523,7 +529,7 @@ Class Filter_ {
 		
 		For i, element in this.Params
 		{
-			t_craft := False
+			t_craftElement := False
 			pad := "			"
 			If (RegExMatch(element,PadWords))
 				pad := "		"
@@ -554,9 +560,9 @@ Class Filter_ {
 					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value) . t_armour_string
 					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  [" . Round(t_Score) . "]" . t_armour_string
 					FilterHits++
-					continue
+					
 				}
-				
+				continue
 			}
 			
 			
@@ -568,14 +574,12 @@ Class Filter_ {
 					continue
 				
 				t_value := Item.Get(element) + this.ValueCraft[i]
-				FilterHits++
+				;FilterHits++
 				t_craftFlag := True
-				t_craft := True
+				t_craftElement := True
 				
 				
 			}
-			
-			
 			
 			If (t_value >= this.ValueTarget[i])
 			{
@@ -603,7 +607,7 @@ Class Filter_ {
 					Value := Round(Value)
 				t_Score := this.Weight[i]*((t_value - this.ValueLo[i])/(this.ValueHi[i] - this.ValueLo[i]))*100
 				ActualScore += t_Score
-				If t_craft
+				If t_craftElement
 				{
 					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value) . "  [CRAFT]"	
 					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  [" . Round(t_Score) . "]  [CRAFT]"
@@ -639,7 +643,6 @@ Class Filter_ {
 			Item.Success := True
 			return True
 		}
-		
 		return False
 	}
 }
@@ -689,48 +692,78 @@ Class WeaponFilter_ {
 	{
 		For i, element in this.ClassType
 		{
+			t_CraftFlag := False
 			If (t_ClassType == element)
 			{
-				If ((this.PhysDPS[i]) and (Item.CraftPhysDPS > this.PhysDPS[i]))
+				
+				If (this.PhysDPS[i])
 				{
-					If Item.CraftPhysDPS > Item.PhysDPS
-						TT_Result := Item.CraftPhysDPS . "  [CRAFT]"
+					TT_PhysDPS := "`nPhysDPS:	"
+					If (Item.CraftPhysDPS > this.PhysDPS[i])
+					{
+						If (Item.CraftPhysDPS > Item.PhysDPS)
+						{
+							TT_PhysDPS := TT_PhysDPS . Item.CraftPhysDPS . "  [CRAFT]"
+							t_CraftFlag := True
+						}
+						Item.Success := True
+					}
 					else
-						TT_Result := Item.PhysDPS
-					
-					Item.Success := True
-					TT_Result := "`n--------------------------------------`nPhysDPS:	" . TT_Result . "`nAPS:		" . Item.CraftedAPS . "`nCrit:		" . Item.WeaponCrit . "`n--------------------------------------"
-					TT_ResultExt := TT_Result
-					return True
+					{
+						TT_PhysDPS := TT_PhysDPS . Item.PhysDPS
+					}
+				}
+				
+				TT_ElemDPS := Item.ElemDPS
+				
+				If (this.ElemDPS[i])
+				{
+					TT_ElemDPS := "`nElemDPS:	"
+					If (Item.CraftElemDPS > this.ElemDPS[i]) and (t_CraftFlag == False)
+					{
+						If (Item.CraftElemDPS > Item.ElemDPS)
+						{
+							TT_ElemDPS := TT_ElemDPS . Item.CraftElemDPS . "  [CRAFT]"
+							t_CraftFlag := True
+						}
+						Item.Success := True
+					}
+					else
+					{
+						TT_ElemDPS := TT_ElemDPS . Item.ElemDPS
+					}
 				}
 				
 				
-				If (this.ElemDPS[i]) and (Item.CraftElemDPS > this.ElemDPS[i])
+				TT_Crit := "`nCrit:		"
+				If (Item.CraftWeaponCrit > Item.WeaponCrit) and (t_CraftFlag == False)
 				{
-					If Item.CraftElemDPS > Item.ElemDPS
-						TT_Result := Item.CraftElemDPS . "  [CRAFT]"
-					else
-						TT_Result := Item.ElemDPS
-					
-					Item.Success := True
-					TT_Result := "`n--------------------------------------`nElemDPS:		" . TT_Result . "`nAPS:		" . Item.CraftedAPS . "`nCrit:		" . Item.WeaponCrit . "`n--------------------------------------"
-					TT_ResultExt := TT_Result
-					return True
+					TT_Crit := TT_Crit . Item.CraftWeaponCrit . "%  [CRAFT]"
+					t_CraftFlag := True
 				}
+				else
+				{
+					TT_Crit := TT_Crit . Item.WeaponCrit . "%"
+				}
+				
 				
 				t_Gems := Item.ColdGem + Item.FireGem + Item.LevelGem + Item.BowGem + Item.LightningGem + Item.ChaosGem + Item.MeleeGem 
-				
-				If (this.Gems[i]) and (t_Gems >= this.Gems[i])
+				TT_Gems := t_Gems
+				If (this.Gems[i]) 
 				{
-					Item.Success := True
-					TT_Result := "`n--------------------------------------`nGemsLevel:		" . t_Gems . "`n--------------------------------------"
-					TT_ResultExt := TT_Result
-					return True
+					If (t_Gems >= this.Gems[i])
+					{
+						TT_Gems := "`nGems:		" . t_Gems
+						Item.Success := True
+					}
 				}
 				
-				TT_Result := "`n--------------------------------------`nPhysDPS:	" . Item.CraftPhysDPS . "`nElemDPS:	 " . Item.ElemDPS . "`nCritChance:	" . Item.WeaponCrit . "%`nAttSpeed:	" . Item.CraftedAPS . "`n--------------------------------------"
+				TT_APS := "`nAttSpeed:	" . Item.CraftedAPS
+				
+				TT_Result := "`n--------------------------------------" . TT_Gems . TT_PhysDPS . TT_ElemDPS . TT_Crit . TT_APS . "`n--------------------------------------"
 				TT_ResultExt := TT_Result
-				return False
+				TT_ResultExt := TT_Result
+				return 
 			}
 			
 			
@@ -968,7 +1001,7 @@ ParseLinks(ItemDataText)
 {
 	Loop, Parse, ItemDataText, `n, `r
 	{
-		IfInString, A_LoopField, Sockets
+		IfInString, A_LoopField, Sockets:
 		{
 			Sockets:
 			
@@ -999,9 +1032,8 @@ ParseLinks(ItemDataText)
 			}
 		}
 	}
-	return
 }
-
+return
 
 
 ParseItemData(ItemDataText)
@@ -1040,10 +1072,13 @@ ParseItemData(ItemDataText)
 	
 	IfNotInString, ItemDataNamePlate, Rarity: Rare
 	{
+		
 		If (Item.Links > 4)
 		{
 			TT_Result := "`n`n	Links: " . Item.Links . "		`n`n "
+			TT_ResultExt := "`n`n	Links: " . Item.Links . "		`n`n "
 			Item.Success := True
+			return True
 		}
 		return False
 		;Goto, ParseItemDataEnd
@@ -1161,21 +1196,23 @@ ParseItemData(ItemDataText)
 	
 	
 	
-	Item.TotalRes := Item.ChaosRes + Item.FireRes + Item.ColdRes + Item.LightningRes + Item.AllRes*3
 	
 	
-	Item.CraftedAPS := Item.APS + Item.IAS/100
-	Item.WeaponCrit := Item.BaseCrit*(100+Item.Crit)/100
+	
+	;Item.CraftedAPS := Item.APS + Item.IAS/100
+	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseImplicit)
 	;подсчет ДПС, олрезов и т.д.
 	
+	Item.TotalRes := Item.ChaosRes + Item.FireRes + Item.ColdRes + Item.LightningRes + Item.AllRes*3
 	CalcElemDPS()
 	CalcSpellDPS()
 	CalcArmour()
+	CalcCrit()
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterCalc)
 	
 	
-	
+	;подсчет очков 
 	Filter_Boots.Scoring()
 	Filter_Gloves.Scoring()
 	Filter_Helmets.Scoring()
@@ -1232,28 +1269,14 @@ ParseItemData(ItemDataText)
 
 
 
-OnClipBoardChange:
-IfWinActive, Path of Exile ahk_class Direct3DWindowClass
-{
-	;ParseClipBoardChanges()
-}
-Else
-{
-        ; if running tests parse clipboard regardless if PoE is foremost
-        ; so we can check individual cases from test case text files
-	;	ParseClipBoardChanges()
-}
-return
-
-
 ParseClassType(BaseType, ItemStatLine)
 {
 	weapons_1h := "^(One Handed Axe|One Handed Mace|Bow|One Handed Sword|Wand|Sceptre|Dagger|Claw)"
 	weapons_2h := "^(Two Handed Axe|Two Handed Mace|Bow|Two Handed Sword|Staff)"
 	belts := " (Belt|Sash)"
 	boots := " (Boots|Greaves|Shoes|Slippers)"
-	helmets := " (Hat|Helmet|Bascinet|Burgonet|Cap|Tricorne|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask)"
-	gloves := " (Gauntlets|Gloves|Mitts)"
+	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Tricorne|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask)"
+	gloves := " (Gauntlets|Gloves|Mitts)"f
 	shields := " (Shield|Bundle|Buckler)"
 	sceptres := " (Sekhem|Sceptre|Fetish)"
 	IfNotInString, ItemStatLine, :
@@ -1289,40 +1312,34 @@ ParseClassType(BaseType, ItemStatLine)
 	IfInString, ItemStatLine, Map Tier:
 	{
 		Item.IsMap := True
-		Item.ClassType := "Map"
+		Item.ClassType := "Map$"
 		return
 	}
-	IfInString, BaseType, Jewel
-	{
-		Item.IsJewel := True
-		Item.ClassType := "Jewel"
-		return
-	}	
 	IfInString, BaseType, Quiver
 	{
 		Item.IsQuiver := True
-		Item.ClassType := "Quiver"
+		Item.ClassType := "Quiver$"
 		return
 	}	
 	IfInString, BaseType, Jewel
 	{
 		Item.IsJewel := True
-		Item.ClassType := "Jewel"
+		Item.ClassType := "Jewel$"
 		return
 	}	
 	IfInString, BaseType, Amulet
 	{
 		Item.IsAmulet := True
-		Item.ClassType := "Amulet"
+		Item.ClassType := "Amulet$"
 		return
 	}	
 	IfInString, BaseType, Talisman
 	{
 		Item.IsTalisman := True
-		Item.ClassType := "Talisman"
+		Item.ClassType := "Talisman$"
 		return
 	}	
-	IfInString, BaseType, Ring
+	If (RegExMatch(BaseType, "Ring$"))
 	{
 		Item.IsRing := True
 		Item.ClassType := "Ring"
@@ -1611,10 +1628,6 @@ CalcPhysDPS()
 	Item.CraftPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamage)/2*(120+Item.LocalPhys+t_CraftPhysDamage)/100*Item.APS * (100 + Item.IAS + t_CraftIAS)/100
 	Item.MultiPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamage)/2*(120+Item.LocalPhys+t_MultiPhysDamage)/100*Item.APS * (100 + Item.IAS + t_MultiIAS)/100
 	Item.CraftedAPS := Item.APS * (100 + Item.IAS + t_CraftIAS)/100
-	
-	TT_PhysDPS := "`nPDPS	CraftModes"
-	TT_PhysDPS := TT_PhysDPS . "`n" . Round(Item.PhysDPS) . "`n" . Round(Item.CraftPhysDPS) . "	" . t_TTcraft . "`n" . Round(Item.MultiPhysDPS) . "	" . t_TT
-	
 }
 return
 
@@ -1691,14 +1704,25 @@ CalcSpellDPS()
 			t_TTcraft := "[LocalElem]"
 		}
 	}
+	
 	Item.CraftTotalSpellDamage := Item.SpellDamage + Item.LocalElem + t_CraftLocalElem + t_CraftSpellDamage
 	Item.CraftSpellDamage := Item.SpellDamage + t_CraftSpellDamage
 	Item.MulticraftSpellDamage := Item.SpellDamage + t_MultiSpellDamage
-	TT_SpellDPS := "`nSpDamage	FlatSpellDPS	LElemDamage	CastSpeed	CraftMode"
-	TT_SpellDPS := TT_SpellDPS . "`n"Item.SpellDamage . "		" . Round(t_FlatSpellDPS) .  " dps		" . t_LocalElem "%		" . Item.CastSpeed
-	TT_SpellDPS := TT_SpellDPS . "`n" . Item.CraftSpellDamage . "		" . Round(t_FlatSpellDPS + t_CraftFlatSpellDamage) .  " dps		" . t_CraftLocalElem + t_LocalElem . "%		" . t_CraftCastSpeed + Item.CastSpeed . "		" . t_TTcraft
-	TT_SpellDPS := TT_SpellDPS . "`n" . Item.MulticraftSpellDamage . "		" . Round(t_FlatSpellDPS + t_MultiFlatSpellDamage) .  " dps		" . t_MultiLocalElem + t_LocalElem . "%		" . t_MultiCastSpeed + Item.CastSpeed . "		" . t_TT
+}
+return
+
+
+
+CalcCrit()
+{
+	t_Suffixes := Item.Suffixes
+	t_Multi := False
 	
+	Item.WeaponCrit := Item.BaseCrit*(100+Item.Crit)/100
+	
+	
+	If (Item.IsCrit == False) and (t_Suffixes < 3)
+		Item.CraftWeaponCrit := Item.BaseCrit*(100+27+Item.Crit)/100
 }
 return
 
@@ -1778,9 +1802,6 @@ CalcElemDPS()
 	
 	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_CraftIAS)/100)
 	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_MultiIAS)/100)
-	
-	TT_ElemDPS := "`nEDPS	CraftModes"
-	TT_ElemDPS := TT_ElemDPS . "`n" . Round(Item.ElemDPS) . "`n" Round(Item.CraftElemDPS) . "	" . t_TTcraft . "`n" . Round(Item.MultiElemDPS) . "	" . t_TT
 }
 return
 

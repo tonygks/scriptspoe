@@ -691,16 +691,14 @@ Show
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
 
-#Disabled Block Start
 # crit multi affix  all weapons quivers
-#Show
-#    ItemLevel >= 75
-#    Rarity = Rare
-#    Class "Staves"
-#    SetTextColor 0 0 0
-#    SetBackgroundColor 0 128 0
-#    SetBorderColor 210 0 0
-#Disabled Block End
+Show
+    ItemLevel >= 75
+    Rarity = Rare
+    Class "Staves"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 210 0 0
 
 #Disabled Block Start
 # crit multi affix  all weapons quivers
@@ -789,7 +787,7 @@ Show
 
 Show # Endgame: Show normal ilvl 60+ rings/amulets
     Rarity = Normal
-    BaseType "Prophecy Wand" "Occultist's Vestment"
+    BaseType "Prophecy Wand" "Occultist's Vestment" "Sorcerer Boots"
     SetTextColor 255 255 255
     SetBorderColor 210 0 0
     SetFontSize 32

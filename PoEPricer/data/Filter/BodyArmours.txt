@@ -2,14 +2,14 @@
 ;						
 !ClassType	BodyArmour					
 !Score	200					
-!ScoreHits4	250					
-!ScoreHits5	200					
-;Links	0	6			20	5
+!ScoreHits4	1250					
+!ScoreHits5	1200					
+Links	0	6			20	5
 ES	1	900			20	500
-EV	1	2850			20	1700
-AR	1	2950			20	1500
-MaxLife	1	119	64	Prefixes	1	1
-TotalRes	1	144	30	Suffixes	3	1
-EV	1	2850			1	1
-AR	1	2950			1	1
-ES	1	900			1	1
+EV	1	2850			20	1500
+AR	1	2950			20	1400
+MaxLife	1	119	64	Prefixes	1.5	1
+TotalRes	1	144	30	Suffixes	4.2	1
+EV	1	2850			1	700
+AR	1	2950			1	700
+ES	1	900			3	300

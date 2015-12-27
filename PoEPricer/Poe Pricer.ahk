@@ -26,12 +26,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
 Global prefixes, suffixes, implicit, affixes
-Global TT, TT_Affixes , TT_PhysCraftMods, TT_ElemCraftMods
+Global TT, TT_Affixes , TT_PhysCraftMods, TT_ElemCraftMods, TT_ArmourCraftMods
 Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
 Global Item, Filter_Boots, Filter_Gloves, Filter_Helmets, Filter_BodyArmours, Filter_Belts, Filter_Amulets, Filter_Rings, Filter_Quivers, Filter_Spirit_Shields, Filter_1h_spell, Filter_WeaponDPS, Filter_2h_skill
-Global CounterBefore, CounterAfter
+Global CounterBefore, CounterAfter, CounterStart
 Global f_ShowScore := False
 Global f_AutoScan := True
 Global f_ToolTip := False
@@ -100,7 +100,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 {
 	clip_saved := Clipboard
 	clip_parsed := Clipboard
-	
+	;DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	MouseGetPos, X, Y
 	
@@ -129,13 +129,13 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			goto, Scanend
 		}
 		
-		DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
+		;DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
 		Send, ^{VK43}
 		Loop, 20
 		{
 			If (GetKeyState("C", "P") == 1)
 			{
-				sleep, 10
+				Sleep, 10
 				If (SubStr(Clipboard,StrLen(Clipboard), 1 ) == " ")
 					clip_saved := Clipboard
 				else
@@ -154,8 +154,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			sleep, 1
 		}
 	}
-	sleep, 10
-	
+		
 	ScanEnd:
 	ToolTipEx()
 	Clipboard := clip_saved
@@ -236,6 +235,7 @@ class Item_ {
 	MultiAR := 0
 	MultiES := 0
 	MultiEV := 0
+	APS := 0
 	
 	CraftMaxLife := 0
 	
@@ -248,7 +248,7 @@ class Item_ {
 	
 	
 	BaseDamage := [0,0]
-	APS := 0
+	BaseAPS := 0
 	BaseCrit := 0
 	CraftedAPS := 0
 	WeaponCrit := 0
@@ -511,7 +511,7 @@ Class Filter_ {
 	
 	Scoring()
 	{
-		PadWords := "(ChaosRes|FlatSpellFire|LightningRes|ItemRarity|SpellDamage|MoveSpeed|LocalPhys|FlatPhysDamage|GlobalCrit|CritDamage|CastSpeed|LocalElem|TotalRes|FlatElem|FlatSpellCold)"
+		PadWords := "(ChaosRes|FlatSpellFire|LightningRes|ItemRarity|SpellDamage|MoveSpeed|LocalPhys|FlatPhysDamage|GlobalCrit|CritDamage|CastSpeed|LocalElem|TotalRes|FlatElem|FlatSpellCold|ProjSpeed)"
 		PadWords2 := "(CraftTotalSpellDamage|FlatSpellLightning)"
 		
 		
@@ -543,8 +543,7 @@ Class Filter_ {
 			
 			If (element == "AR") or (element == "ES") or (element == "EV")
 			{
-				t_var := Craft . element
-				
+				t_var := "Craft" . element
 				If (Item.Get(t_var) > this.ValueTarget[i]) and (t_CraftFlag == False)
 				{
 					
@@ -555,7 +554,7 @@ Class Filter_ {
 					;msgbox, %  Item.Get(element)  "-" Item.Get(t_var) "-" Item.ES "-" var
 					If (Item.Get(element) < Item.Get(t_var))
 					{
-						t_armour_string := "	[CRAFT]"
+						t_armour_string := "	[CRAFT]" . TT_ArmourCraftMods
 						t_CraftFlag := True
 					}
 					else
@@ -719,7 +718,6 @@ Class WeaponFilter_ {
 					{
 						If (Item.CraftPhysDPS > Item.PhysDPS)
 						{
-							msgbox, % Item.CraftPhysDPS Item.PhysDPS
 							TT_PhysDPS := Item.CraftPhysDPS . "  [CRAFT]" . TT_PhysCraftMods
 							TT_APS := "`nAttSpeed:	" . Item.CraftedAPS
 							t_CraftFlag := True
@@ -1202,11 +1200,11 @@ ParseItemData(ItemDataText)
 	Item.FlatElem := Item.FlatCold + Item.FlatChaos + Item.FlatFire + Item.FlatLightning
 	
 	
+	;DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	
 	
 	
-	;Item.CraftedAPS := Item.APS + Item.IAS/100
 	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseImplicit)
 	;подсчет ДПС, олрезов и т.д.
@@ -1216,7 +1214,7 @@ ParseItemData(ItemDataText)
 	CalcSpellDPS()
 	CalcArmour()
 	CalcCrit()
-	;DllCall("QueryPerformanceCounter", "Int64*", CounterCalc)
+	
 	
 	
 	;подсчет очков 
@@ -1264,7 +1262,8 @@ ParseItemData(ItemDataText)
 	DllCall("QueryPerformanceCounter", "Int64*", CounterAfter)
 	DllCall("QueryPerformanceFrequency", "Int64*", Frequency)
 	
-	;TT_Result := TT_Result . "`n" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds"
+	;TT_Result := TT_Result . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
+	;TT_ResultExt := TT_ResultExt . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey:	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
 	
 	
 	
@@ -1294,7 +1293,7 @@ ParseClassType(BaseType, ItemStatLine)
 			Item.BaseDamage[1] := DamLo
 			Item.BaseDamage[2] := DamHi
 			Item.BaseCrit := CC
-			Item.APS := APS
+			Item.BaseAPS := APS
 			Item.GripType := "1h"
 			Item.ClassType := var
 			If (RegExMatch(BaseType,sceptres))
@@ -1307,7 +1306,7 @@ ParseClassType(BaseType, ItemStatLine)
 			Item.BaseDamage[1] := DamLo
 			Item.BaseDamage[2] := DamHi
 			Item.BaseCrit := CC
-			Item.APS := APS
+			Item.BaseAPS := APS
 			Item.GripType := "2h"
 			Item.ClassType := var
 			return
@@ -1592,7 +1591,8 @@ CalcPhysDPS()
 	t_Prefixes := Item.Prefixes
 	t_Suffixes := Item.Suffixes
 	t_Multi := False
-	Item.PhysDPS := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage)/2*(120+Item.LocalPhys)/100*Item.APS*(100 + Item.IAS)/100
+	TT_PhysCraftMods := ""
+	Item.PhysDPS := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage)/2*(120+Item.LocalPhys)/100*Item.BaseAPS*(100 + Item.IAS)/100
 	If (Item.IsFlatPhysDamage == False) and (t_Prefixes < 3)
 	{
 		If Item.GripType == "1h"
@@ -1632,10 +1632,94 @@ CalcPhysDPS()
 		}
 		t_TT := t_TT . "[IAS]"
 	}
-	Item.CraftPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamage)/2*(120+Item.LocalPhys+t_CraftPhysDamage)/100*Item.APS * (100 + Item.IAS + t_CraftIAS)/100
-	Item.MultiPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamage)/2*(120+Item.LocalPhys+t_MultiPhysDamage)/100*Item.APS * (100 + Item.IAS + t_MultiIAS)/100
-	Item.CraftedAPS := Item.APS * (100 + Item.IAS + t_CraftIAS)/100
+	Item.CraftPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamage)/2*(120+Item.LocalPhys+t_CraftPhysDamage)/100*Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100
+	Item.MultiPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamage)/2*(120+Item.LocalPhys+t_MultiPhysDamage)/100*Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100
+	Item.APS := Item.BaseAPS*(100+Item.IAS)/100
+	Item.CraftedAPS := Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100
 	TT_PhysCraftMods := t_TTcraft
+}
+return
+
+
+CalcElemDPS()
+{
+	t_CraftFlatElemDamage := 0
+	t_MultiFlatElemDamage := 0
+	t_CraftIAS := 0
+	t_MultiIAS := 0
+	t_Prefixes := Item.Prefixes
+	t_Suffixes := Item.Suffixes
+	t_Multi := False
+	TT_ElemCraftMods := ""
+	
+	
+	Item.ElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning)*Item.BaseAPS*(100 + Item.IAS)/100
+	
+	
+	
+	If (Item.IsFlatLightning == False) and  (t_Prefixes < 3)
+	{
+		If Item.GripType == "1h"
+			t_MultiFlatElemDamage += := 56
+		else
+			t_MultiFlatElemDamage += := 85
+		t_Prefixes++
+		If (t_Multi == False) and (Item.Prefixes < 3)
+		{
+			t_CraftFlatElemDamage := t_MultiFlatElemDamage
+			t_Multi := True
+			t_TTcraft := "[FlatLightning]"
+		}
+		t_TT := t_TT . "[FlatLightning]"
+	}
+	If (Item.IsFlatFire == False) and (t_Prefixes < 3)
+	{
+		If Item.GripType == "1h"
+			t_MultiFlatElemDamage += 54
+		else
+			t_MultiFlatElemDamage += 80
+		t_Prefixes++
+		If (t_Multi == False) and (Item.Prefixes < 3)
+		{
+			t_CraftFlatElemDamage := t_MultiFlatElemDamage
+			t_Multi := True
+			t_TTcraft := "[FlatFire]"
+		}
+		t_TT := t_TT . "[FlatFire]"
+	}
+	If (Item.IsFlatCold == False) and (t_Prefixes < 3)
+	{
+		If Item.GripType == "1h"
+			t_MultiFlatElemDamage += 44
+		else
+			t_MultiFlatElemDamage += 65
+		t_Prefixes++
+		If (t_Multi == False) and (Item.Prefixes < 3)
+		{
+			t_CraftFlatElemDamage := t_MultiFlatElemDamage
+			t_Multi := True
+			t_TTcraft := "[FlatCold]"
+		}
+		t_TT := t_TT . "[FlatCold]"
+	}
+	If (Item.IAS == False) and (t_Suffixes < 3)
+	{
+		t_MultiIAS := 15
+		t_TTcraft := t_TTcraft . "[IAS]"
+		If (t_Multi == False) and (Item.Suffixes < 3)
+		{
+			t_CraftIAS := t_MultiIAS
+			t_Multi := True
+			t_TTcraft := "[IAS]"
+		}
+		
+		t_Suffixes++
+		t_TT := t_TT . "[IAS]"
+	}
+	
+	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)/2*(Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100)
+	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)/2*(Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100)
+	TT_ElemCraftMods := t_TTcraft
 }
 return
 
@@ -1735,86 +1819,6 @@ CalcCrit()
 }
 return
 
-CalcElemDPS()
-{
-	t_CraftFlatElemDamage := 0
-	t_MultiFlatElemDamage := 0
-	t_CraftIAS := 0
-	t_MultiIAS := 0
-	t_Prefixes := Item.Prefixes
-	t_Suffixes := Item.Suffixes
-	t_Multi := False
-	
-	Item.ElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning)*Item.APS*(100 + Item.IAS)/100
-	
-	
-	
-	If (Item.IsFlatLightning == False) and  (t_Prefixes < 3)
-	{
-		If Item.GripType == "1h"
-			t_MultiFlatElemDamage += := 56
-		else
-			t_MultiFlatElemDamage += := 85
-		t_Prefixes++
-		If (t_Multi == False) and (Item.Prefixes < 3)
-		{
-			t_CraftFlatElemDamage := t_MultiFlatElemDamage
-			t_Multi := True
-			t_TTcraft := "[FlatLightning]"
-		}
-		t_TT := t_TT . "[FlatLightning]"
-	}
-	If (Item.IsFlatFire == False) and (t_Prefixes < 3)
-	{
-		If Item.GripType == "1h"
-			t_MultiFlatElemDamage += 54
-		else
-			t_MultiFlatElemDamage += 80
-		t_Prefixes++
-		If (t_Multi == False) and (Item.Prefixes < 3)
-		{
-			t_CraftFlatElemDamage := t_MultiFlatElemDamage
-			t_Multi := True
-			t_TTcraft := "[FlatFire]"
-		}
-		t_TT := t_TT . "[FlatFire]"
-	}
-	If (Item.IsFlatCold == False) and (t_Prefixes < 3)
-	{
-		If Item.GripType == "1h"
-			t_MultiFlatElemDamage += 44
-		else
-			t_MultiFlatElemDamage += 65
-		t_Prefixes++
-		If (t_Multi == False) and (Item.Prefixes < 3)
-		{
-			t_CraftFlatElemDamage := t_MultiFlatElemDamage
-			t_Multi := True
-			t_TTcraft := "[FlatCold]"
-		}
-		t_TT := t_TT . "[FlatCold]"
-	}
-	If (Item.IAS == False) and (t_Suffixes < 3)
-	{
-		t_MultiIAS := 15
-		t_TTcraft := t_TTcraft . "[IAS]"
-		If (t_Multi == False) and (Item.Suffixes < 3)
-		{
-			t_CraftIAS := t_MultiIAS
-			t_Multi := True
-			t_TTcraft := "[IAS]"
-		}
-		
-		t_Suffixes++
-		t_TT := t_TT . "[IAS]"
-	}
-	
-	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_CraftIAS)/100)
-	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)/2*(Item.APS * (100 + Item.IAS + t_MultiIAS)/100)
-	TT_ElemCraftMods := t_TTcraft
-}
-return
-
 
 CalcArmour()
 {
@@ -1831,6 +1835,7 @@ CalcArmour()
 	t_Prefixes := Item.Prefixes
 	t_Suffixes := Item.Suffixes
 	t_Multi := False
+	TT_ArmourCraftMods := ""
 	
 	Item.AR := (Item.BaseAR + Item.FlatAR)*(Item.LocalArmour + 120)/100
 	Item.ES := (Item.BaseES + Item.FlatES)*(Item.LocalArmour + 120)/100
@@ -1924,11 +1929,10 @@ CalcArmour()
 	Item.CraftEV := t_EV
 	Item.CraftES := t_ES
 	
+	
 	Item.CraftMaxLife := Item.MaxLife + t_CraftMaxLife
-	TT_Armour := "`nAR	EV	ES	MaxLife	CraftModes"
-	TT_Armour := TT_Armour . "`n" . Round(Item.AR) . "	" . Round(Item.EV) . "	" . Round(Item.ES) . "	" . Round(Item.MaxLife)
-	TT_Armour := TT_Armour . "`n" . Round(Item.CraftAR) . "	" . Round(Item.CraftEV) . "	" . Round(Item.CraftES) . "	" .  Round(Item.MaxLife + t_CraftMaxLife) . "	" . t_TTcraft 
-	TT_Armour := TT_Armour . "`n" . Round(Item.MultiAR) . "	" . Round(Item.MultiEV) . "	" . Round(Item.MultiES) . "	" .  Round(Item.MaxLife + t_MultiMaxLife) . "	" . t_TT 
+	
+	TT_ArmourCraftMods := t_TTcraft
 }
 
 

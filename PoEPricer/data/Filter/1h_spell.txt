@@ -7,9 +7,9 @@
 SpellDamage	0	139	44	Prefixes	2.8	1
 CastSpeed	0	25	11	Suffixes	1	1
 LocalElem	0	100	19	Suffixes	2.8	1
-FlatSpellCold	0	54.5	17.5	Prefixes	2	1
-FlatSpellFire	0	67	21.5	Prefixes	2	1
-FlatSpellLightning	0	72	23	Prefixes	2	1
+FlatSpellCold	0	54.5	17.5	Prefixes	1.4	1
+FlatSpellFire	0	67	21.5	Prefixes	1.4	1
+FlatSpellLightning	0	72	23	Prefixes	1.4	1
 ProjSpeed	0	46	30	Suffixes	0.8	1
 SpellCrit	0	100	69	Suffixes	1	1
 CritDamage	0	38	27	Suffixes	0.6	1

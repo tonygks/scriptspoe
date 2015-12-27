@@ -1,17 +1,15 @@
 ;Boots minvalue maxvalue craftvalue prefixes/suffixes weight target						
 ;						
 !ClassType	Helm					
-!Score	300					
-!ScoreHits4	250					
-!ScoreHits5	200					
+!Score	200					
+!ScoreHits4	1250					
+!ScoreHits5	1200					
 ES	4	530			20	200
 ES	4	530			4	100
-;MaxLife	3	89	64	Prefixes	500	80
-MaxLife	3	89	64	Prefixes	2	30
-TotalRes	23	144	30	Suffixes	3	40
-ItemRarity	8	55			50	40
-ItemRarity	8	55			3	15
-;Int	8	55	30	Suffixes	1	20
-;Str	8	55	30	Suffixes	1	20
-;Dex	8	55	30	Suffixes	1	20
+MaxLife	1	89	64	Prefixes	1	1
+TotalRes	1	144	30	Suffixes	2.7	1
+ItemRarity	1	55			3	15
+;Int	1	55	30	Suffixes	1	1
+;Str	1	55	30	Suffixes	1	1
+;Dex	1	55	30	Suffixes	1	1
 ;AccuracyRating	5	400			1	250

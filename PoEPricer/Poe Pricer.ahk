@@ -26,7 +26,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
 Global prefixes, suffixes, implicit, affixes
-Global TT, TT_Affixes , TT_PhysCraftMods, TT_ElemCraftMods, TT_ArmourCraftMods
+Global TT, TT_Affixes , TT_PhysCraftMods, TT_PhysMultiMods, TT_ElemCraftMods, TT_ArmourCraftMods
 Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
@@ -154,7 +154,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			sleep, 1
 		}
 	}
-		
+	
 	ScanEnd:
 	ToolTipEx()
 	Clipboard := clip_saved
@@ -213,8 +213,13 @@ class Item_ {
 	SPAffixes := 0
 	
 	PhysDPS := 0
-	CraftPhysDPS := 0
-	MultiPhysDPS := 0
+	CraftPhysDPSLo := 0
+	CraftPhysDPSHi := 0
+	MultiPhysDPSLo := 0
+	MultiPhysDPSHi := 0
+	CraftAPSLo := 0
+	CraftAPSHi := 0
+	APS := 0
 	
 	ElemDPS := 0
 	CraftElemDPS := 0
@@ -235,7 +240,7 @@ class Item_ {
 	MultiAR := 0
 	MultiES := 0
 	MultiEV := 0
-	APS := 0
+	
 	
 	CraftMaxLife := 0
 	
@@ -710,26 +715,37 @@ Class WeaponFilter_ {
 			t_CraftFlag := False
 			If (t_ClassType == element)
 			{
-				TT_PhysDPS := Item.PhysDPS
-				TT_APS := "`nAttSpeed:	" . Item.APS
+				
+				TT_PhysDPS := "`nPhysDPS:	" . Item.PhysDPS . "`nAPS:		" . Item.APS
 				If (this.PhysDPS[i])
 				{
-					If (Item.CraftPhysDPS > this.PhysDPS[i])
+					If (Item.CraftPhysDPSHi > this.PhysDPS[i]) 
 					{
-						If (Item.CraftPhysDPS > Item.PhysDPS)
+						If (Item.CraftPhysDPSHi > Item.PhysDPS)
 						{
-							TT_PhysDPS := Item.CraftPhysDPS . "  [CRAFT]" . TT_PhysCraftMods
-							TT_APS := "`nAttSpeed:	" . Item.CraftedAPS
+							t_PhysCraftDPS := "`nPhysDPS:	" . Round(Item.CraftPhysDpsLo) . "-" . Round(Item.CraftPhysDpsHi) . "  " . TT_PhysCraftMods
+							t_PhysMultiDPS := "`nPhysDPS:	" . Round(Item.MultiPhysDpsLo) . "-" . Round(Item.MultiPhysDpsHi) . "  " . TT_PhysMultiMods
+							
+							If InStr(TT_PhysCraftMods, "IAS")
+								t_CraftAPS := "`nAPS:		" . Item.CraftAPSLo . "-" . Item.CraftAPSHi
+							else
+								t_CraftAPS := "`nAPS:		" . Item.CraftAPSLo
+							If InStr(TT_PhysMultiMods, "IAS")
+								t_MultiAPS := "`nAPS:		" . Item.MultiAPSLo . "-" . Item.MultiAPSHi
+							else
+								t_MultiAPS := "`nAPS:		" . Item.MultiAPSLo
+							
 							t_CraftFlag := True
 						}
 						Item.Success := True
+						TT_CraftPhysDPS := "`n--------------------------------------`n[Craft]" . t_PhysCraftDPS . t_CraftAPS
+						If (Item.MultiPhysDPSHi > Item.CraftPhysDPSHi)
+							TT_CraftPhysDPS := TT_CraftPhysDPS .  "`n--------------------------------------`n[MultiCraft]" . t_PhysMultiDPS . t_MultiAPS
+						
 					}
-					else
-					{
-						TT_PhysDPS := Item.PhysDPS
-					}
+					
 				}
-				TT_PhysDPS := "`nPhysDPS:	" . TT_PhysDPS
+				
 				
 				TT_ElemDPS := Item.ElemDPS
 				If (this.ElemDPS[i])
@@ -765,7 +781,7 @@ Class WeaponFilter_ {
 				
 				
 				
-				TT_Result := "`n--------------------------------------" . TT_PhysDPS . TT_ElemDPS . TT_Crit . TT_APS . "`n--------------------------------------"
+				TT_Result := "`n--------------------------------------" . TT_PhysDPS . TT_ElemDPS . TT_Crit . TT_CraftPhysDPS "`n--------------------------------------"
 				TT_ResultExt := TT_Result
 				TT_ResultExt := TT_Result
 				return 
@@ -1582,26 +1598,44 @@ ParseAffixes(AffixesData)
 
 CalcPhysDPS()
 {
-	t_CraftPhysDamage := 0
-	t_MultiPhysDamage := 0
-	t_CraftFlatPhysDamage := 0
-	t_MultiFlatPhysDamage := 0
-	t_CraftIAS := 0
-	t_MultiIAS := 0
+	t_CraftPhysDamageLo := 0
+	t_CraftPhysDamageHi := 0
+	t_MultiPhysDamageLo := 0
+	t_MultiPhysDamageHi := 0
+	t_CraftFlatPhysDamageLo := 0
+	t_CraftFlatPhysDamageHi := 0
+	t_MultiFlatPhysDamageLo := 0
+	t_MultiFlatPhysDamageHi := 0
+	t_CraftIASLo := 0
+	t_CraftIASHi := 0
+	t_MultiIASLo := 0
+	t_MultiIASHi := 0
 	t_Prefixes := Item.Prefixes
 	t_Suffixes := Item.Suffixes
 	t_Multi := False
 	TT_PhysCraftMods := ""
+	
+	If (Item.GripType <> "1h") and (Item.GripType <> "2h")
+		return
+	
 	Item.PhysDPS := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage)/2*(120+Item.LocalPhys)/100*Item.BaseAPS*(100 + Item.IAS)/100
 	If (Item.IsFlatPhysDamage == False) and (t_Prefixes < 3)
 	{
-		If Item.GripType == "1h"
-			t_MultiFlatPhysDamage := 33
+		If (Item.GripType == "1h")
+		{
+			t_MultiFlatPhysDamageLo := 27
+			t_MultiFlatPhysDamageHi := 33
+		}
 		else
-			t_MultiFlatPhysDamage := 49
+		{
+			t_MultiFlatPhysDamageLo := 40
+			t_MultiFlatPhysDamageHi := 49
+		}
+		
 		If (t_Multi == False) and (Item.Prefixes < 3)
 		{
-			t_CraftFlatPhysDamage := t_MultiFlatPhysDamage
+			t_CraftFlatPhysDamageLo := t_MultiFlatPhysDamageLo
+			t_CraftFlatPhysDamageHi := t_MultiFlatPhysDamageHi
 			t_Multi := True
 			t_TTcraft := "[FlatPhys]"
 		}
@@ -1610,11 +1644,13 @@ CalcPhysDPS()
 	}
 	If (Item.IsLocalPhysAff == False) and (t_Prefixes < 3)
 	{
-		t_MultiPhysDamage := 79
+		t_MultiPhysDamageLo := 60
+		t_MultiPhysDamageHi := 79
 		t_Prefixes++
 		If (t_Multi == False) and (Item.Prefixes < 3)
 		{
-			t_CraftPhysDamage := t_MultiPhysDamage
+			t_CraftPhysDamageLo := t_MultiPhysDamageLo
+			t_CraftPhysDamageHi := t_MultiPhysDamageHi
 			t_Multi := True
 			t_TTcraft := "[Phys]"
 		}
@@ -1622,21 +1658,39 @@ CalcPhysDPS()
 	}
 	If (Item.IsIAS == False) and (Item.Suffixes < 3)
 	{
-		t_MultiIAS := 15
+		If Item.GripType == "1h"
+		{
+			t_MultiIASLo := 12
+			t_MultiIASHi := 15
+		}
+		else
+		{
+			t_MultiIASLo := 7
+			t_MultiIASHi := 12
+			
+		}
 		t_Suffixes++
 		If (t_Multi == False) and (Item.Suffixes < 3)
 		{
-			t_CraftIAS := t_MultiIAS
+			t_CraftIASLo := t_MultiIASLo
+			t_CraftIASHi := t_MultiIASHi
 			t_Multi := True
 			t_TTcraft := "[IAS]"
 		}
 		t_TT := t_TT . "[IAS]"
 	}
-	Item.CraftPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamage)/2*(120+Item.LocalPhys+t_CraftPhysDamage)/100*Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100
-	Item.MultiPhysDps := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamage)/2*(120+Item.LocalPhys+t_MultiPhysDamage)/100*Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100
-	Item.APS := Item.BaseAPS*(100+Item.IAS)/100
-	Item.CraftedAPS := Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100
+	Item.CraftPhysDpsLo := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamageLo)/2*(120+Item.LocalPhys+t_CraftPhysDamageLo)/100*Item.BaseAPS * (100 + Item.IAS + t_CraftIASLo)/100
+	Item.CraftPhysDpsHi := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_CraftFlatPhysDamageHi)/2*(120+Item.LocalPhys+t_CraftPhysDamageHi)/100*Item.BaseAPS * (100 + Item.IAS + t_CraftIASHi)/100
+	Item.MultiPhysDpsLo := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamageLo)/2*(120+Item.LocalPhys+t_MultiPhysDamageLo)/100*Item.BaseAPS * (100 + Item.IAS + t_MultiIASLo)/100
+	Item.MultiPhysDpsHi := (Item.BaseDamage[1] + Item.BaseDamage[2] + Item.FlatPhysDamage + t_MultiFlatPhysDamageHi)/2*(120+Item.LocalPhys+t_MultiPhysDamageHi)/100*Item.BaseAPS * (100 + Item.IAS + t_MultiIASHi)/100
+	Item.CraftAPSLo := Item.BaseAPS*(100 + Item.IAS + t_CraftIASLo)/100
+	Item.CraftAPSHi := Item.BaseAPS*(100 + Item.IAS + t_CraftIASHi)/100
+	Item.APS := Item.BaseAPS*(100 + Item.IAS)/100
+	
+	Item.MultiAPSLo := Item.BaseAPS * (100 + Item.IAS + t_MultiIASLo)/100
+	Item.MultiAPSHi := Item.BaseAPS * (100 + Item.IAS + t_MultiIASHi)/100
 	TT_PhysCraftMods := t_TTcraft
+	TT_PhysMultiMods := t_TT
 }
 return
 
@@ -1851,10 +1905,10 @@ CalcArmour()
 		If (t_Multi == False) and (Item.Prefixes < 3)
 		{
 			t_CraftLocalArmour := t_MultiLocalArmour
-			t_TTcraft := "[LocalAR/EV/ES]"
+			t_TTcraft := "[LocalArmour]"
 			t_Multi := True
 		}
-		t_TT := t_TT . "[LocalAR/EV/ES]"
+		t_TT := t_TT . "[LocalArmour]"
 	}
 	
 	If (Item.IsMaxLife == False) and (t_Prefixes < 3)

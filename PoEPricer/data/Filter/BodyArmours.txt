@@ -8,8 +8,8 @@ Links	0	6			20	5
 ES	1	900			20	500
 EV	1	2850			20	1500
 AR	1	2950			20	1400
-MaxLife	1	119	64	Prefixes	1.5	1
-TotalRes	1	144	30	Suffixes	4.2	1
+MaxLife	1	119	64	Prefixes	1.25	1
+TotalRes	1	144	30	Suffixes	2.3	1
 EV	1	2850			1	700
 AR	1	2950			1	700
 ES	1	900			3	300

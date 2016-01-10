@@ -43,8 +43,7 @@ Global X, Y
 Global t_clip
 
 
-IniRead, f_AutoScan, PoePricer.ini, Flags, opt_AutoScan, 0
-IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, 0
+IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, False
 IniRead, path_FilterFolder, PoePricer.ini, Path, opt_FilterFolder, "Filter"
 
 ;f_ShowScore := True
@@ -165,12 +164,23 @@ return
 Reload
 return
 
+#F10::
+f_ShowScore := !f_ShowScore
+IniWrite, %f_ShowScore%, PoePricer.ini, Flags, opt_ShowScore
+MouseGetPos, CurrX, CurrY
+If f_ShowScore
+	TooltipEx("ShowScore ON ", CurrX + 50, CurrY + 50)
+else
+	TooltipEx("ShowScore OFF ", CurrX + 50, CurrY + 50)
+sleep, 1000
+ToolTipEx()
+return
 
 
 
 ShowToolTip()
 {
-	If (f_ShowScore == 1)
+	If (f_ShowScore == True)
 		t_string := TT_ResultExt
 	else
 		t_string := TT_Result
@@ -629,13 +639,13 @@ Class Filter_ {
 				ActualScore += t_Score
 				If t_craftElement
 				{
-					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value) . "  [CRAFT]"	
-					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  [" . Round(t_Score) . "]  [CRAFT]"
+					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value) . "	[+" . this.ValueCraft[i] . "]"
+					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  (" . Round(t_Score) . ")  [+" . this.ValueCraft[i] . "]"
 				}
 				else
 				{
 					TT_Result := TT_Result . "`n" . element . ":" . pad . Round(t_value)
-					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  [" . Round(t_Score) . "]"
+					TT_ResultExt := TT_ResultExt . "`n" . element . ":" . pad . Round(t_value) . "  (" . Round(t_Score) . ")"
 				}
 				;msgbox, % element "-" t_value "-" this.ValueTarget[i] t_Score
 				FilterHits++
@@ -1293,7 +1303,7 @@ ParseItemData(ItemDataText)
 
 ParseClassType(BaseType, ItemStatLine)
 {
-	weapons_1h := "^(One Handed Axe|One Handed Mace|Bow|One Handed Sword|Wand|Sceptre|Dagger|Claw)"
+	weapons_1h := "^(One Handed Axe|One Handed Mace|One Handed Sword|Wand|Sceptre|Dagger|Claw)"
 	weapons_2h := "^(Two Handed Axe|Two Handed Mace|Bow|Two Handed Sword|Staff)"
 	belts := " (Belt|Sash)"
 	boots := " (Boots|Greaves|Shoes|Slippers)"
@@ -1644,6 +1654,10 @@ CalcPhysDPS()
 	}
 	If (Item.IsLocalPhysAff == False) and (t_Prefixes < 3)
 	{
+		If (t_Multi == True) and (t_Suffixes < 3)
+		{
+			
+		}
 		t_MultiPhysDamageLo := 60
 		t_MultiPhysDamageHi := 79
 		t_Prefixes++
@@ -1658,7 +1672,7 @@ CalcPhysDPS()
 	}
 	If (Item.IsIAS == False) and (Item.Suffixes < 3)
 	{
-		If Item.GripType == "1h"
+		If (Item.GripType == "1h")
 		{
 			t_MultiIASLo := 12
 			t_MultiIASHi := 15
@@ -1686,7 +1700,6 @@ CalcPhysDPS()
 	Item.CraftAPSLo := Item.BaseAPS*(100 + Item.IAS + t_CraftIASLo)/100
 	Item.CraftAPSHi := Item.BaseAPS*(100 + Item.IAS + t_CraftIASHi)/100
 	Item.APS := Item.BaseAPS*(100 + Item.IAS)/100
-	
 	Item.MultiAPSLo := Item.BaseAPS * (100 + Item.IAS + t_MultiIASLo)/100
 	Item.MultiAPSHi := Item.BaseAPS * (100 + Item.IAS + t_MultiIASHi)/100
 	TT_PhysCraftMods := t_TTcraft
@@ -2044,6 +2057,8 @@ CheckPhysAccuracyRating()
 		return
 	}
 	
+	
+	
 	If (Item.LocalPhys > MaxComboPhys)
 	{
 		Item.IsLocalPhysAff := True
@@ -2067,16 +2082,44 @@ CheckPhysAccuracyRating()
 	
 	If (Item.LocalPhys <= MaxComboPhys) and (Item.LightRadius < 15) and (Item.LightRadius > 0)
 	{
+		If (Item.IsLightRadius <> False)
+		{
+			If (Item.Accuracy > (AccFromPhys_Hi + MaxAccLight))
+			{
+				Item.Affixes--
+				Item.Suffixes++
+				Item.IsAccuracyAff := true
+				return
+			}
+			
+			If (Item.Accuracy < (MinAcc + MinAccLight))
+			{
+				Item.Affixes--
+				If Item.LocalPhys < 40
+					return
+				Item.Prefixes++
+				Item.IsLocalPhysAff := True
+				return
+			}
+			return	
+		}
 		
-		If (Item.Accuracy > (AccFromPhys_Hi + MaxAccLight))
+		If (Item.Accuracy > AccFromPhys_Hi)
 		{
 			Item.Affixes--
 			Item.Suffixes++
-			Item.IsAccuracyAff := true
+			Item.IsAccuracyAff := True
 			return
 		}
 		
-		If (Item.Accuracy < (MinAcc + MinAccLight))
+		If (Item.Accuracy > AccFromPhys_Lo) and (Item.Prefixes == 3)
+		{
+			Item.Affixes--
+			Item.Suffixes++
+			return
+		}
+		
+		If (Item.Accuracy < MinAcc)
 		{
 			Item.Affixes--
 			If Item.LocalPhys < 40

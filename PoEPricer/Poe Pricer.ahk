@@ -31,7 +31,7 @@ Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
 Global Item, Filter_Boots, Filter_Gloves, Filter_Helmets, Filter_BodyArmours, Filter_Belts, Filter_Amulets, Filter_Rings, Filter_Quivers, Filter_Spirit_Shields, Filter_1h_spell, Filter_WeaponDPS, Filter_2h_skill
-Global CounterBefore, CounterAfter, CounterStart
+Global CounterBefore, CounterAfter, CounterStart, CounterBeforeParse
 Global f_ShowScore := False
 Global f_AutoScan := True
 Global f_ToolTip := False
@@ -99,7 +99,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 {
 	clip_saved := Clipboard
 	clip_parsed := Clipboard
-	;DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
+	DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	MouseGetPos, X, Y
 	
@@ -128,9 +128,9 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			goto, Scanend
 		}
 		
-		;DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
+		DllCall("QueryPerformanceCounter", "Int64*", CounterBefore)
 		Send, ^{VK43}
-		Loop, 20
+		Loop, 5
 		{
 			If (GetKeyState("C", "P") == 1)
 			{
@@ -1289,7 +1289,7 @@ ParseItemData(ItemDataText)
 	DllCall("QueryPerformanceFrequency", "Int64*", Frequency)
 	
 	;TT_Result := TT_Result . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
-	;TT_ResultExt := TT_ResultExt . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey:	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
+	TT_ResultExt := TT_ResultExt . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey:	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
 	
 	
 	

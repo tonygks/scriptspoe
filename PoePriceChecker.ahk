@@ -81,11 +81,11 @@ If (A_AhkVersion <= "1.1.22")
 ; or are removed
 
 ;global LeagueName := "warbands"
-global LeagueName := "Talisman"
+global LeagueName := "Perandus"
 ;global LeagueName := "tempest"
 ;global LeagueName := "standard"
 ;global LeagueName := "hardcore"
-
+global f_spam := 0
 ; showDays - This filters results to items that are in shops which have been updated
 ; without the last # of days. The default is 7. There is not really any need to change
 ; this unless you really want the freshest prices, then you can try setting this to 3 or 4.
@@ -123,12 +123,26 @@ CoordMode, ToolTip, Screen
 return
 
 ;F8 hotkey
-~vk77::
+$~vk77::
 {
+  IfWinNotActive, Path of Exile ahk_class Direct3DWindowClass
+    return
   BlockInput On
   SendMode Input
+  f_spam := !f_spam
+  If (f_spam == 1)
+  {
+    f_spam := 0
+    return
+  }
+	
   loop
   {
+    If (f_spam == 1)
+    {
+      f_spam := 0
+      return
+    }
     Send {ENTER}
     Send /trade %A_Index%
     Send {ENTER}
@@ -144,6 +158,7 @@ return
   BlockInput Off
 }
 return
+
 ; Price check w/ auto filters
 
 ;F5 hotkey

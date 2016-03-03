@@ -581,6 +581,26 @@ Show
 # 2regals weapons
 Show
     ItemLevel >= 75
+    DropLevel = 56
+    Rarity = Rare
+    Class "Two Hand Axes" "Two Hand Maces" "Staves"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 210 0 0
+
+# 2regals weapons
+Show
+    ItemLevel >= 60
+    DropLevel = 56
+    Rarity = Rare
+    Class "Two Hand Axes" "Two Hand Maces" "Staves"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 0 0 0
+
+# 2regals weapons
+Show
+    ItemLevel >= 75
     Rarity = Rare
     BaseType "Bone Spirit Shield" "Ivory Spirit Shield" "Chiming Spirit Shield" "Vaal Spirit Shield" "Harmonic Spirit Shield" "Titanium Spirit Shield" "Thorium Spirit Shield" "Harbinger Bow" "Decimation Bow" "Spike-Point Arrow Quiver" "Fossilised Spirit Shield"
     SetTextColor 0 0 0

@@ -17,6 +17,7 @@
 ; WINDOWS 10 NOTE: You may need to run this .ahk file as an Administrator in order for the popups
 ; to show properly. 
 ;
+;
 ; INDEXER NOTE: I do not use poe.trade in any way. I run my own indexer, which lets me
 ; provide far more in-depth and advanced statistics than I could get from using 
 ; poe.trade. The results will not always exactly match poe.trade. You can read more 

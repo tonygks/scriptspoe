@@ -2383,7 +2383,7 @@ CheckItemRarity()
 	{
 		If (Item.Prefixes > 2)
 		{
-			msgbox, ItemRaritySuff : WTF with affixes and suffixes quantity?
+			msgbox, ItemRaritySuff : WTF with affixes and suffixes quantity? 
 		}
 		Item.Prefixes++
 		Item.Affixes--

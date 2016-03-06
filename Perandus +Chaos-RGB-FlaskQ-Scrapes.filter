@@ -184,6 +184,29 @@
 # Section: 0000 # UTILITY AND JUST-IN-CASE
 
 Show
+    BaseType "Silver Key"
+    SetTextColor 74 230 58
+    SetBorderColor 74 230 58
+    SetFontSize 40
+
+Show
+    Class "Quest" "Items"
+    SetBorderColor 74 230 58
+    SetFontSize 40
+
+Show
+    BaseType "Treasure Key"
+    SetTextColor 74 230 58
+    SetBorderColor 74 230 58
+    SetFontSize 40
+
+Show
+    BaseType "Golden Key"
+    SetTextColor 74 230 58
+    SetBorderColor 74 230 58
+    SetFontSize 40
+
+Show
     Class "Microtransactions"
 
 # Section: 0100 # TOP TIER RARITY
@@ -378,7 +401,14 @@ Show
     PlayAlertSound 3 300
 
 Show
-    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel" "Orb of Chance"
+    BaseType "Orb of Chance"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 0 0 0
+    SetFontSize 38
+
+Show
+    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 0 0 0
@@ -392,6 +422,13 @@ Show
 
 Show
     BaseType "Portal Scroll"
+
+Show
+    Class "Currency"
+    BaseType "Perandus"
+    SetTextColor 255 178 135
+    SetBorderColor 255 178 135 135
+    SetFontSize 38
 
 Show
     BaseType "Perandus Coin"
@@ -541,14 +578,12 @@ Hide
 
 # Section: 0600 # RARE ITEM HIGHLIGHTING
 
-#Disabled Block Start
-#Show
-#    Width = 1
-#    SocketGroup "RGB"
-#    SetTextColor 0 0 0
-#    SetBackgroundColor 170 158 130
-#    SetBorderColor 0 0 0
-#Disabled Block End
+Show
+    Width = 1
+    SocketGroup "RGB"
+    SetTextColor 0 0 0
+    SetBackgroundColor 170 158 130
+    SetBorderColor 0 0 0
 
 #Disabled Block Start
 #Show
@@ -580,25 +615,29 @@ Show
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
 
+#Disabled Block Start
 # 2regals weapons
-Show
-    ItemLevel >= 75
-    DropLevel = 56
-    Rarity = Rare
-    Class "Two Hand Axes" "Two Hand Maces" "Staves"
-    SetTextColor 0 0 0
-    SetBackgroundColor 0 128 0
-    SetBorderColor 210 0 0
+#Show
+#    ItemLevel >= 75
+#    DropLevel = 56
+#    Rarity = Rare
+#    Class "Two Hand Axes" "Two Hand Maces" "Staves"
+#    SetTextColor 0 0 0
+#    SetBackgroundColor 0 128 0
+#    SetBorderColor 210 0 0
+#Disabled Block End
 
+#Disabled Block Start
 # 2regals weapons
-Show
-    ItemLevel >= 60
-    DropLevel = 56
-    Rarity = Rare
-    Class "Two Hand Axes" "Two Hand Maces" "Staves"
-    SetTextColor 0 0 0
-    SetBackgroundColor 0 128 0
-    SetBorderColor 0 0 0
+#Show
+#    ItemLevel >= 60
+#    DropLevel = 56
+#    Rarity = Rare
+#    Class "Two Hand Axes" "Two Hand Maces" "Staves"
+#    SetTextColor 0 0 0
+#    SetBackgroundColor 0 128 0
+#    SetBorderColor 0 0 0
+#Disabled Block End
 
 # 2regals weapons
 Show
@@ -705,12 +744,11 @@ Show
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
 
-# 2 regals armours
+# 2 chaos armours
 Show
     ItemLevel >= 75
-    DropLevel >= 53
     Rarity = Rare
-    Class "Body Armours"
+    BaseType "Zodiac Leather" "Assassin's Garb" "Astral Plate" "Vaal Regalia" "Widowsilk Robe" "Occultist's Vestment" "Glorious Plate" "Gladiator Plate"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 210 0 0
@@ -718,21 +756,22 @@ Show
 # 2 chaos armours
 Show
     ItemLevel >= 60
-    DropLevel >= 53
     Rarity = Rare
-    Class "Body Armours"
+    BaseType "Zodiac Leather" "Assassin's Garb" "Astral Plate" "Vaal Regalia" "Widowsilk Robe" "Occultist's Vestment" "Glorious Plate" "Gladiator Plate"
     SetTextColor 0 0 0
     SetBackgroundColor 0 128 0
     SetBorderColor 0 0 0
 
+#Disabled Block Start
 # crit multi affix  all weapons quivers
-Show
-    ItemLevel >= 75
-    Rarity = Rare
-    Class "Staves"
-    SetTextColor 0 0 0
-    SetBackgroundColor 0 128 0
-    SetBorderColor 210 0 0
+#Show
+#    ItemLevel >= 75
+#    Rarity = Rare
+#    Class "Staves"
+#    SetTextColor 0 0 0
+#    SetBackgroundColor 0 128 0
+#    SetBorderColor 210 0 0
+#Disabled Block End
 
 #Disabled Block Start
 # crit multi affix  all weapons quivers
@@ -773,6 +812,14 @@ Hide
     SetBorderColor 0 0 0
 
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
+
+Show
+    Rarity = Normal
+    BaseType "Sorcerer Boots"
+    SetTextColor 255 255 255
+    SetBorderColor 0 210 0 210
+    SetFontSize 38
+    PlayAlertSound 7 150
 
 Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
     ItemLevel >= 83

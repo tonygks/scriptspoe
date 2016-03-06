@@ -1096,6 +1096,8 @@ ParseItemData(ItemDataText)
 	StringSplit, ItemDataParts, TempResult, ``,
 	
 	ItemDataNamePlate := ItemDataParts1
+	IfInString, ItemDataParts%ItemDataParts0%, Note:
+		ItemDataParts0--
 	ItemDataIndexLast := ItemDataParts0
 	ItemDataLastPart := ItemDataParts%ItemDataParts0%
 	
@@ -1193,6 +1195,8 @@ ParseItemData(ItemDataText)
 	{
 		ItemDataImplicit := ItemDataParts6
 	}
+	
+	
 	
 	RegExMatch(ItemDataText,"Item Level: (\d+)\r\n", TempResult)
 	Item.iLevel := TempResult1

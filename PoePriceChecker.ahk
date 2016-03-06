@@ -58,9 +58,13 @@
 #SingleInstance force
 #NoEnv 
 #Persistent ; Stay open in background
+#MaxThreadsPerHotkey 2
 SendMode Input 
 StringCaseSense, On ; Match strings with case.
 Menu, tray, Tip, Exile Tools Price Check
+
+
+f_spam := False
 
 If (A_AhkVersion <= "1.1.22")
 {
@@ -123,25 +127,24 @@ CoordMode, ToolTip, Screen
 	Send {Enter}
 return
 
+
 ;F8 hotkey
-$~vk77::
+~vk77::
 {
   IfWinNotActive, Path of Exile ahk_class Direct3DWindowClass
     return
-  BlockInput On
+  ;BlockInput On
   SendMode Input
   f_spam := !f_spam
-  If (f_spam == 1)
+  If (f_spam == False)
   {
-    f_spam := 0
     return
   }
 	
   loop
   {
-    If (f_spam == 1)
+    If (f_spam == False)
     {
-      f_spam := 0
       return
     }
     Send {ENTER}
@@ -151,12 +154,12 @@ $~vk77::
     Send {Up 2}
     Sleep, 2600
     Send {ENTER}
-    If A_Index = 13
+    If A_Index = 15
     Break
     else
     Sleep, 100
   }
-  BlockInput Off
+  ;BlockInput Off
 }
 return
 

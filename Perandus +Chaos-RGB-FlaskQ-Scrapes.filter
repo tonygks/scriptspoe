@@ -429,6 +429,7 @@ Show
     SetTextColor 255 178 135
     SetBorderColor 255 178 135 135
     SetFontSize 38
+    PlayAlertSound 4 150
 
 Show
     BaseType "Perandus Coin"
@@ -851,7 +852,7 @@ Show
 
 Show # Endgame: Show normal ilvl 60+ rings/amulets
     Rarity = Normal
-    BaseType "Prophecy Wand" "Occultist's Vestment" "Sorcerer Boots"
+    BaseType "Prophecy Wand" "Occultist's Vestment"
     SetTextColor 255 255 255
     SetBorderColor 210 0 0
     SetFontSize 32

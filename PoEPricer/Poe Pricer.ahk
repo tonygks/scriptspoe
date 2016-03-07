@@ -26,7 +26,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
 Global prefixes, suffixes, implicit, affixes
-Global TT, TT_Affixes , TT_PhysCraftMods, TT_PhysMultiMods, TT_ElemCraftMods, TT_ArmourCraftMods
+Global TT, TT_Affixes , TT_PhysCraftMods, TT_PhysMultiMods, TT_ElemCraftMods, TT_ArmourCraftMods, TT_Rarity
 Global TT_Result, TT_ResultExt
 
 Global BaseBoots, BaseGloves, BaseWeapons, BaseHelmets, BaseBodyArmours, BaseSpiritShields
@@ -431,6 +431,10 @@ class Item_ {
 	
 	Success := False
 	
+	RarityPrefix := False
+	RaritySuffix := False
+	RarityAffix := False
+	RaritySingle := False
 	
 	Get(var)
 	{
@@ -1281,8 +1285,51 @@ ParseItemData(ItemDataText)
 		TT_ResultExt := "[Corrupted]" . TT_ResultExt
 	}
 	
-	TT_Result := Item.ClassType . TT_Result . "`nFree Prefixes:	" . 3 - Item.Prefixes . "`nFree Suffixes:	" . 3 - Item.Suffixes
-	TT_ResultExt := Item.ClassType . TT_ResultExt . "`nFree Prefixes:	" . 3 - Item.Prefixes . "`nFree Suffixes:	" . 3 - Item.Suffixes
+	FreePrefixes := 3 - Item.Prefixes
+	FreeSuffixes := 3 - Item.Suffixes
+	If (Item.Affixes > 0) 
+	{
+		If (Item.RarityAffix == True)
+		{
+			If (Item.Affixes == 1)
+			{
+				;msgbox, % "RarityPref " Item.RarityPrefix " RaritySuff " Item.RaritySuffix
+				If (Item.RarityPrefix == True)
+					FreeSuffixes := FreeSuffixes . " ?"
+				If (Item.RaritySuffix == True)
+					FreePrefixes := FreePrefixes . " ?"
+			}
+			else
+			{
+				If (FreePrefixes > 0)
+				{	
+					FreePrefixes := FreePrefixes . " ?"
+				}
+				
+				If (FreeSuffixes > 0)
+				{
+					FreeSuffixes := FreeSuffixes . " ?"
+				}
+			}
+		}
+		else
+		{
+			If (FreePrefixes > 0)
+			{	
+				FreePrefixes := FreePrefixes . " ?"
+			}
+			
+			If (FreeSuffixes > 0)
+			{
+				FreeSuffixes := FreeSuffixes . " ?"
+			}	
+		}
+		
+	}
+	
+	
+	TT_Result := Item.ClassType . TT_Result . "`nFree Prefixes:	" . FreePrefixes . "`nFree Suffixes:	" . FreeSuffixes . TT_Rarity
+	TT_ResultExt := Item.ClassType . TT_ResultExt . "`nFree Prefixes:	" . FreePrefixes . "`nFree Suffixes:	" . FreeSuffixes . TT_Rarity . "`n?Affixes:		" . Item.Affixes
 	
 	;TT_Result := TT_Result . TT_Affixes
 	;TT_ResultExt := TT_ResultExt . TT_Affixes
@@ -1294,7 +1341,7 @@ ParseItemData(ItemDataText)
 	
 	;TT_Result := TT_Result . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
 	TT_ResultExt := TT_ResultExt . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey:	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
-	
+	TT_ResultExt := TT_ResultExt . TT_Affixes 
 	
 	
 	return True	
@@ -2356,39 +2403,28 @@ return
 
 CheckItemRarity()
 {
+	Global TT_Rarity
+	TT_Rarity := ""
+	
 	If (Item.IsItemRarity == False)
 	{
 		return
 	}
-	If Item.Suffixes > 2 and Item.Prefixes > 2
-		msgbox, 3+ pref and suff .... 
+	If ((Item.Suffixes > 2) and (Item.Prefixes > 2))
+		msgbox, ItemRarityCheck 3+ pref and 3+ suff .... 
 	
 	maxSuffixValue := GetItemRaritySuffix(Item.iLevel)
 	maxPrefixValue := GetItemRarityPrefix(Item.iLevel)
-	If (Item.ItemRarity > maxSuffixValue)
-	{
-		Item.Suffixes++
-		Item.Prefixes++
-		Item.Affixes--
-		return
-	}
+	;msgbox, % "MaxPref " maxPrefixValue " MaxSuf " maxSuffixValue
 	
 	If (Item.Prefixes > 2)
 	{
-		If (Item.Suffixes > 2)
-		{
-			msgbox, ItemRarityPref : WTF with affixes and suffixes quantity?
-		}
 		Item.Suffixes++
 		Item.Affixes--
 		return
 	}
 	If (Item.Suffixes > 2)
 	{
-		If (Item.Prefixes > 2)
-		{
-			msgbox, ItemRaritySuff : WTF with affixes and suffixes quantity? 
-		}
 		Item.Prefixes++
 		Item.Affixes--
 		return
@@ -2396,27 +2432,69 @@ CheckItemRarity()
 	
 	If (Item.ItemRarity < 8)
 	{
-		Item.Affixes--
-		Item.Prefixes++
+		Item.Affixes--	
+		Item.Suffixes++
 		return
 	}
 	
 	If (Item.ItemRarity < 14)
 	{
-		Item.SPAffixes++
-		Item.Affixes--
+		Item.RaritySingle := True
+		TT_Rarity := "`n`n[Single ItemRarity Affix]`n"
 	}
+	
+	If (maxPrefixValue < maxSuffixValue)
+	{
+		If (Item.ItemRarity > maxSuffixValue)
+		{
+			Item.Suffixes++
+			Item.Prefixes++
+			Item.Affixes--
+			return
+		}
+		
+		If (Item.ItemRarity > maxPrefixValue)
+		{
+			Item.Suffixes++
+			Item.RaritySuffix := True
+			Item.RarityAffix := True
+			return
+		}
+	}
+	else
+	{
+		If (Item.ItemRarity > maxSuffixValue)
+		{
+			Item.Prefixes++
+			Item.RarityPrefix := True
+			Item.RarityAffix := True
+			return
+		}
+		
+		If (Item.ItemRarity > maxPrefixValue)
+		{
+			Item.Prefixes++
+			Item.Suffixes++
+			Item.Affixes--
+			return
+		}
+	}
+	
+	
+	
+	
+	
 	
 }
 return
 
 
 
-GetItemRaritySuffix(iLevel)
+GetItemRarityPrefix(iLevel)
 {
-	If iLevel >= 84 
+	If (iLevel >= 84 and (Item.ClassType == "Amulet" or Item.ClassType == "Ring"))
 		return 28
-	If iLevel >= 62
+	If (iLevel >= 62 and (Item.ClassType == "Amulet" or Item.ClassType == "Ring" or Item.ClassType == "Helm"))
 		return 24
 	If iLevel >= 39
 		return 18
@@ -2425,11 +2503,11 @@ GetItemRaritySuffix(iLevel)
 }
 return
 
-GetItemRarityPrefix(iLevel)
+GetItemRaritySuffix(iLevel)
 {
-	If iLevel >= 75
+	If (iLevel >= 75 and (Item.ClassType == "Amulet" or Item.ClassType == "Ring" or Item.ClassType == "Helm"))
 		return 26
-	If iLevel >= 53
+	If (iLevel >= 53 and (Item.ClassType == "Amulet" or Item.ClassType == "Ring" or Item.ClassType == "Helm"))
 		return 20
 	If iLevel >= 30
 		return 14

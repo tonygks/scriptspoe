@@ -9,7 +9,7 @@
 ^(\d+)% increased Flask Charges gained
 ^(\d+)% increased Flask effect duration
 ^(\d+)% increased Global Critical Strike Chance	GlobalCrit	IsGlobalCrit
-^(\d+)% increased Global Critical Strike Multiplier	CritDamage	IsCritDamage
+^\+(\d+)% to Global Critical Strike Multiplier	CritDamage	IsCritDamage
 ^(\d+)% increased Light Radius	LightRadius	IsLightRadius
 ^(\d+)% increased Lightning Damage	LocalElem	IsLocalElem
 ^(\d+)% increased Mana Regeneration Rate
@@ -18,6 +18,7 @@
 ^(\d+)% reduced Attribute Requirements
 ^(\d+)% reduced Enemy Stun Threshold	StunTreshold	IsStunTheshold
 ^(\d+)% reduced Flask Charges used
+^\+(\d+) Life gained for each Enemy hit by your Attacks
 ^\+(\d+) Life gained for each Enemy hit by Attacks
 ^\+(\d+) Life gained on Kill
 ^\+(\d+) Life Gained on Kill

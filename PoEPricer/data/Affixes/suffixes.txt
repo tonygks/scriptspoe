@@ -25,6 +25,7 @@
 ^\+(\d+) Mana gained on Kill
 ^\+(\d+) Mana Gained on Kill
 ^\+(\d+) to All Attributes	AllStat	IsAllStat
+^\+(\d+) to all Attributes	AllStat	IsAllStat
 ^\+(\d+) to Dexterity	Dex	IsDex
 ^\+(\d+) to Intelligence	Int	IsInt
 ^\+(\d+) to Strength	Str	IsStr

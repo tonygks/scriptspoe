@@ -1287,6 +1287,7 @@ ParseItemData(ItemDataText)
 	
 	FreePrefixes := 3 - Item.Prefixes
 	FreeSuffixes := 3 - Item.Suffixes
+	;Msgbox, % Item.Suffixes Item.Prefixes
 	If (Item.Affixes > 0) 
 	{
 		If (Item.RarityAffix == True)
@@ -2252,15 +2253,19 @@ CheckSpellDamageMana()
 		return
 	}
 	
+	
+	
 	If Item.SpellDamage > ComboSp_Hi
 	{
 		Item.IsSpellDamageAff := True
 		Item.Prefixes++
+		;msgbox, % Item.MaxMana " " ComboMana_Hi  " " Sp_Hi " " ComboSp_Hi
 		If (Item.MaxMana > ComboMana_Hi)
 		{
 			Item.IsMaxManaAff := True
-			Item.Prefixes++
+			;Item.Prefixes++
 			Item.Affixes--
+			
 			return		
 		}
 		If (Item.MaxMana < 15)

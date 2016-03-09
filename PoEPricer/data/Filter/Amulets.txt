@@ -6,7 +6,7 @@
 !ScoreHits5	200
 MaxLife	3	89	44	Prefixes	1	30
 Crit	10	38	32	Suffixes	1	10
-TotalRes	23	176	25	Suffixes	4	40
+TotalRes	10	135	25	Suffixes	4	20
 LocalES	2	22	20	Prefixes	0.7	8
 FlatElem	3	36	40	Prefixes	1	14
 FlatPhysDamage	3	20	7	Prefixes	1	10

@@ -7,7 +7,7 @@
 Crit	12	16	16	Suffixes	1	12
 MaxLife	1	79	44	Prefixes	1	30
 FlatES	1	47	23	Prefixes	1	20
-TotalRes	23	144	25	Suffixes	3	40
+TotalRes	10	144	25	Suffixes	3	20
 CastSpeed	5	7			1	5
 IAS	5	7			1	5
 LocalElem	3	12			1	6

@@ -560,6 +560,7 @@ Class Filter_ {
 			
 			t_value := Item.Get(element)
 			
+			
 			If (element == "AR") or (element == "ES") or (element == "EV")
 			{
 				t_var := "Craft" . element
@@ -617,18 +618,19 @@ Class Filter_ {
 			{
 				If (element == "TotalRes")
 				{
-					If (Item.ColdRes > 20)
+					If (Item.ColdRes > 10)
 						FilterHits++
-					If (Item.FireRes > 20)
+					If (Item.FireRes > 10)
 						FilterHits++
-					If (Item.LightningRes > 20)
+					If (Item.LightningRes > 10)
 						FilterHits++
-					If (Item.ChaosRes > 13)
+					If (Item.ChaosRes > 10)
 						FilterHits++
 					If (Item.AllRes > 8)
 						FilterHits++
 					FilterHits--
 				}
+				
 				
 				
 				If (element == "CraftTotalSpellDamage") and (Item.CraftTotalSpellDamage > Item.SpellDamage)
@@ -1342,7 +1344,7 @@ ParseItemData(ItemDataText)
 	
 	;TT_Result := TT_Result . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
 	TT_ResultExt := TT_ResultExt . "`nTimerBuffer:	" . (CounterAfter - CounterBefore)*1000/Frequency . " milliseconds" . "`nTimerHotkey:	" . (CounterAfter - CounterStart)*1000/Frequency . " milliseconds"
-	TT_ResultExt := TT_ResultExt . TT_Affixes 
+	TT_ResultExt := TT_ResultExt . TT_Affixes ;. "`n "Item.LightningRes " " Item.ColdRes " " Item.TotalRes
 	
 	
 	return True	

@@ -43,7 +43,7 @@
 ^\+(\d+)% to Fire and Cold Resistances	FireRes	ColdRes
 ^\+(\d+)% to Fire and Lightning Resistances	FireRes	LightningRes
 ^\+(\d+)% to Lightning Resistance	LightningRes
-^\+(\d+)% to all Elemental Resistances	ColdRed	FireRes	LightningRes
+^\+(\d+)% to all Elemental Resistances	ColdRes	FireRes	LightningRes
 ^Adds (\d+)–(\d+) Physical Damage to Attacks	FlatPhysDamage	FlatPhysDamage
 ^Adds (\d+)-(\d+) Fire Damage to Attacks with Bows	FlatFire	FlatFire
 ^Adds (\d+)-(\d+) Physical Damage to Attacks with Bows	FlatPhysDamage	FlatPhysDamage

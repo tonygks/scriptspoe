@@ -1242,7 +1242,7 @@ ParseItemData(ItemDataText)
 	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseImplicit)
 	;подсчет ДПС, олрезов и т.д.
-	
+	;msgbox, % Item.FireRes  " " Item.ColdRes " " Item.LightningRes " " Item.AllRes
 	Item.TotalRes := Item.ChaosRes + Item.FireRes + Item.ColdRes + Item.LightningRes + Item.AllRes*3
 	CalcElemDPS()
 	CalcSpellDPS()

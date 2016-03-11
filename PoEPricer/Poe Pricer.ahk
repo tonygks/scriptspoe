@@ -274,6 +274,7 @@ class Item_ {
 	FlatAR := 0
 	FlatES := 0
 	FlatEV := 0
+	LocalES := 0
 	LocalArmour := 0
 	MaxLife := 0
 	FlatPhysDamage := 0
@@ -2133,9 +2134,10 @@ CheckPhysAccuracyRating()
 	}
 	
 	Affix_ComboPhys.Value2FromValue(Item.LocalPhys, AccFromPhys_Hi, AccFromPhys_Lo)
-	
-	If (Item.LocalPhys <= MaxComboPhys) and (Item.LightRadius < 15) and (Item.LightRadius > 0)
+	;msgbox, % Item.LocalPhys MaxComboPhys Item.LightRadius
+	If (Item.LocalPhys <= MaxComboPhys)
 	{
+		
 		If (Item.IsLightRadius <> False)
 		{
 			If (Item.Accuracy > (AccFromPhys_Hi + MaxAccLight))

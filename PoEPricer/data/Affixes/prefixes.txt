@@ -38,3 +38,4 @@
 ^\+(\d+) to maximum Energy Shield	FlatES	IsFlatES
 ^\+(\d+) to maximum Life	MaxLife	IsMaxLife
 ^(\d+)% increased Damage over Time	DOT	IsDOT
+^(\d+)% increased maximum Energy Shield	LocalES

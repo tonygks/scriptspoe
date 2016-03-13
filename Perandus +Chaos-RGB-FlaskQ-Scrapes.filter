@@ -277,7 +277,6 @@ Hide # Maps:69
     Class "Maps"
     BaseType "Arcade" "Cemetery" "Channel" "Mountain Ledge" "Sewer" "Thicket" "Wharf"
     SetFontSize 34
-    PlayAlertSound 4 300
 
 Show # Maps:69
     ItemLevel < 74
@@ -291,7 +290,6 @@ Hide # Maps:70
     Class "Maps"
     BaseType "Ghetto" "Mud Geyser" "Museum" "Quarry" "Reef" "Spider Lair" "Vaal Pyramid"
     SetFontSize 34
-    PlayAlertSound 4 300
 
 Show # Maps:70
     ItemLevel < 74
@@ -305,7 +303,6 @@ Hide # Maps:71
     Class "Maps"
     BaseType "Arena" "Overgrown Shrine" "Promenade" "Shore" "Spider Forest" "Tunnel" "Phantasmagoria"
     SetFontSize 36
-    PlayAlertSound 4 300
 
 Show # Maps:71
     ItemLevel < 74

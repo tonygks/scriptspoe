@@ -247,6 +247,15 @@ Show
 
 # Section: 0200 # UNIQUES AND MAPS
 
+Show
+    Rarity = Unique
+    BaseType "Champion Kite Shield" "Hubris Circlet" "Judgement Staff" "Glorious Plate" "Terror Maul" "Gavel" "Paua Ring" "Siege Axe" "Sapphire Flask" "Occultist's Vestment" "Imperial Bow" "Prophecy Wand"
+    SetTextColor 0 0 255
+    SetBackgroundColor 255 255 255
+    SetBorderColor 0 0 255
+    SetFontSize 45
+    PlayAlertSound 8 250
+
 Show # Uniques: Top tier unique
     Rarity = Unique
     BaseType "Golden Plate" "Lathi" "Varnished Coat" "Granite Flask" "Imperial Skean" "Nubuck Boots" "Serpentine Staff" "Vile Staff" "Terror Maul" "Full Wyrmscale" "Gold Ring" "Gavel" "Penetrating" "Deerskin Gloves" "Sinner Tricorne" "Nightmare Bascinet" "Ursine Pelt" "Champion Kite Shield" "Archon Kite Shield" "Opal Wand" "Slaughter Knife" "Large Hybrid Flask" "Sapphire Flask" "Paua Ring" "Reinforced Greaves" "Vaal Gauntlets" "Desert Brigandine" "Occultist" "Glorious" "Titanium" "Imperial Bow" "Hubris" "Judgement Staff" "Siege Axe" "Spine Bow" "Prophecy Wand" "Zodiac Leather" "Necromancer Silks" "Conjurer Boots" "Steelscale Gauntlets" "Vaal Axe" "Fiend Dagger" "Karui Sceptre" "Sacrificial Garb"
@@ -443,7 +452,7 @@ Show
     PlayAlertSound 4 300
 
 Show
-    BaseType "Orb of Chance" "Orb of Alteration" "Chromatic Orb" "Jeweller's Orb"
+    BaseType "Orb of Chance" "Chromatic Orb" "Jeweller's Orb"
     SetTextColor 190 178 135
     SetFontSize 34
 
@@ -466,9 +475,10 @@ Show
     PlayAlertSound 3 300
 
 Show
-    BaseType "Orb of Transmutation"
+    BaseType "Orb of Transmutation" "Orb of Alteration"
     SetTextColor 30 181 37
-    SetFontSize 44
+    SetBorderColor 0 128 0
+    SetFontSize 37
 
 Hide
     BaseType "Scroll Fragment"

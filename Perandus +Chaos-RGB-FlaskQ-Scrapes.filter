@@ -383,7 +383,7 @@ Show # Maps:78
 Show # Maps:79
     Class "Maps"
     BaseType "Arsenal" "Overgrown Ruin" "Shipyard" "Village Ruin"
-    SetTextColor 255 255 0
+    SetTextColor 255 0 0
     SetFontSize 42
     PlayAlertSound 4 300
 

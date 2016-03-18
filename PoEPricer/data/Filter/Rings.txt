@@ -1,7 +1,7 @@
 ;Boots minvalue maxvalue craftvalue prefixes/suffixes weight target						
 ;						
 !ClassType	Ring
-!Score	350
+!Score	300
 !ScoreHits4	300
 !ScoreHits5	250
 Crit	12	16	16	Suffixes	1	12

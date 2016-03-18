@@ -909,7 +909,6 @@ Class AffixBracket_ {
 	
 	MaxValueFromiLevel(iLevel)
 	{
-		
 		For i, element in this.iLevel
 		{
 			If (iLevel < this.iLevel[i])
@@ -1363,11 +1362,12 @@ ParseClassType(BaseType, ItemStatLine)
 	belts := " (Belt|Sash)"
 	boots := " (Boots|Greaves|Shoes|Slippers)"
 	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Tricorne|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask)"
-	gloves := " (Gauntlets|Gloves|Mitts)"f
+	gloves := " (Gauntlets|Gloves|Mitts)"
 	shields := " (Shield|Bundle|Buckler)"
-	sceptres := " (Sekhem|Sceptre|Fetish)"
+	sceptres := " (Sekhem|Sceptre|Fetish)"	;msgbox, %ItemStatLine%
 	IfNotInString, ItemStatLine, :
 	{
+		
 		If (RegExMatch(ItemStatLine, weapons_1h, var))	
 		{
 			BaseWeapons.SetItem(BaseType, DamLo, DamHi, CC, APS)
@@ -1396,6 +1396,7 @@ ParseClassType(BaseType, ItemStatLine)
 			msgbox, Unknown Weapon Type |%ItemStatLine%|
 		}
 	}
+	
 	IfInString, ItemStatLine, Map Tier:
 	{
 		Item.IsMap := True
@@ -1563,7 +1564,7 @@ ParseImplicit(ImplicitData)
 			{
 				Item.AddValueImplicit(t_field2,t_value1,t_field3,t_value2,t_field4,t_value3,t_field5,t_value4)
 				Item.Implicit := ImplicitData
-				TT_Affixes := TT_Affixes . "`nI   " . ImplicitData
+				TT_Affixes := TT_Affixes . "`nI   " . I	mplicitData
 				ImplicitData :=
 			}
 		}	

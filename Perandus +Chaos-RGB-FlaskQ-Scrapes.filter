@@ -279,7 +279,10 @@ Show # Maps:68
     ItemLevel < 74
     Class "Maps"
     BaseType "Crypt" "Desert" "Dunes" "Dungeon" "Grotto" "Pit Map" "Tropical Island"
-    SetFontSize 32
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
+    SetFontSize 34
+    PlayAlertSound 4 78
 
 Hide # Maps:69
     ItemLevel >= 74
@@ -291,8 +294,10 @@ Show # Maps:69
     ItemLevel < 74
     Class "Maps"
     BaseType "Arcade" "Cemetery" "Channel" "Mountain Ledge" "Sewer" "Thicket" "Wharf"
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
     SetFontSize 34
-    PlayAlertSound 4 300
+    PlayAlertSound 4 79
 
 Hide # Maps:70
     ItemLevel >= 74
@@ -304,8 +309,10 @@ Show # Maps:70
     ItemLevel < 74
     Class "Maps"
     BaseType "Ghetto" "Mud Geyser" "Museum" "Quarry" "Reef" "Spider Lair" "Vaal Pyramid"
-    SetFontSize 34
-    PlayAlertSound 4 300
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
+    SetFontSize 36
+    PlayAlertSound 4 79
 
 Hide # Maps:71
     ItemLevel >= 74
@@ -317,75 +324,89 @@ Show # Maps:71
     ItemLevel < 74
     Class "Maps"
     BaseType "Arena" "Overgrown Shrine" "Promenade" "Shore" "Spider Forest" "Tunnel" "Phantasmagoria"
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
     SetFontSize 36
-    PlayAlertSound 4 300
+    PlayAlertSound 4 79
 
 Show # Maps:72
     Class "Maps"
     BaseType "Bog Map" "Coves" "Graveyard" "Pier" "Underground Sea" "Villa Map"
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
     SetFontSize 36
     PlayAlertSound 4 300
 
 Show # Maps:73
     Class "Maps"
     BaseType "Arachnid" "Catacomb" "Colonnade" "Dry Woods" "Strand" "Temple"
+    SetTextColor 255 255 255
+    SetBackgroundColor 0 0 0
     SetFontSize 38
     PlayAlertSound 4 300
 
 Show # Maps:74
     Class "Maps"
     BaseType "Jungle Valley" "Terrace" "Torture Chamber" "Waste Pool" "Canyon" "Abandoned Cavern"
+    SetTextColor 255 255 0
     SetFontSize 38
     PlayAlertSound 4 300
 
 Show # Maps:75
     Class "Maps"
     BaseType "Canyon" "Cells" "Dark Forest" "Dry Peninsula" "Orchard"
+    SetTextColor 255 255 0
     SetFontSize 40
     PlayAlertSound 4 300
 
 Show # Maps:76
     Class "Maps"
     BaseType "Arid Lake" "Gorge" "Residence" "Underground River" "Malformation"
+    SetTextColor 255 255 0
     SetFontSize 40
     PlayAlertSound 4 300
 
 Show # Maps:77
     Class "Maps"
     BaseType "Bazaar" "Necropolis" "Plateau" "Volcano" "Chateau"
+    SetTextColor 255 255 0
     SetFontSize 42
     PlayAlertSound 4 300
 
 Show # Maps:78
     Class "Maps"
     BaseType "Academy" "Crematorium" "Precinct" "Springs"
+    SetTextColor 255 255 0
     SetFontSize 42
     PlayAlertSound 4 300
 
 Show # Maps:79
     Class "Maps"
     BaseType "Arsenal" "Overgrown Ruin" "Shipyard" "Village Ruin"
+    SetTextColor 255 255 0
     SetFontSize 42
     PlayAlertSound 4 300
 
 Show # Maps:80
     Class "Maps"
     BaseType "Courtyard" "Excavation" "Wasteland" "Waterways"
+    SetTextColor 255 0 0
     SetFontSize 42
     PlayAlertSound 4 300
 
 Show # Maps:81
     Class "Maps"
     BaseType "Shrine" "Conservatory" "Palace"
+    SetTextColor 255 0 0
     SetFontSize 44
     PlayAlertSound 4 300
 
 Show # Maps:82
     Class "Maps"
     BaseType "Abyss" "Colosseum" "Core"
-    SetTextColor 0 0 0
+    SetTextColor 255 0 0
     SetBackgroundColor 255 255 255
-    SetBorderColor 0 0 0
+    SetBorderColor 255 0 0
     SetFontSize 45
     PlayAlertSound 4 300
 
@@ -465,14 +486,6 @@ Show
     SetTextColor 255 178 135
     SetBorderColor 255 178 135 135
     SetFontSize 38
-    PlayAlertSound 4 150
-
-Show
-    BaseType "Perandus Coin"
-    SetTextColor 0 0 0
-    SetBackgroundColor 128 128 128
-    SetBorderColor 175 96 37
-    PlayAlertSound 3 300
 
 Show
     BaseType "Orb of Transmutation" "Orb of Alteration"
@@ -549,22 +562,12 @@ Show
     PlayAlertSound 1 300
 
 Show
-    ItemLevel >= 75
-    Rarity = Rare
     Sockets = 6
     SetTextColor 0 0 0
     SetBackgroundColor 92 186 240
     SetBorderColor 0 0 0
     SetFontSize 38
-    PlayAlertSound 2 79
-
-Show
-    Sockets = 6
-    SetTextColor 0 0 0
-    SetBackgroundColor 92 186 240
-    SetBorderColor 0 0 0
-    SetFontSize 38
-    PlayAlertSound 2 79
+    PlayAlertSound 2 250
 
 Show
     Sockets >= 3
@@ -705,7 +708,6 @@ Show
     SetBorderColor 255 0 0
     SetFontSize 38
 
-# 2 chaos jews
 Show
     ItemLevel >= 60
     Rarity = Rare
@@ -714,7 +716,6 @@ Show
     SetBackgroundColor 180 96 0
     SetBorderColor 0 0 0
     SetFontSize 38
-    PlayAlertSound 5 33
 
 #Disabled Block Start
 #Show

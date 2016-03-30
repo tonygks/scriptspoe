@@ -1980,18 +1980,6 @@ CalcArmour()
 		t_TT := t_TT . "[LocalArmour]"
 	}
 	
-	If (Item.IsMaxLife == False) and (t_Prefixes < 3)
-	{
-		t_MultiMaxLife := 64
-		t_Prefixes++
-		If (t_Multi == False) and (Item.Prefixes < 3)
-		{
-			t_CraftMaxLife := t_MultiMaxLife
-			t_TTcraft := "[MaxLife]"
-			t_Multi := True
-		}
-		t_TT := t_TT . "[MaxLife]"
-	}
 	
 	If (Item.IsFlatAR == False)  and (t_Prefixes < 3) and (Item.BaseES > 0)
 	{

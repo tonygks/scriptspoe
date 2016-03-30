@@ -1840,8 +1840,8 @@ CalcElemDPS()
 		t_TT := t_TT . "[IAS]"
 	}
 	
-	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)/2*(Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100)
-	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)/2*(Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100)
+	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage)*(Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100)
+	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage)*(Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100)
 	TT_ElemCraftMods := t_TTcraft
 }
 return

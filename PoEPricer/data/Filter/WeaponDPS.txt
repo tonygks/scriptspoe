@@ -1,10 +1,10 @@
 ;weapon	pdps	elemdps	gems
 One Handed Axe	200	200	
 One Handed Sword	200	200	
-Dagger	200		
-Claw	200		
-Wand	160		
-Sceptre	150		
+Dagger	200	200	
+Claw	200	200	
+Wand	160	150	
+Sceptre	150	150	
 One Handed Mace	220	300	
 Two Handed Axe	350	300	
 Two Handed Mace	370	300	

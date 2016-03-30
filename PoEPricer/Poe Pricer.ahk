@@ -588,6 +588,9 @@ Class Filter_ {
 				continue
 			}
 			
+			If (element == "CraftTotalSpellDamage") and (Item.CraftTotalSpellDamage > Item.TotalSpellDamage)
+				t_CraftFlag := True
+			
 			
 			IsVar := "Is" . element
 			;msgbox, % element " CraftFlag: "t_CraftFlag " AffixType: " Item.Get(this.AffixType[i]) " FlagAffix: " Item.Get(IsVar) " CraftValue: " (this.ValueCraft[i]) " Corrupt: " Item.IsCorrupted 
@@ -633,9 +636,6 @@ Class Filter_ {
 				}
 				
 				
-				
-				If (element == "CraftTotalSpellDamage") and (Item.CraftTotalSpellDamage > Item.SpellDamage)
-					t_CraftFlag := True
 				
 				
 				

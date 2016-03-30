@@ -4,6 +4,7 @@
 !Score	200
 !ScoreHits4	1250
 !ScoreHits5	1200
+CraftTotalSpellDamage	0	180			10	79
 SpellDamage	0	139	44	Prefixes	2.8	1
 CastSpeed	0	25	11	Suffixes	1	1
 LocalElem	0	100	19	Suffixes	2.8	1

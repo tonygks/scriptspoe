@@ -66,43 +66,7 @@ Menu, tray, Tip, Exile Tools Price Check
 
 f_spam := False
 
-;F8 hotkey
-~vk77::
-{
-  IfWinNotExist, Path of Exile ahk_exe PathOfExile.exe
-    return
 
-
-  ;BlockInput On
-  SendMode Input
-  f_spam := !f_spam
-  If (f_spam == False)
-  {
-    return
-  }
-	
-  loop
-  {
-    If (f_spam == False)
-    {
-      return
-    }
-	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
-	ControlSend , ,/trade %A_Index%, ahk_exe PathOfExile.exe
-	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
-	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
-	ControlSend , ,{Up}, ahk_exe PathOfExile.exe
-	ControlSend , ,{Up}, ahk_exe PathOfExile.exe
-	Sleep, 2600
-	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
-	If A_Index = 15
-	Break
-	else
-	Sleep, 100
-  }
-  ;BlockInput Off
-}
-return
 
 
 If (A_AhkVersion <= "1.1.22")
@@ -169,6 +133,45 @@ return
 
 
 ; Price check w/ auto filters
+
+;F8 hotkey
+~vk77::
+{
+  IfWinNotExist, Path of Exile ahk_exe PathOfExile.exe
+    return
+
+
+  ;BlockInput On
+  SendMode Input
+  f_spam := !f_spam
+  If (f_spam == False)
+  {
+    return
+  }
+	
+  loop
+  {
+    If (f_spam == False)
+    {
+      return
+    }
+	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
+	ControlSend , ,/trade %A_Index%, ahk_exe PathOfExile.exe
+	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
+	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
+	ControlSend , ,{Up}, ahk_exe PathOfExile.exe
+	ControlSend , ,{Up}, ahk_exe PathOfExile.exe
+	Sleep, 2600
+	ControlSend , ,{Enter}, ahk_exe PathOfExile.exe
+	If A_Index = 15
+	Break
+	else
+	Sleep, 100
+  }
+  ;BlockInput Off
+}
+return
+
 
 ;F5 hotkey
 ~vk74::

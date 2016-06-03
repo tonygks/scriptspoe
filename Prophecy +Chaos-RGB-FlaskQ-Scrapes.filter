@@ -504,16 +504,6 @@ Show
 # Section: 0500 # SKILL GEMS
 
 Show
-    Quality >= 15
-    Class "Gem"
-    BaseType "Empower" "Enlighten"
-    SetTextColor 30 150 180
-    SetBackgroundColor 255 255 255
-    SetBorderColor 30 150 180
-    SetFontSize 45
-    PlayAlertSound 6 300
-
-Show
     Quality = 20
     Class "Gem"
     SetTextColor 30 150 180
@@ -524,7 +514,7 @@ Show
 
 Show
     Class "Gem"
-    BaseType "Portal" "Empower" "Enlighten" "Enhance" "Vaal Haste"
+    BaseType "Portal" "Vaal Haste" "Enchance Support" "Enlighten Support" "Empower Support"
     SetBorderColor 30 150 180
     SetFontSize 41
     PlayAlertSound 3 300

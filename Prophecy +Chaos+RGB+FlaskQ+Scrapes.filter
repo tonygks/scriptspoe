@@ -427,7 +427,7 @@ Show
 
 Show
     Class "Divination"
-    BaseType "The Spoiled Prince" "Abandoned Wealth" "Chains that Bind" "The Drunken Aristocrat" "The Feast" "The Gladiator" "The Hunger" "The Incantation" "The Pact" "The Road to Power" "The Watcher" "The Betrayal" "The Pack Leader" "The Stormcaller" "The Jester" "The Rigwald's Curse" "Lysah's Respite" "Emperor of Purity"
+    BaseType "The Spoiled Prince" "Abandoned Wealth" "Chains that Bind" "The Drunken Aristocrat" "The Feast" "The Gladiator" "The Hunger" "The Incantation" "The Pact" "The Road to Power" "The Watcher" "The Betrayal" "The Pack Leader" "The Stormcaller" "The Jester" "Lysah's Respite" "Emperor of Purity"
     SetTextColor 0 0 0
     SetBackgroundColor 235 15 200
     SetBorderColor 0 0 0
@@ -514,7 +514,7 @@ Show
 
 Show
     Class "Gem"
-    BaseType "Portal" "Vaal Haste" "Enchance Support" "Enlighten Support" "Empower Support"
+    BaseType "Portal" "Vaal Haste" "Enlighten Support" "Empower Support" "Enhance Support"
     SetBorderColor 30 150 180
     SetFontSize 41
     PlayAlertSound 3 300

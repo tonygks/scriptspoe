@@ -398,6 +398,7 @@ Show
     SetTextColor 0 0 0
     SetBackgroundColor 128 128 128
     SetBorderColor 175 96 37
+    PlayAlertSound 4 38
 
 Show
     BaseType "Eber's Key" "Yriel's Key" "Inya's Key" "Volkuur's Key" "Offering to the Goddess"
@@ -427,7 +428,7 @@ Show
 
 Show
     Class "Divination"
-    BaseType "The Spoiled Prince" "Abandoned Wealth" "Chains that Bind" "The Drunken Aristocrat" "The Feast" "The Gladiator" "The Hunger" "The Incantation" "The Pact" "The Road to Power" "The Watcher" "The Betrayal" "The Pack Leader" "The Stormcaller" "The Jester" "The Rigwald's Curse" "Lysah's Respite" "Emperor of Purity"
+    BaseType "The Spoiled Prince" "Abandoned Wealth" "Chains that Bind" "The Drunken Aristocrat" "The Feast" "The Gladiator" "The Hunger" "The Incantation" "The Pact" "The Road to Power" "The Watcher" "The Betrayal" "The Pack Leader" "The Stormcaller" "The Jester" "Lysah's Respite" "Emperor of Purity"
     SetTextColor 0 0 0
     SetBackgroundColor 235 15 200
     SetBorderColor 0 0 0

@@ -398,6 +398,7 @@ Show
     SetTextColor 0 0 0
     SetBackgroundColor 128 128 128
     SetBorderColor 175 96 37
+    PlayAlertSound 4 35
 
 Show
     BaseType "Eber's Key" "Yriel's Key" "Inya's Key" "Volkuur's Key" "Offering to the Goddess"

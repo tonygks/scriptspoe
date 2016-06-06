@@ -95,15 +95,15 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 ;control hotkey
-~vkA2::
+~vk5B::
 {
 	clip_saved := Clipboard
 	clip_parsed := Clipboard
 	DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	MouseGetPos, X, Y
-	
-	While (GetKeyState("LControl", "P") == 1)
+	Send, {Control Down}
+	While (GetKeyState("LWin", "P") == 1)
 	{
 		IfWinNotActive,  ahk_exe PathOfExile.exe
 		{
@@ -153,7 +153,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			sleep, 1
 		}
 	}
-	
+	Send, {Control Up}
 	ScanEnd:
 	ToolTipEx()
 	Clipboard := clip_saved
@@ -164,7 +164,11 @@ return
 Reload
 return
 
-#F10::
+F10::
+IfWinNotActive,  ahk_exe PathOfExile.exe
+{
+	return
+}
 f_ShowScore := !f_ShowScore
 IniWrite, %f_ShowScore%, PoePricer.ini, Flags, opt_ShowScore
 MouseGetPos, CurrX, CurrY

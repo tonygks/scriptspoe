@@ -455,6 +455,14 @@ Show
 
 Show
     Class "Currency"
+    BaseType "Silver Coin" "Prophecy"
+    SetTextColor 255 178 135
+    SetBorderColor 255 178 135 135
+    SetFontSize 38
+    PlayAlertSound 4 70
+
+Show
+    Class "Currency"
 
 Show
     Class "Stackable" "Currency"
@@ -798,13 +806,6 @@ Show # Endgame: Show normal ilvl 60+ rings/amulets
     SetTextColor 255 255 255
     SetBorderColor 210 0 0
     SetFontSize 32
-
-Show
-    BaseType "Silver Coin" "Prophecy"
-    SetTextColor 255 178 135
-    SetBorderColor 255 178 135 135
-    SetFontSize 38
-    PlayAlertSound 4 70
 
 #Disabled Block Start
 #Show

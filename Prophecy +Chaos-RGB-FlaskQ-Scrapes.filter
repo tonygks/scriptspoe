@@ -394,13 +394,6 @@ Show
     BaseType "Portal Scroll"
 
 Show
-    BaseType "Silver Coin" "Prophecy"
-    SetTextColor 0 0 0
-    SetBackgroundColor 128 128 128
-    SetBorderColor 175 96 37
-    PlayAlertSound 4 38
-
-Show
     BaseType "Eber's Key" "Yriel's Key" "Inya's Key" "Volkuur's Key" "Offering to the Goddess"
     SetTextColor 49 21 43
     SetBackgroundColor 204 68 82
@@ -805,6 +798,13 @@ Show # Endgame: Show normal ilvl 60+ rings/amulets
     SetTextColor 255 255 255
     SetBorderColor 210 0 0
     SetFontSize 32
+
+Show
+    BaseType "Silver Coin" "Prophecy"
+    SetTextColor 255 178 135
+    SetBorderColor 255 178 135 135
+    SetFontSize 38
+    PlayAlertSound 4 70
 
 #Disabled Block Start
 #Show

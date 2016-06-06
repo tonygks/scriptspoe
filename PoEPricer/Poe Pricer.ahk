@@ -1981,7 +1981,7 @@ CalcArmour()
 	}
 	
 	
-	If (Item.IsFlatAR == False)  and (t_Prefixes < 3) and (Item.BaseES > 0)
+	If (Item.IsFlatES == False)  and (t_Prefixes < 3) and (Item.BaseES > 0)
 	{
 		
 		t_MultiFlatES := 22

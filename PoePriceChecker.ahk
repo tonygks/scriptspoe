@@ -89,7 +89,7 @@ If (A_AhkVersion <= "1.1.22")
 ; or are removed
 
 ;global LeagueName := "warbands"
-global LeagueName := "Perandus"
+global LeagueName := "Prophecy"
 ;global LeagueName := "tempest"
 ;global LeagueName := "standard"
 ;global LeagueName := "hardcore"

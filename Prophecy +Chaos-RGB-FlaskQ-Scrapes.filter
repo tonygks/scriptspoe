@@ -516,7 +516,7 @@ Show
 
 Show
     Class "Gem"
-    BaseType "Portal" "Vaal Haste" "Enchance Support" "Enlighten Support" "Empower Support"
+    BaseType "Portal" "Vaal Haste" "Enlighten Support" "Empower Support" "Enhance Support"
     SetBorderColor 30 150 180
     SetFontSize 41
     PlayAlertSound 3 300

@@ -640,10 +640,6 @@ Class Filter_ {
 				}
 				
 				
-				
-				
-				
-				
 				If (Value > 20)
 					Value := Round(Value)
 				t_Score := this.Weight[i]*((t_value - this.ValueLo[i])/(this.ValueHi[i] - this.ValueLo[i]))*100
@@ -1250,6 +1246,7 @@ ParseItemData(ItemDataText)
 	;подсчет ДПС, олрезов и т.д.
 	;msgbox, % Item.FireRes  " " Item.ColdRes " " Item.LightningRes " " Item.AllRes
 	Item.TotalRes := Item.ChaosRes + Item.FireRes + Item.ColdRes + Item.LightningRes + Item.AllRes*3
+	CalcTotalLife()
 	CalcElemDPS()
 	CalcSpellDPS()
 	CalcArmour()
@@ -2050,6 +2047,10 @@ CalcArmour()
 	TT_ArmourCraftMods := t_TTcraft
 }
 
+CalcTotalLife()
+{
+	Item.MaxLife := Item.MaxLife + Item.Str/2	
+}
 
 CheckPhysAccuracyRating()
 {

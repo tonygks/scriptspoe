@@ -401,7 +401,7 @@ Show
     SetFontSize 40
 
 Show
-    BaseType "Scroll of Wisdom"
+    BaseType "Orb of Transmutation"
     SetTextColor 30 181 37
     SetFontSize 37
 

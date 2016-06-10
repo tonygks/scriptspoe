@@ -394,7 +394,7 @@ Show
     BaseType "Portal Scroll"
 
 Show
-    BaseType "Eber's Key" "Yriel's Key" "Inya's Key" "Volkuur's Key" "Offering to the Goddess"
+    BaseType "Eber's Key" "Yriel's Key" "Inya's Key" "Volkuur's Key" "Offering to the Goddess" "Treasure Key"
     SetTextColor 49 21 43
     SetBackgroundColor 204 68 82
     SetBorderColor 49 21 43

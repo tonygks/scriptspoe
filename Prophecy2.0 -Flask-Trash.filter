@@ -343,7 +343,6 @@ Hide # Maps:72
     SetTextColor 255 255 255
     SetBackgroundColor 0 0 0
     SetFontSize 36
-    PlayAlertSound 4 300
 
 Show # Maps:72
     ItemLevel < 74
@@ -361,7 +360,6 @@ Hide # Maps:73
     SetTextColor 255 255 255
     SetBackgroundColor 0 0 0
     SetFontSize 38
-    PlayAlertSound 4 300
 
 Show # Maps:73
     ItemLevel < 74

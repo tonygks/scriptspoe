@@ -1,14 +1,4 @@
 
-;
-; AutoHotkey Version: 1.x
-; Language:       English
-; Platform:       Win9x/NT
-; Author:         A.N.Other <myemail@nowhere.com>
-;
-; Script Function:
-;	Template script (you can customize this template by editing "ShellNew\Template.ahk" in your Windows folder)
-;
-
 ;#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -19,9 +9,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;#MaxThreads 2
 
 
-#IfWinActive,  ahk_exe PathOfExile.exe
-
-
+#IfWinActive,  ahk_exe PathOfExile_x64.exe
 
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
@@ -94,7 +82,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 
-;control hotkey
+;Win key
 ~vk5B::
 {
 	clip_saved := Clipboard
@@ -105,7 +93,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 	Send, {Control Down}
 	While (GetKeyState("LWin", "P") == 1)
 	{
-		IfWinNotActive,  ahk_exe PathOfExile.exe
+		IfWinNotActive,  ahk_exe PathOfExile_x64.exe
 		{
 			goto, ScanEnd
 		}
@@ -153,8 +141,9 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 			sleep, 1
 		}
 	}
-	Send, {Control Up}
+	
 	ScanEnd:
+	Send, {Control Up}
 	ToolTipEx()
 	Clipboard := clip_saved
 }
@@ -165,7 +154,7 @@ Reload
 return
 
 F10::
-IfWinNotActive,  ahk_exe PathOfExile.exe
+IfWinNotActive,  ahk_exe PathOfExile_x64.exe
 {
 	return
 }
@@ -1840,7 +1829,7 @@ CalcElemDPS()
 		t_Suffixes++
 		t_TT := t_TT . "[IAS]"
 	}
-
+	
 	Item.CraftElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_CraftFlatElemDamage/2)*(Item.BaseAPS * (100 + Item.IAS + t_CraftIAS)/100)
 	Item.MultiElemDPS := (Item.FlatFire + Item.FlatCold + Item.FlatLightning + t_MultiFlatElemDamage/2)*(Item.BaseAPS * (100 + Item.IAS + t_MultiIAS)/100)
 	TT_ElemCraftMods := t_TTcraft

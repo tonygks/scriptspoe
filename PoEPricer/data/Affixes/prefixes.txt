@@ -12,18 +12,18 @@
 ^(\d+)% increased Spell Damage	SpellDamage	IsSpellDamage
 ^(.+)% of Physical Attack Damage Leeched as Life	LifeLeech	IsLifeLeech
 ^(.+)% of Physical Attack Damage Leeched as Mana	ManaLeech	IsManaLeech
-^Adds (\d+)-(\d+) Chaos Damage	FlatChaos	FlatChaos	IsFlatChaos
-^Adds (\d+)-(\d+) Cold Damage to Spells	FlatSpellCold	FlatSpellCold	IsFlatSpellCold
-^Adds (\d+)-(\d+) Cold Damage to Attacks	FlatCold	FlatCold	IsFlatCold
-^Adds (\d+)-(\d+) Cold Damage	FlatCold	FlatCold	IsFlatCold
-^Adds (\d+)-(\d+) Fire Damage to Spells	FlatSpellFire	FlatSpellFire	IsFlatSpellFire
-^Adds (\d+)-(\d+) Fire Damage to Attacks	FlatFire	FlatFire	IsFlatFire
-^Adds (\d+)-(\d+) Fire Damage	FlatFire	FlatFire	IsFlatFire
-^Adds (\d+)-(\d+) Lightning Damage to Spells	FlatSpellLightning	FlatSpellLightning	IsFlatSpellLightning
-^Adds (\d+)-(\d+) Lightning Damage to Attacks	FlatLightning	FlatLightning	IsFlatLightning
-^Adds (\d+)-(\d+) Lightning Damage	FlatLightning	FlatLightning	IsFlatLightning
-^Adds (\d+)-(\d+) Physical Damage to Attacks	FlatPhysDamage	FlatPhysDamage	IsFlatPhysDamage
-^Adds (\d+)-(\d+) Physical Damage	FlatPhysDamage	FlatPhysDamage	IsFlatPhysDamage
+^Adds (\d+) to (\d+) Chaos Damage	FlatChaos	FlatChaos	IsFlatChaos
+^Adds (\d+) to (\d+) Cold Damage to Spells	FlatSpellCold	FlatSpellCold	IsFlatSpellCold
+^Adds (\d+) to (\d+) Cold Damage to Attacks	FlatCold	FlatCold	IsFlatCold
+^Adds (\d+) to (\d+) Cold Damage	FlatCold	FlatCold	IsFlatCold
+^Adds (\d+) to (\d+) Fire Damage to Spells	FlatSpellFire	FlatSpellFire	IsFlatSpellFire
+^Adds (\d+) to (\d+) Fire Damage to Attacks	FlatFire	FlatFire	IsFlatFire
+^Adds (\d+) to (\d+) Fire Damage	FlatFire	FlatFire	IsFlatFire
+^Adds (\d+) to (\d+) Lightning Damage to Spells	FlatSpellLightning	FlatSpellLightning	IsFlatSpellLightning
+^Adds (\d+) to (\d+) Lightning Damage to Attacks	FlatLightning	FlatLightning	IsFlatLightning
+^Adds (\d+) to (\d+) Lightning Damage	FlatLightning	FlatLightning	IsFlatLightning
+^Adds (\d+) to (\d+) Physical Damage to Attacks	FlatPhysDamage	FlatPhysDamage	IsFlatPhysDamage
+^Adds (\d+) to (\d+) Physical Damage	FlatPhysDamage	FlatPhysDamage	IsFlatPhysDamage
 ^Reflects (\d+) Physical Damage to Melee Attackers
 ^\+(\d+) to Armour	FlatAR	IsFlatAR
 ^\+(\d+) to Evasion	FlatEV	IsFlatEV

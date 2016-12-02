@@ -1,4 +1,4 @@
-
+﻿
 ;#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -37,14 +37,14 @@ IniRead, path_FilterFolder, PoePricer.ini, Path, opt_FilterFolder, "Filter"
 ;f_ShowScore := True
 
 
-; считывание префиксов/суффиксов/имплисит в регексп виде
+; СЃС‡РёС‚С‹РІР°РЅРёРµ РїСЂРµС„РёРєСЃРѕРІ/СЃСѓС„С„РёРєСЃРѕРІ/РёРјРїР»РёСЃРёС‚ РІ СЂРµРіРµРєСЃРї РІРёРґРµ
 FileRead, prefixes, %A_ScriptDir%\Data\Affixes\prefixes.txt
 FileRead, suffixes, %A_ScriptDir%\Data\Affixes\suffixes.txt
 FileRead, implicit, %A_ScriptDir%\Data\Affixes\implicit.txt
 FileRead, affixes, %A_ScriptDir%\Data\Affixes\affixes.txt
 
 SetFormat, Float, 0.2
-;считывание прототипов доспеxов
+;СЃС‡РёС‚С‹РІР°РЅРёРµ РїСЂРѕС‚РѕС‚РёРїРѕРІ РґРѕСЃРїРµxРѕРІ
 
 Global BaseHelmets:= new BaseArmours_("Helmets")
 Global BaseBodyArmours := new BaseArmours_("BodyArmour")
@@ -53,7 +53,7 @@ Global BaseBoots := new BaseArmours_("Boots")
 Global BaseGloves := new BaseArmours_("Gloves")
 Global BaseSpiritShields := new BaseArmours_("SpiritShields")
 
-;массивы с таблицей тиров для аффиксов
+;РјР°СЃСЃРёРІС‹ СЃ С‚Р°Р±Р»РёС†РµР№ С‚РёСЂРѕРІ РґР»СЏ Р°С„С„РёРєСЃРѕРІ
 Global Affix_ComboPhys := new ComboAffixBracket_("ComboLocalPhysAcc")
 Global Affix_Acc := new AffixBracket_("AccuracyRating")
 Global Affix_Phys := new AffixBracket_("LocalPhys")
@@ -81,17 +81,18 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 
-
-;Win key
-~vk5B::
+;ctr = vk11
+~vk11::
+;Win key vk5B
+;~vk5B::
 {
 	clip_saved := Clipboard
 	clip_parsed := Clipboard
 	DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	MouseGetPos, X, Y
-	Send, {Control Down}
-	While (GetKeyState("LWin", "P") == 1)
+	;Send, {Control Down}
+	While (GetKeyState("LControl", "P") == 1)
 	{
 		IfWinNotActive,  ahk_exe PathOfExile_x64.exe
 		{
@@ -143,7 +144,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 	}
 	
 	ScanEnd:
-	Send, {Control Up}
+	;Send, {Control Up}
 	ToolTipEx()
 	Clipboard := clip_saved
 }
@@ -953,7 +954,7 @@ class BaseWeapons_ {
 	
 	SetItem(BaseType, ByRef DamageLo, ByRef DamageHi, ByRef CC, ByRef APS)
 	{
-		StringReplace, BaseType, BaseType, "ö", "o"
+		StringReplace, BaseType, BaseType, "Г¶", "o"
 		
 		
 		
@@ -1137,7 +1138,7 @@ ParseItemData(ItemDataText)
 	ItemStatLine := ItemDataStat1
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterStringSplit)
 	;DllCall("QueryPerformanceFrequency", "Int64*", Frequency1)
-	;перебор прототипов для определения типа предмета
+	;РїРµСЂРµР±РѕСЂ РїСЂРѕС‚РѕС‚РёРїРѕРІ РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С‚РёРїР° РїСЂРµРґРјРµС‚Р°
 	
 	ParseClassType(Item.BaseType, ItemStatLine)
 	
@@ -1197,7 +1198,7 @@ ParseItemData(ItemDataText)
 	Item.iLevel := TempResult1
 	
 	;msgbox, % ItemDataText  TempResult1
-	; парсинг блока с аффиксами и заполнение xарактеристик предмета
+	; РїР°СЂСЃРёРЅРі Р±Р»РѕРєР° СЃ Р°С„С„РёРєСЃР°РјРё Рё Р·Р°РїРѕР»РЅРµРЅРёРµ xР°СЂР°РєС‚РµСЂРёСЃС‚РёРє РїСЂРµРґРјРµС‚Р°
 	ParseAffixes(ItemDataAffixes)
 	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseAffix)
@@ -1207,7 +1208,7 @@ ParseItemData(ItemDataText)
 	CheckItemRarity()
 	
 	
-	; парсинг имплисит блока, обязательно после просчета веса аффиксов (комбоаффиксы и дубли) IR Accuracy\PhysDamage AR\StunRecovery ...
+	; РїР°СЂСЃРёРЅРі РёРјРїР»РёСЃРёС‚ Р±Р»РѕРєР°, РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РїРѕСЃР»Рµ РїСЂРѕСЃС‡РµС‚Р° РІРµСЃР° Р°С„С„РёРєСЃРѕРІ (РєРѕРјР±РѕР°С„С„РёРєСЃС‹ Рё РґСѓР±Р»Рё) IR Accuracy\PhysDamage AR\StunRecovery ...
 	ParseImplicit(ItemDataImplicit)
 	
 	
@@ -1232,7 +1233,7 @@ ParseItemData(ItemDataText)
 	
 	
 	;DllCall("QueryPerformanceCounter", "Int64*", CounterParseImplicit)
-	;подсчет ДПС, олрезов и т.д.
+	;РїРѕРґСЃС‡РµС‚ Р”РџРЎ, РѕР»СЂРµР·РѕРІ Рё С‚.Рґ.
 	;msgbox, % Item.FireRes  " " Item.ColdRes " " Item.LightningRes " " Item.AllRes
 	Item.TotalRes := Item.ChaosRes + Item.FireRes + Item.ColdRes + Item.LightningRes + Item.AllRes*3
 	CalcTotalLife()
@@ -1243,7 +1244,7 @@ ParseItemData(ItemDataText)
 	
 	
 	
-	;подсчет очков 
+	;РїРѕРґСЃС‡РµС‚ РѕС‡РєРѕРІ 
 	Filter_Boots.Scoring()
 	Filter_Gloves.Scoring()
 	Filter_Helmets.Scoring()
@@ -2473,15 +2474,9 @@ CheckItemRarity()
 	}
 	
 	
-	
-	
-	
-	
 }
-return
-
-
-
+	
+	
 GetItemRarityPrefix(iLevel)
 {
 	If (iLevel >= 84 and (Item.ClassType == "Amulet" or Item.ClassType == "Ring"))
@@ -2510,5 +2505,4 @@ return
 
 
 
-
-
+	

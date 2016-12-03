@@ -290,56 +290,48 @@ Hide
     DropLevel < 75
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 79
     DropLevel < 74
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 78
     DropLevel < 73
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 77
     DropLevel < 72
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 76
     DropLevel < 71
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 75
     DropLevel < 71
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 74
     DropLevel < 70
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Hide
     ItemLevel >= 73
     DropLevel < 69
     Class "Maps"
     SetFontSize 37
-    PlayAlertSound 4 300
 
 Show # Maps:82
     DropLevel >= 83

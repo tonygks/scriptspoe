@@ -261,6 +261,15 @@ Show # T1 - These uniques are have a consistent price of ~0.5++ ex
     PlayAlertSound 6 300
 
 Show # T2 - These uniques usually are worth ~0.5 - 1 ex at the start of the league and drop to ~5c++ (sometimes ranging to an ex and up) over 1 - 2 month.
+    BaseType "Thorium Spirit Shield" "Imperial Claw" "Cutlass" "Plate Vest" "Ezomyte Tower Shield" "Siege Helmet" "Jade Amulet" "Coronal Leather" "Spiraled Wand" "Labrys" "Amber Amulet" "Bone Bow"
+    Rarity = Unique
+    SetTextColor 0 0 0
+    SetBackgroundColor 233 255 110 220
+    SetBorderColor 0 0 0
+    SetFontSize 45
+    PlayAlertSound 6 300
+
+Show # T2 - These uniques usually are worth ~0.5 - 1 ex at the start of the league and drop to ~5c++ (sometimes ranging to an ex and up) over 1 - 2 month.
     BaseType "Judgement Staff" "Golden Plate" "Nubuck Boots" "Terror Maul" "Full Wyrmscale" "Gavel" "Archon Kite Shield" "Reinforced Greaves" "Imperial Bow" "Conjurer Boots" "Steelscale Gauntlets" "Nightmare Bascinet" "Sharkskin Boots" "Granite Flask" "Imperial Staff" "Deerskin Gloves" "Karui Sceptre" "Paua Ring" "Vaal Axe" "Spine Bow" "Slaughter Knife" "Sinner Tricorne" "Hubris" "Strapped Mitts" "Eternal Sword" "Onyx Amulet" "Penetrating Arrow Quiver" "Broadhead Arrow Quiver" "Fiend Dagger" "Exquisite Leather" "Stibnite Flask" "Desert Brigandine"
     Rarity = Unique
     SetTextColor 0 0 0

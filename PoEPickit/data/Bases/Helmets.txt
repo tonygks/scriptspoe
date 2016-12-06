@@ -72,3 +72,4 @@ Regicide Mask		122	36
 Harlequin Mask		137	40
 Vaal Mask		180	47
 Deicide Mask		166	59
+Bone Helmet	76		76

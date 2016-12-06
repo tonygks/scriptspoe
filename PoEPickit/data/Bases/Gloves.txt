@@ -49,3 +49,6 @@ Ambush Mitts		71	21
 Carnal Mitts		78	23
 Assassin's Mitts		91	27
 Murder Mitts		105	31
+Spiked Gloves	95
+Gripped Gloves		95
+Fingering Silk Gloves		95

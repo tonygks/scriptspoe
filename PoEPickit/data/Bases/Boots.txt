@@ -50,3 +50,4 @@ Ambush Boots		74	22
 Carnal Boots		86	25
 Assassin's Boots		105	31
 Murder Boots		161	22
+Two-Toned Boots	62	62	62

@@ -500,7 +500,7 @@ Show
     PlayAlertSound 6 300
 
 Show
-    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb"
+    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb" "Stacked Deck"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 255 0 0
@@ -901,15 +901,23 @@ Show # Endgame: Show normal ilvl 60+ rings/amulets
     SetBorderColor 210 0 0
     SetFontSize 32
 
+#Disabled Block Start
+#Show
+#    BaseType "Ambusher" "Platinum Kris"
+#    ItemLevel >= 83
+#    SetBorderColor 255 255 0
+#    SetFontSize 38
+#Disabled Block End
+
 Show
-    BaseType "Coronal Maul" "Harbinger Bow" "Gemini Claw" "Ambusher" "Platinum Kris" "Imbued Wand" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
+    BaseType "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Steel Ring" "Opal Ring" "Crystal Belt"
     ItemLevel >= 83
-    SetBorderColor 255 255 0
-    SetFontSize 38
+    SetBorderColor 128 0 128
+    SetFontSize 45
+    PlayAlertSound 7 150
 
 Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
-    BaseType "Steel Ring" "Two-Stone Ring" "Diamond Ring" "Opal Ring" "Gold Ring" "Crystal Belt" "Agate Amulet" "Citrine Amulet" "Turquoise Amulet" "Lapis Amulet"
-    Rarity = Normal
+    BaseType "Two-Stone Ring" "Diamond Ring" "Gold Ring" "Agate Amulet" "Citrine Amulet" "Turquoise Amulet" "Lapis Amulet"
     ItemLevel >= 83
     SetTextColor 255 255 255
     SetBorderColor 255 255 0

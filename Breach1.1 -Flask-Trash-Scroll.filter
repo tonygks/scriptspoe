@@ -911,7 +911,7 @@ Show # Endgame: Show normal ilvl 60+ rings/amulets
 
 Show
     BaseType "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Steel Ring" "Opal Ring" "Crystal Belt"
-    ItemLevel >= 83
+    ItemLevel > 84
     SetBorderColor 128 0 128
     SetFontSize 45
     PlayAlertSound 7 150

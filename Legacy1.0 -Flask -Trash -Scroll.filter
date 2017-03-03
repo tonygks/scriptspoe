@@ -562,6 +562,12 @@ Show
     SetFontSize 38
 
 Show
+    Class "Leaguestone"
+    SetTextColor 255 178 135
+    SetBorderColor 255 178 135 135
+    SetFontSize 38
+
+Show
     BaseType "Orb of Transmutation" "Orb of Alteration"
     SetTextColor 30 181 37
     SetBorderColor 0 128 0

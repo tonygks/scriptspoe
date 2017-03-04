@@ -1,0 +1,360 @@
+The following is a list of what has been updated, starting with 1.9.3.
+Current Script Caretaker: aRTy42
+
+2.5.06
+================================
+from Eruyome, 4GForce, aRTy42
+
+New features: Auto-updater and global user settings. (by Eruyome)
+	The update notification window now comes with a button "update". This feature allows the script to download the new files
+		from GitHub and extract them to a folder of your choosing. In the right click menu "PoE Item Info Settings" you can tick
+		options to skip the folder selection (and thus always using the default generic folder "POE-ItemInfo") aswell as
+		not creating and asking about a backup folder (which occurs when overwriting an existing folder with the update).
+		If you are not interested in keeping old versions and basically want the update with ask few clicks as possible,
+		you probably want to tick both options.
+	Global user settings means that the script no longer stores its config files and the AdditionalMacros file in the script folder
+		itself, but instead creates and uses files at "<MyDocuments>\PoE-ItemInfo\". This means that the script will no longer
+		overwrite your settings and AdditionalMacro file with the defaults with every update. By using file hashes the updater will
+		detect when an update introduced changes to the defaults and only then update the user files. In that case your former
+		user files will also be backed up in that case so you can easily copy modifications into the new file again if you want to.
+
+Made several fixes and changes to pseudo-mods. (by 4GForce and Eruyome)
+Added a new default command to the AdditionalMacros: Winkey+D will now minimize PoE to the taskbar. Contrary to tabbing out or similar
+	commands this will make PoE stay minimized while using other windows, instead of having it pop-up again behind them.
+Fixed the tiers for the flat ES mod for shields. The legacy tier "136-145" was still being used as T1, which is now fixed so
+	that "107-135" is considered T1.
+Made some adjustments to the handling of Implicits. (by Eruyome)
+	
+2.5.05
+================================
+from aRTy42, Eruyome, 4GForce
+
+Fixed an issue with the file encoding of the config file and adjusted the handling of it. If you had weird characters instead
+	of the three dots for abbreviating mods, try this release.
+
+2.5.04
+================================
+from Eruyome, aRTy42, 4GForce
+
+UPDATE YOUR AUTOHOTKEY INSTALLATION
+(unless you updated in the last 2-3 months already)
+http://ahkscript.org/
+
+New feature: Currency ratios fetched from http://poe.ninja/. Using the script on currency other than chaos calculates the
+	conversion of the whole stack into chaos and displays the ratio. All four leagues are displayed.
+	This feature is enabled by default. The data gets refreshed when starting or reloading the script or
+	when using the function while the data is older than 3 hours. (by Eruyome; special thanks also
+	to poe.ninja dev rasmuskl for the API and assistance)
+Added two functions to the AdditionalMacros: "setAfkMessage" and "CloseScripts" (by Eruyome).
+Added missing gem quality infos (Blade Flurry, Blight, Scorching Ray, Vaal Breach).
+Unknown mods and special essence mods now display that they are unknown or from essences instead of leaving a blank line. (by 4GForce)
+Fixed a bug that sometimes caused pseudo mods from an earlier item to show up if the current item had none. (thanks to 4GForce)
+Fixed a bug with data fetching for uniques. The last release was missing data for a few body armours and many jewels.
+Fixed several errors in the data for maps about vendoring and atlas connections.
+Updated Maps, Divination Cards and Uniques with the current wiki info.
+
+2.5.03
+================================
+from aRTy42, Eruyome
+Included an update notifier for the script (by Eruyome).
+Updated Maps, Divination Cards and Uniques with the current wiki info.
+Included the name change of "Armory Map" to "Armoury Map" (again), because it got partially reverted with v2.5.02.
+
+2.5.02
+================================
+from aRTy42
+Fixed a bug with added elemental damage for bows that got introduced in 2.5.01.
+Moved the pause function key binding to the "AdditionalMacros" file so that people can change the key more easily.
+
+2.5.01
+================================
+from aRTy42
+Updated maps and divination cards with wiki info.
+Added gem quality info to cast while channeling.
+Fixed a bug that sometimes caused item types of rares to be mismatched if their randomly assigned name contained a keyword
+	for that item type.
+Corrected the data for the unique "Prismatic Eclipse" that was missing two mods in the last release.
+
+2.5.00
+================================
+from aRTy42, Eruyome
+Updated Uniques for PoE v2.5.
+Uniques now only show those values on the right side that actually have a range to roll. This should simplify comparing your rolls.
+The method of pulling the unique data was changed, so a few errors might have slipped in. Please report any errors you find.
+Items now show pseudo mods below the affix details (by Eruyome). Update autohotkey if you get an error about a nonexisting function StrReplace (in that case your AHK installation is more than 1.5 years old).
+Included the name change of the "Armory Map" to "Armoury Map".
+Fixed a bug that caused item flavour text or usage hints to appear at the bottom line in some cases.
+
+2.4.05
+================================
+from aRTy42, Eruyome, Arkaf
+Changed Direct3DWindowClass to POEWindowClass and the relevant .exe names, so that the script works again.
+	It should support both standalone and steam version and both 32 and 64 bit.
+Currency stacks of 1000+ in the currency tab should now read correctly for the currency conversion function.
+	(thanks to Arkaf and iulianov who commented on this)
+
+2.4.04
+================================
+from aRTy42
+Minor fix for map matching (Ivory Temple Map and Vaal Temple Map were detected as Temple Map)
+
+2.4.03
+================================
+from aRTy42 and Eruyome
+Updated Maps. Added shaped maps and included information from the wiki where possible.
+Corrected the data for the "Cast Speed" affix, which is higher for staves since PoE v2.4
+Fixed item type detection for magic items (by Eruyome)
+Added or changed several functions and data storing methods so that the "PoE-TradeMacro" can build
+	on top of this script (by Eruyome)
+
+2.4.02
+================================
+from aRTy42
+Updated Uniques.
+Maps have updated Boss descriptions, general notes and ratings for difficulty (1-5) and layout (A-C).
+
+2.4.01
+================================
+from aRTy42
+Compiled new map info from various sources, see the forum thread for details.
+Updated Divinations cards with wiki information.
+Uniques not updated yet, because there are lots of things to fix and holding back
+	the map update until everything is done seemed stupid.
+
+2.4.00
+================================
+from aRTy42
+Basic support for the new value range format ("#-#" was changed to "# to #"). The script will continue to display its results as before.
+Map and Divination card information was not updated yet. This will follow in a few days once there is enough on the wiki.
+Fixed how the "AdditionalMacros" file was included to support shortcuts to the script from the start menu and task bar.
+
+2.3.07
+================================
+from aRTy42
+New feature: Gem quality info. Full 20% quality effect and effect per quality point get displayed.
+Completely restructured jewels: Separated both the affix parsing code and the data files.
+	This change should have no visible impact ingame. Please report bugs if you notice any.
+Corrected a few value ranges and detection errors for jewels. Legacy Crit Multiplier for jewels in standard did not get a special
+	detection though, you will get something like "n/a (0) <new value range> T0" there.
+Added Tora crafts "increased Trap and Mine damage" and "increased Trap Throwing and Mine Laying Speed"
+Updated Divination Cards with wiki infos
+
+2.3.06
+================================
+from aRTy42
+The new label "Map Drop" introduced in PoE v2.3.2 is now accounted for and thus no longer breaks parsing items.
+Added new file "AdditionalMacros.txt" in the main folder. The user macros that used to be at the very end of the ahk-file
+	are now located here, for easier access. Added detection for the Steam version exe-file. The user macros are disabled
+	by default, if you want to learn more about them, check the opening post in the forum thread.
+Removed script function "Valuable Evaluation", meaning uniques and gems are no longer tagged as "Valuable" in the
+	last line, which was controlled via txt files. Lootfilters fulfill this role nowadays.
+	Similarly, drop only gems are no longer tagged, also because lootfilters and since there are almost none since
+	gems became available from vendors. If you miss one of these functions, please give feedback in the forum thread.
+DPS display: Fixed how additional ele/chaos damage was detected. It used to break for certain mods, which made the section display blanks.
+Fixed Divination Card detection that got broken with PoE v2.3.2 (the game now labels them with "Rarity: Divination Card"
+	instead of "Rarity: Normal")
+Fixed "Stun Recovery" that got renamed to "Stun and Block Recovery" with PoE v2.3.2.
+Updated Uniques, Maps, Divination Cards with wiki infos
+
+2.3.04
+================================
+from Underbent, magus424
+Major update to the maps data file, thanks to yet another data script from Underbent
+	This should fix incorrect map vendoring information and give more divination card drop infos.
+Added Shavronne's Gambit to uniques, which was still missing (pointed out by magus424)
+
+2.3.03
+================================
+from aRTy42
+Uniques: Included more of the new 2.3 uniques. Updated implicits for Sceptres and Wands.
+	Manually adjusted the display for a few more uniques (notable: Ventor's Gamble and several Jewels)
+Updated Divination Cards
+Updated Maps
+
+2.3.02
+================================
+from underbent, vdorie, aRTy42
+Improved data thanks to underbent's additions to the data fetch script: https://github.com/underbent/scrape_poe_info
+	This means divination cards are now updated to today's wiki infos
+	and uniques with decimal point values (like 0.2% leech) no longer truncate the displayed value to 0
+Manually cleaned up the display for uniques with style variants (Doryani's Invitation, Atziri's Splendour, Vessel of Vinktar)
+The modifier/text column for uniques is now 10 characters wider than for other items (if truncation is used, which is the default),
+	as uniques don't need the space for displaying mod tiers but tend to have longer or more complicated wording.
+Included a fix from vdorie to how the base level of blue items was determined
+Included a fix from underbent so that the warning info of equipped items that you no longer meet the requirements for is not
+	displayed in the info script window anymore
+
+2.3.01
+================================
+from aRTy42
+Added "Has Fated Variant" line to info for respective uniques
+"Max Sockets" should no longer show up on non armour/weapon items
+Fixed Drillneck data that got lost due to an odd wiki entry
+
+2.3
+================================
+from /u/trecko1234 and /u/netarc: https://www.reddit.com/r/pathofexile/comments/4nd1mj/updated_bahnzos_item_info_script_for_23/
+Merged with the latest version from Bahnzo by aRTy42
+
+2.11
+================================
+from aRTy42
+Armour matching with RegEx. MaxLife fix & cleanup
+
+2.1
+=================================
+from underbent/master
+Two bugfixes and support for master signature mods
+from R3ality
+Added the Unique version of maps to the base map info. Mainly for making use of Chance Orbs
+Added the name of each Unique Map as a comment line before its definition to simplify readability for future changes
+Fixed Olmec's Sanctum Unique Map base type (was changed to Catacomb Map in v2.0.0)
+Added Caer Blaidd, Wolfpack's Den
+Added The Perandus Manor. Could use more detais, wiki article was rather short
+
+2.0.12
+=================================
+Uniques.txt updated
+Added ability to "Pause" the script. 
+This allows users of other scripts
+that look for the clipboard change to 
+operate. Simply press the "Pause" key
+to pause, and then "Pause" again to 
+re-enable the script. Key can be
+remapped to whatever key the user
+may like in the section at the very
+end of the script. 
+
+2.0.11
+=================================
+Uniques.txt updated
+Fixed issue with maps showing affixes
+
+2.0.10
+=================================
+Fixes for items with Prices/Notes
+
+2.0.9
+=================================
+Added last max life tier. by Jeykey1990
+Changed name of Mine map to Abandoned Cavern
+Added Chateau Map
+Updated crit multiplier values on jewels
+Added "increased Sttack Speed with Daggers" mod on jewels
+
+2.0.8
+=================================
+Updated Uniques.txt
+Rewrote the web scraper used for getting
+the Uniques.txt
+Available at: https://github.com/Bahnzo
+
+2.0.7
+=================================
+Fixed issue with CritStrikeChance for spells
+reported by grinvader
+
+2.0.6
+=================================
+Addition of Divination cards by Sieberkev
+A couple map updates
+
+2.0.5 by XiMMiX
+=================================
+Fix regular amulets with "Talisman" in their name (bug reported by Bahnzo).
+Fixes "Increased Physical Camage with Claws" (bug reported by vicrv)
+Fixes "increased Critical Strike Chance with Two Handed Melee Weapons" (bug reported by vicrv)
+Fixes "increased Physical Damage" on jewels (bug reported by vicrv)
+Updated Uniques.txt
+
+2.0.4 by XiMMiX
+=================================
+Added "increased Totem Damage" affix (bug reported by vicrv)
+Fixed Global Crit Multi on Jewels (bug reported by vicrv)
+Updated uniques.txt
+
+2.0.3 by XiMMiX
+=================================
+Added handling of "increased Maximum Energy Shield" affix on Jewels
+
+2.0.2 Bug Fix and Unique update by XiMMiX
+=================================
+Fixed itemlevel requirement for Glyphic affix on 1-handers (bug reported by Patwor)
+Updated Uniques.txt
+
+2.0.1 Bug Fixes by XiMMiX
+=================================
+Fixed typo in FlaskChargesUsed
+Fixed buugs reported by FleshRocket
+
+2.0 Jewel Support by XiMMiX
+=================================
+I've added support for jewels to the script.
+
+There is a known problem with the suffix count in those cases where we don't know if the item has 1 or 2 suffixes. At the moment the output says the item has 2 suffixes but it should be "1 or 2". But otherwise the code should work.
+
+The second problem is that I haven't yet been able to test very much, especially the complex affixes. I'm planning to test all edge cases with complex affixes, but would appreciate any help with testing the simple affixes.
+
+1.9.8a from XiMMiX
+=================================
+Cleaning up indents on max life detection to make things readable again
+Bugfix for max life detection on bodyarmours missing the new T1 roll (bug reported by didii)
+Show tiers on magic items (bug reported by didii)
+Added detection of flat chaos damage on weapons, rings and amulets.
+
+1.9.8
+=================================
+Final (?) darkshrine updates
+Uniques updated &
+Talisman Support, by XiMMiX
+
+1.9.7a
+=================================
+Darkshrine Updates by XiMMiX
+
+1.9.7
+=================================
+Updates to show correct life tiers for Gloves/Boots/Rings
+and correct physical damage for Gloves.
+Various Map corrections
+
+1.9.6d
+=================================
+More Darkshrine Updates +
+Uniques updated by XiMMiX
+
+1.9.6c
+=================================
+Darkshrine Updates by XiMMiX
+
+1.9.6b
+=================================
+More Darkshrine updates by XiMMiX
+
+1.9.6.a
+=================================
+Further Darkshrine updates by XiMMiX
+
+1.9.6
+=================================
+Darkshrine affixes added by XiMMiX
+Added current info to the "About" screen. 
+
+1.9.5
+=================================
+Updated info screen
+Maps updated with new vendor info &
+Divination Cards which can be found 
+within map. 
+
+1.9.4
+=================================
+Fixes for base item level: sirmanky
+Added code at very end of script giving examples of quick key 
+combinations to add some easy macros.
+
+1.9.3
+=================================
+Updated Uniques list: Hixxie
+Sockets corrected: Portent
+Various fixes to tiers: Slinkston

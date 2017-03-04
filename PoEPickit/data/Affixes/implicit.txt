@@ -16,7 +16,7 @@
 ^(\d+)% increased Mana Regeneration Rate
 ^(\d+)% increased Movement Speed	MoveSpeed
 ^(\d+)% increased Physical Damage	LocalPhys
-^(\d+)% increased Radius of Area Skills
+^(\d+)% increased Area of Effect of Area Skills
 ^(\d+)% increased Rarity of Items found	ItemRarity
 ^(\d+)% increased Spell Damage	SpellDamage
 ^(\d+)% increased Stun Duration on Enemies

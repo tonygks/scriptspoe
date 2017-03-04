@@ -1,4 +1,4 @@
-Leather Cap		17
+Feather Cap		17
 Tricorne		46
 Leather Hood		88
 Wolf Pelt		130
@@ -8,7 +8,6 @@ Ursine Pelt		240
 Silken Hood		301
 Sinner Tricorne		321
 Lion Pelt		331
-Name	Armour Rating
 Iron Hat	8
 Cone Helmet	33
 Barbute Helmet	80

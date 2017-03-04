@@ -9,7 +9,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;#MaxThreads 2
 
 
-;#IfWinActive,  ahk_exe PathOfExile_x64.exe
+#IfWinActive,  ahk_exe PathOfExile.exe
 
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
 
@@ -30,7 +30,7 @@ Global Name := ""
 
 Global X, Y
 Global t_clip
-Global lastItem
+
 
 IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, False
 IniRead, path_FilterFolder, PoePricer.ini, Path, opt_FilterFolder, "Filter"
@@ -95,7 +95,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 	Send, {Control Down}
 	While (GetKeyState("LWin", "P") == 1)
 	{
-		IfWinNotActive,  ahk_exe PathOfExile_x64.exe
+		IfWinNotActive,  ahk_exe PathOfExile.exe
 		{
 			goto, ScanEnd
 		}
@@ -153,22 +153,13 @@ return
 
 #F9::
 Reload
-
-return
-
-Xbutton2::
-ParseItemData(Clipboard)
-MouseGetPos, X, Y
-ShowToolTip()
-sleep, 3000
-ToolTipEx()
 return
 
 F5::
-Send, {^c}
-ParseItemData(Clipboard)
-If (Name <> "")
-{
+	Send, {^c}
+	ParseItemData(Clipboard)
+	If (Name <> "")
+	{
 		Run, PoeEyeCreateNewTab.exe
 		Sleep, 1000
 		Run, PoeEyeTabSearch.exe %Name%
@@ -1103,19 +1094,6 @@ ParseItemData(ItemDataText)
 	
 	
 	
-	If (RegExMatch(ItemDataText, "^Rarity: (Normal|Unique|Magic|Rare)"))
-	{
-		
-		If (lastItem != ItemDataText)
-		{
-			lastItem = ItemDataText
-			FileAppend,`,`r`n`@`"%ItemDataText%`", ItemLogs.txt
-		}
-	}
-	else
-	{
-		return False
-	}
 	
 	
 	
@@ -1138,7 +1116,7 @@ ParseItemData(ItemDataText)
 	StringSplit,ItemDataNamePlate, ItemDataNamePlate, ``
 	Item.Name := ItemDataNamePlate2
 	Name := Item.Name
-	
+			
 	IfNotInString, ItemDataText, Rarity: Rare
 	{
 		
@@ -1389,11 +1367,10 @@ ParseClassType(BaseType, ItemStatLine)
 	weapons_2h := "^(Two Handed Axe|Two Handed Mace|Bow|Two Handed Sword|Staff)"
 	belts := " (Belt|Sash)"
 	boots := " (Boots|Greaves|Shoes|Slippers)"
-	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask|Tricorne)"
+	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Tricorne|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask)"
 	gloves := " (Gauntlets|Gloves|Mitts)"
 	shields := " (Shield|Bundle|Buckler)"
 	sceptres := " (Sekhem|Sceptre|Fetish)"	;msgbox, %ItemStatLine%
-	
 	IfNotInString, ItemStatLine, :
 	{
 		
@@ -1504,6 +1481,7 @@ ParseClassType(BaseType, ItemStatLine)
 		Item.ClassType := "Gloves"
 		return
 	}
+	
 	If (RegExMatch(BaseType, helmets))
 	{
 		If BaseHelmets.SetItem(BaseType, AR, EV, ES)

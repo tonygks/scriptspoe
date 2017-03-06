@@ -8,11 +8,27 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxThreadsPerHotkey 1
 ;#MaxThreads 2
 
+if (Process, Exist, PathOfExile_x64Steam.exe)
+{
+	poe_exe = PathOfExile_x64Steam.exe
+	#IfWinActive,  ahk_exe PathOfExile_x64Steam.exe
+}
+else if (Process, Exist, PathOfExile.exe)
+{
+	poe_exe = PathOfExile.exe
+	#IfWinActive,  ahk_exe PathOfExile.exe
+}
+else
+{
+	poe_exe = PathOfExile_x64.exe
+	#IfWinActive,  ahk_exe PathOfExile_x64.exe
+}
+	
 
-#IfWinActive,  ahk_exe PathOfExile_x64.exe
 
+
+	
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
-
 Global prefixes, suffixes, implicit, affixes
 Global TT, TT_Affixes , TT_PhysCraftMods, TT_PhysMultiMods, TT_ElemCraftMods, TT_ArmourCraftMods, TT_Rarity
 Global TT_Result, TT_ResultExt
@@ -26,10 +42,11 @@ Global f_ToolTip := False
 Global path_FilterFolder := "Filter"
 Global ScanToggle := False
 Global SingleScanToggle := False
+Global Name := ""
 
 Global X, Y
 Global t_clip
-
+Global lastItem
 
 IniRead, f_ShowScore, PoePricer.ini, Flags, opt_ShowScore, False
 IniRead, path_FilterFolder, PoePricer.ini, Path, opt_FilterFolder, "Filter"
@@ -81,20 +98,20 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 
-;ctr = vk11
-~vk11::
+;ctrl = vk11
+;vk11::
 ;Win key vk5B
-;~vk5B::
+~vk11::
 {
 	clip_saved := Clipboard
 	clip_parsed := Clipboard
 	DllCall("QueryPerformanceCounter", "Int64*", CounterStart)
 	
 	MouseGetPos, X, Y
-	;Send, {Control Down}
+	Send, {Control Down}
 	While (GetKeyState("LControl", "P") == 1)
 	{
-		IfWinNotActive,  ahk_exe PathOfExile_x64.exe
+		IfWinNotActive,  ahk_exe %poe_exe%
 		{
 			goto, ScanEnd
 		}
@@ -144,7 +161,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 	}
 	
 	ScanEnd:
-	;Send, {Control Up}
+	Send, {Control Up}
 	ToolTipEx()
 	Clipboard := clip_saved
 }
@@ -152,10 +169,20 @@ return
 
 #F9::
 Reload
+
 return
 
+Xbutton2::
+ParseItemData(Clipboard)
+MouseGetPos, X, Y
+ShowToolTip()
+sleep, 3000
+ToolTipEx()
+return
+
+
 F10::
-IfWinNotActive,  ahk_exe PathOfExile_x64.exe
+IfWinNotActive,  ahk_exe %poe_exe%
 {
 	return
 }
@@ -1082,6 +1109,19 @@ ParseItemData(ItemDataText)
 	
 	
 	
+	If (RegExMatch(ItemDataText, "^Rarity: (Normal|Unique|Magic|Rare)"))
+	{
+		
+		If (lastItem != ItemDataText)
+		{
+			lastItem = ItemDataText
+			FileAppend,`,`r`n`@`"%ItemDataText%`", ItemLogs.txt
+		}
+	}
+	else
+	{
+		return False
+	}
 	
 	
 	
@@ -1099,7 +1139,13 @@ ParseItemData(ItemDataText)
 	
 	ParseLinks(ItemDataText)
 	
-	IfNotInString, ItemDataNamePlate, Rarity: Rare
+	ItemDataStat := ItemDataParts2
+	StringReplace, ItemDataNamePlate, ItemDataText, `r`n, ``, All
+	StringSplit,ItemDataNamePlate, ItemDataNamePlate, ``
+	Item.Name := ItemDataNamePlate2
+	Name := Item.Name
+	
+	IfNotInString, ItemDataText, Rarity: Rare
 	{
 		
 		If (Item.Links > 4)
@@ -1128,10 +1174,7 @@ ParseItemData(ItemDataText)
 	
 	
 	
-	ItemDataStat := ItemDataParts2
-	StringReplace, ItemDataNamePlate, ItemDataText, `r`n, ``, All
-	StringSplit,ItemDataNamePlate, ItemDataNamePlate, ``
-	Item.Name := ItemDataNamePlate2
+	
 	Item.BaseType := ItemDataNamePlate3
 	StringReplace, ItemDataStat, ItemDataStat, `r`n, ``, All
 	StringSplit, ItemDataStat, ItemDataStat, ``
@@ -1352,10 +1395,11 @@ ParseClassType(BaseType, ItemStatLine)
 	weapons_2h := "^(Two Handed Axe|Two Handed Mace|Bow|Two Handed Sword|Staff)"
 	belts := " (Belt|Sash)"
 	boots := " (Boots|Greaves|Shoes|Slippers)"
-	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Tricorne|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask)"
+	helmets := " (Hat|Helm|Bascinet|Burgonet|Cap|Hood|Pelt|Circlet|Cage|Sallet|Coif|Crown|Mask|Tricorne)"
 	gloves := " (Gauntlets|Gloves|Mitts)"
 	shields := " (Shield|Bundle|Buckler)"
 	sceptres := " (Sekhem|Sceptre|Fetish)"	;msgbox, %ItemStatLine%
+	
 	IfNotInString, ItemStatLine, :
 	{
 		
@@ -1466,7 +1510,6 @@ ParseClassType(BaseType, ItemStatLine)
 		Item.ClassType := "Gloves"
 		return
 	}
-	
 	If (RegExMatch(BaseType, helmets))
 	{
 		If BaseHelmets.SetItem(BaseType, AR, EV, ES)
@@ -2505,4 +2548,4 @@ return
 
 
 
-	
+

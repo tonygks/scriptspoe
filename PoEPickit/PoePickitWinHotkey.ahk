@@ -8,11 +8,27 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxThreadsPerHotkey 1
 ;#MaxThreads 2
 
+if (Process, Exist, PathOfExile_x64Steam.exe)
+{
+	poe_exe = PathOfExile_x64Steam.exe
+	#IfWinActive,  ahk_exe PathOfExile_x64Steam.exe
+}
+else if (Process, Exist, PathOfExile.exe)
+{
+	poe_exe = PathOfExile.exe
+	#IfWinActive,  ahk_exe PathOfExile.exe
+}
+else
+{
+	poe_exe = PathOfExile_x64.exe
+	#IfWinActive,  ahk_exe PathOfExile_x64.exe
+}
+	
 
-;#IfWinActive,  ahk_exe PathOfExile_x64.exe
 
+
+	
 menu, tray, Icon, %A_ScriptDir%\Data\PoePricer.ico
-
 Global prefixes, suffixes, implicit, affixes
 Global TT, TT_Affixes , TT_PhysCraftMods, TT_PhysMultiMods, TT_ElemCraftMods, TT_ArmourCraftMods, TT_Rarity
 Global TT_Result, TT_ResultExt
@@ -82,7 +98,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 
 
 
-;ctr = vk11
+;ctrl = vk11
 ;vk11::
 ;Win key vk5B
 ~vk5B::
@@ -95,7 +111,7 @@ Global Filter_WeaponDPS := new WeaponFilter_("WeaponDPS")
 	Send, {Control Down}
 	While (GetKeyState("LWin", "P") == 1)
 	{
-		IfWinNotActive,  ahk_exe PathOfExile_x64.exe
+		IfWinNotActive,  ahk_exe %poe_exe%
 		{
 			goto, ScanEnd
 		}
@@ -164,19 +180,9 @@ sleep, 3000
 ToolTipEx()
 return
 
-F5::
-Send, {^c}
-ParseItemData(Clipboard)
-If (Name <> "")
-{
-		Run, PoeEyeCreateNewTab.exe
-		Sleep, 1000
-		Run, PoeEyeTabSearch.exe %Name%
-	}
-return
 
 F10::
-IfWinNotActive,  ahk_exe PathOfExile_x64.exe
+IfWinNotActive,  ahk_exe %poe_exe%
 {
 	return
 }

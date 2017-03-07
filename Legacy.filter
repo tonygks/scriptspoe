@@ -206,7 +206,7 @@ Show
     SetFontSize 40
 
 Show
-    Class "Quest" "Items"
+    Class "Quest"
     SetBorderColor 74 230 58
     SetFontSize 40
 
@@ -488,8 +488,11 @@ Show
 
 # Section: 0300 # CURRENCY
 
+Show
+    BaseType "Blacksmith's Whetstone"
+
 Hide
-    BaseType "Blacksmith's Whetstone" "Armourer's Scrap"
+    BaseType "Armourer's Scrap"
 
 Show
     BaseType "Eternal Orb" "Divine Orb" "Exalted Orb" "Albino Rhoa Feather"
@@ -500,7 +503,7 @@ Show
     PlayAlertSound 6 300
 
 Show
-    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb"
+    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb" "Stacked Deck"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 255 0 0
@@ -532,22 +535,40 @@ Show
 
 Show
     BaseType "Orb of Chance" "Chromatic Orb" "Jeweller's Orb"
-    SetTextColor 190 178 135
-    SetFontSize 34
+    SetTextColor 30 181 37
+    SetBorderColor 0 128 0
+    SetFontSize 37
+
+Hide
+    BaseType "Scroll of Wisdom"
 
 Show
     BaseType "Portal Scroll"
 
 Show
+    Class "Misc Map Items"
+    BaseType "Ancient Reliquary Key" "Chayula's Breachstone" "Uul-Netol's Breachstone" "Esh's Breachstone" "Tul's Breachstone" "Xoph's Breachstone"
+    SetTextColor 30 144 255
+    SetBorderColor 210 0 0
+    SetFontSize 45
+    PlayAlertSound 6 300
+
+Show
     Class "Currency"
     BaseType "Shrieking Essence of" "Essence of Hysteria" "Essence of Horror" "Essence of Insanity" "Essence of Delirium" "Unshaping Orb" "Deafening Essence of" "Remnant of Corruption"
-    SetTextColor 30 144 255
-    SetBorderColor 255 178 135 135
+    SetTextColor 141 242 196 200
+    SetBorderColor 255 0 0
     SetFontSize 38
 
 Show
     Class "Currency"
-    BaseType "Prophecy" "Silver Coin" "Screaming Essence of" "Wailing Essence of" "Weeping Essence of" "Muttering Essence of" "Whispering Essence of" "Splinter of Xoph" "Splinter of Tul" "Splinter of Esh" "Splinter of Uul-Netol" "Splinter of Chayula" "Blessing of Xoph" "Blessing of Tul" "Blessing of Esh" "Blessing of Uul-Netol" "Blessing of Chayula"
+    BaseType "Prophecy" "Silver Coin" "Screaming Essence of" "Wailing Essence of" "Weeping Essence of" "Muttering Essence of" "Whispering Essence of" "Splinter of Xoph" "Splinter of Tul" "Splinter of Esh" "Splinter of Uul-Netol" "Splinter of Chayula" "Blessing of Xoph" "Blessing of Tul" "Blessing of Esh" "Blessing of Uul-Netol" "Blessing of Chayula" "Perandus Coin"
+    SetTextColor 255 178 135
+    SetBorderColor 255 178 135 135
+    SetFontSize 38
+
+Show
+    Class "Leaguestone"
     SetTextColor 255 178 135
     SetBorderColor 255 178 135 135
     SetFontSize 38
@@ -900,15 +921,23 @@ Show # Endgame: Show normal ilvl 60+ rings/amulets
     SetBorderColor 210 0 0
     SetFontSize 32
 
+#Disabled Block Start
+#Show
+#    BaseType "Ambusher" "Platinum Kris"
+#    ItemLevel >= 83
+#    SetBorderColor 255 255 0
+#    SetFontSize 38
+#Disabled Block End
+
 Show
-    BaseType "Coronal Maul" "Harbinger Bow" "Gemini Claw" "Ambusher" "Platinum Kris" "Imbued Wand" "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves"
-    ItemLevel >= 83
-    SetBorderColor 255 255 0
-    SetFontSize 38
+    BaseType "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Steel Ring" "Opal Ring" "Crystal Belt"
+    ItemLevel > 84
+    SetBorderColor 128 0 128
+    SetFontSize 45
+    PlayAlertSound 7 150
 
 Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
-    BaseType "Steel Ring" "Two-Stone Ring" "Diamond Ring" "Opal Ring" "Gold Ring" "Crystal Belt" "Agate Amulet" "Citrine Amulet" "Turquoise Amulet" "Lapis Amulet"
-    Rarity = Normal
+    BaseType "Two-Stone Ring" "Diamond Ring" "Gold Ring" "Agate Amulet" "Citrine Amulet" "Turquoise Amulet" "Lapis Amulet"
     ItemLevel >= 83
     SetTextColor 255 255 255
     SetBorderColor 255 255 0
@@ -978,9 +1007,18 @@ Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisa
 
 # Section: 0800 # FLASKS
 
-Hide
-    Quality >= 1
+Show
+    Quality >= 15
     BaseType "Flask"
+    SetTextColor 0 0 0
+    SetBackgroundColor 184 218 242
+    SetBorderColor 0 0 0
+
+Show # $flask, utility, lvl, top %TB - T1 - Leveling - Flask
+    Quality >= 1
+    BaseType "Quicksilver Flask" "Silver Flask" "Bismuth Flask" "Basalt Flask" "Granite Flask"
+    Rarity <= Magic
+    ItemLevel >= 5
     SetTextColor 0 0 0
     SetBackgroundColor 184 218 242
     SetBorderColor 0 0 0
@@ -1185,7 +1223,7 @@ Show
     ItemLevel >= 65
     SetTextColor 100 100 255
 
-Hide
+Show
     BaseType "Flask"
     Rarity <= Magic
     SetFontSize 30

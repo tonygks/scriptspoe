@@ -284,54 +284,109 @@ Show # T3 - Random uniques. In some cases, such as jewels some very valuable uni
     PlayAlertSound 6 300
 
 Hide
+    ShapedMap False
     ItemLevel >= 80
-    DropLevel < 75
+    DropLevel <= 76
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 79
-    DropLevel < 74
+    DropLevel <= 75
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 78
-    DropLevel < 73
+    DropLevel <= 74
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 77
-    DropLevel < 72
+    DropLevel <= 73
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 76
-    DropLevel < 71
+    DropLevel <= 73
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 75
-    DropLevel < 71
+    DropLevel <= 72
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 74
-    DropLevel < 70
+    DropLevel <= 71
     Class "Maps"
     SetFontSize 37
 
 Hide
+    ShapedMap False
     ItemLevel >= 73
-    DropLevel < 69
+    DropLevel <= 70
     Class "Maps"
     SetFontSize 37
+
+Hide
+    ShapedMap False
+    ItemLevel >= 73
+    DropLevel <= 69
+    Class "Maps"
+    SetFontSize 37
+
+# hide shaped maps 
+
+Hide
+    ShapedMap True
+    ItemLevel >= 82
+    DropLevel <= 72
+    Class "Maps"
+    SetFontSize 37
+
+Hide
+    ShapedMap True
+    ItemLevel >= 81
+    DropLevel <= 71
+    Class "Maps"
+    SetFontSize 37
+
+Hide
+    ShapedMap True
+    ItemLevel >= 80
+    DropLevel <= 70
+    Class "Maps"
+    SetFontSize 37
+
+Hide
+    ShapedMap True
+    ItemLevel >= 79
+    DropLevel <= 69
+    Class "Maps"
+    SetFontSize 37
+
+Hide
+    ShapedMap True
+    ItemLevel >= 78
+    DropLevel <= 68
+    Class "Maps"
+    SetFontSize 37
+
+# show  maps
 
 Show # Maps:82
+    ShapedMap False
     DropLevel >= 83
     Class "Maps"
     SetTextColor 255 0 0
@@ -341,34 +396,7 @@ Show # Maps:82
     PlayAlertSound 4 300
 
 Show # Maps:82
-    DropLevel >= 82
-    Class "Maps"
-    SetTextColor 210 0 0
-    SetFontSize 44
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 81
-    Class "Maps"
-    SetTextColor 210 0 0
-    SetFontSize 43
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 80
-    Class "Maps"
-    SetTextColor 210 0 0
-    SetFontSize 42
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 79
-    Class "Maps"
-    SetTextColor 210 0 0
-    SetFontSize 41
-    PlayAlertSound 4 300
-
-Show # Maps:82
+    ShapedMap False
     DropLevel >= 78
     Class "Maps"
     SetTextColor 210 0 0
@@ -376,34 +404,7 @@ Show # Maps:82
     PlayAlertSound 4 300
 
 Show # Maps:82
-    DropLevel >= 77
-    Class "Maps"
-    SetTextColor 255 255 0
-    SetFontSize 40
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 76
-    Class "Maps"
-    SetTextColor 255 255 0
-    SetFontSize 39
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 75
-    Class "Maps"
-    SetTextColor 255 255 0
-    SetFontSize 39
-    PlayAlertSound 4 300
-
-Show # Maps:82
-    DropLevel >= 74
-    Class "Maps"
-    SetTextColor 255 255 0
-    SetFontSize 38
-    PlayAlertSound 4 300
-
-Show # Maps:82
+    ShapedMap False
     DropLevel >= 73
     Class "Maps"
     SetTextColor 255 255 0
@@ -411,34 +412,7 @@ Show # Maps:82
     PlayAlertSound 4 300
 
 Show
-    DropLevel >= 72
-    Class "Maps"
-    SetTextColor 232 224 224
-    SetFontSize 40
-    PlayAlertSound 4 300
-
-Show
-    DropLevel >= 71
-    Class "Maps"
-    SetTextColor 232 224 224
-    SetFontSize 39
-    PlayAlertSound 4 300
-
-Show
-    DropLevel >= 70
-    Class "Maps"
-    SetTextColor 232 224 224
-    SetFontSize 38
-    PlayAlertSound 4 300
-
-Show
-    DropLevel >= 69
-    Class "Maps"
-    SetTextColor 232 224 224
-    SetFontSize 37
-    PlayAlertSound 4 300
-
-Show
+    ShapedMap False
     DropLevel >= 68
     Class "Maps"
     SetTextColor 232 224 224
@@ -447,7 +421,7 @@ Show
 
 Show
     Class "Maps"
-    SetTextColor 232 224 224
+    SetTextColor 58 219 92
     SetFontSize 36
     PlayAlertSound 4 300
 
@@ -490,86 +464,57 @@ Show
     SetFontSize 36
     PlayAlertSound 4 300
 
+Show
+    Class "Misc Map Items"
+    BaseType "Ancient Reliquary Key" "Chayula's Breachstone" "Uul-Netol's Breachstone" "Esh's Breachstone" "Tul's Breachstone" "Xoph's Breachstone"
+    SetTextColor 30 144 255
+    SetBorderColor 210 0 0
+    SetFontSize 45
+    PlayAlertSound 6 300
+
 # Section: 0300 # CURRENCY
 
-Show
+# Low value currency can be hided
+
+Hide
+    Class "Currency"
     BaseType "Blacksmith's Whetstone"
 
-Show
+Hide
+    Class "Currency"
     BaseType "Armourer's Scrap"
 
-Show
-    BaseType "Eternal Orb" "Divine Orb" "Exalted Orb" "Albino Rhoa Feather"
-    SetTextColor 255 0 0
-    SetBackgroundColor 255 255 255
-    SetBorderColor 255 0 0
-    SetFontSize 45
-    PlayAlertSound 6 300
-
-Show
-    BaseType "Mirror Shard" "Ancient Orb" "Exalted Shard"
-    SetTextColor 255 0 0
-    SetBackgroundColor 255 255 255
-    SetBorderColor 255 0 0
-    SetFontSize 45
-    PlayAlertSound 6 300
-
-Show
-    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb" "Stacked Deck"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 255 0 0
-    SetFontSize 38
-    PlayAlertSound 3 300
-
-Show
-    BaseType "Apprentice Cartographer's Sextant" "Journeyman Cartographer's Sextant" "Master Cartographer's Sextant" "Apprentice Cartographer's Seal" "Apprentice Cartographer's Seal" "Master Cartographer's Seal"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 255 0 0
-    SetFontSize 38
-    PlayAlertSound 3 300
-
-Show
-    BaseType "Harbinger's Orb" "Orb of Horizons" "Orb of Annulment" "Engineer's Orb"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 255 0 0
-    SetFontSize 38
-    PlayAlertSound 3 300
-
-Show
-    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 0 0 0
-    SetFontSize 38
-    PlayAlertSound 4 300
-
-Show
-    BaseType "Harbinger's Shard" "Orb of Binding" "Binding Shard" "Annulment Shard" "Horizon Shard" "Engineer's Shard"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 0 0 0
-    SetFontSize 38
-    PlayAlertSound 4 300
-
-Show
-    BaseType "Orb of Chance"
-    SetTextColor 0 0 0
-    SetBackgroundColor 213 159 15
-    SetBorderColor 0 0 0
-    SetFontSize 38
-
-Show
-    BaseType "Alchemy Shard" "Chaos Shard" "Regal Shard" "Ancient Shard"
+Hide
+    Class "Currency"
+    BaseType "Alteration Shard" "Transmutation Shard"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 0 0 0
     SetFontSize 38
 
 Hide
-    BaseType "Alteration Shard" "Transmutation Shard"
+    Class "Currency"
+    BaseType "Scroll of Wisdom"
+    SetTextColor 30 181 37
+    SetBorderColor 0 128 0
+    SetFontSize 37
+
+Hide
+    Class "Currency"
+    BaseType "Portal Scroll"
+    SetTextColor 30 181 37
+    SetBorderColor 0 128 0
+    SetFontSize 37
+
+Hide
+    Class "Currency"
+    BaseType "Scroll Fragment"
+    SetTextColor 170 158 130 165
+    SetFontSize 30
+
+Show
+    Class "Currency"
+    BaseType "Orb of Chance"
     SetTextColor 0 0 0
     SetBackgroundColor 213 159 15
     SetBorderColor 0 0 0
@@ -582,24 +527,83 @@ Show
     SetFontSize 37
 
 Show
-    BaseType "Scroll of Wisdom"
+    BaseType "Orb of Transmutation" "Orb of Alteration" "Orb of Augmentation"
     SetTextColor 30 181 37
     SetBorderColor 0 128 0
     SetFontSize 37
 
-Show
-    BaseType "Portal Scroll"
-    SetTextColor 30 181 37
-    SetBorderColor 0 128 0
-    SetFontSize 37
+# Valuable currency
 
 Show
-    Class "Misc Map Items"
-    BaseType "Ancient Reliquary Key" "Chayula's Breachstone" "Uul-Netol's Breachstone" "Esh's Breachstone" "Tul's Breachstone" "Xoph's Breachstone"
-    SetTextColor 30 144 255
-    SetBorderColor 210 0 0
+    Class "Currency"
+    BaseType "Eternal Orb" "Divine Orb" "Exalted Orb" "Albino Rhoa Feather"
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
     SetFontSize 45
     PlayAlertSound 6 300
+
+Show
+    Class "Currency"
+    BaseType "Mirror Shard" "Ancient Orb" "Exalted Shard"
+    SetTextColor 255 0 0
+    SetBackgroundColor 255 255 255
+    SetBorderColor 255 0 0
+    SetFontSize 45
+    PlayAlertSound 6 300
+
+Show
+    Class "Currency"
+    BaseType "Regal Orb" "Orb of Regret" "Chaos Orb" "Blessed Orb" "Gemcutter's Prism" "Vaal Orb" "Stacked Deck"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 255 0 0
+    SetFontSize 38
+    PlayAlertSound 3 300
+
+Show
+    Class "Currency"
+    BaseType "Apprentice Cartographer's Sextant" "Journeyman Cartographer's Sextant" "Master Cartographer's Sextant" "Apprentice Cartographer's Seal" "Apprentice Cartographer's Seal" "Master Cartographer's Seal"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 255 0 0
+    SetFontSize 38
+    PlayAlertSound 3 300
+
+Show
+    Class "Currency"
+    BaseType "Harbinger's Orb" "Orb of Horizons" "Orb of Annulment" "Engineer's Orb"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 255 0 0
+    SetFontSize 38
+    PlayAlertSound 3 300
+
+Show
+    Class "Currency"
+    BaseType "Orb of Fusing" "Orb of Scouring" "Orb of Alchemy" "Glassblower's Bauble" "Cartographer's Chisel"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 0 0 0
+    SetFontSize 38
+    PlayAlertSound 4 300
+
+Show
+    Class "Currency"
+    BaseType "Harbinger's Shard" "Orb of Binding" "Binding Shard" "Annulment Shard" "Horizon Shard" "Engineer's Shard"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 0 0 0
+    SetFontSize 38
+    PlayAlertSound 4 300
+
+Show
+    Class "Currency"
+    BaseType "Alchemy Shard" "Chaos Shard" "Regal Shard" "Ancient Shard"
+    SetTextColor 0 0 0
+    SetBackgroundColor 213 159 15
+    SetBorderColor 0 0 0
+    SetFontSize 38
 
 Show
     Class "Currency"
@@ -615,22 +619,22 @@ Show
     SetBorderColor 255 178 135 135
     SetFontSize 38
 
+# League drop items
+
+Show
+    Class "Stackable Currency"
+    BaseType "Bestiary Orb" "Imprinted Bestiary Orb" "Simple Rope Net" "Reinforced Rope Net" "Strong Rope Net" "Simple Iron Net" "Reinforced Iron Net" "Strong Iron Net" "Simple Steel Net" "Reinforced Steel Net" "Strong Steel Net" "Thaumaturgical Net"
+    SetTextColor 240 104 28
+    SetBorderColor 252 90 0 135
+    SetFontSize 38
+
 Show
     Class "Leaguestone"
     SetTextColor 255 178 135
     SetBorderColor 255 178 135 135
     SetFontSize 38
 
-Show
-    BaseType "Orb of Transmutation" "Orb of Alteration"
-    SetTextColor 30 181 37
-    SetBorderColor 0 128 0
-    SetFontSize 37
-
-Hide
-    BaseType "Scroll Fragment"
-    SetTextColor 170 158 130 165
-    SetFontSize 30
+# Divination cards
 
 # TIER 1: ~15C++ The penultimate cards. 
 Show
@@ -679,14 +683,13 @@ Show
     SetFontSize 37
     PlayAlertSound 4 150
 
-Show
-    Class "Currency"
+# Not filtered currency, stackable. Need to fix
 
 Show
     Class "Stackable" "Currency"
-
-Show
-    BaseType "Orb of Transmutation"
+    SetTextColor 206 255 88
+    SetBackgroundColor 104 130 41
+    SetFontSize 43
 
 # Section: 0400 # SOCKET/LINK BASED stuff
 
@@ -712,16 +715,6 @@ Show
 # Section: 0500 # SKILL GEMS
 
 Show
-    Quality >= 15
-    Class "Gem"
-    BaseType "Empower Support" "Enlighten Support"
-    SetTextColor 30 150 180
-    SetBackgroundColor 255 255 255
-    SetBorderColor 30 150 180
-    SetFontSize 45
-    PlayAlertSound 6 300
-
-Show
     Quality = 20
     Class "Gem"
     SetTextColor 30 150 180
@@ -744,6 +737,9 @@ Show
     SetFontSize 41
     PlayAlertSound 3 300
 
+Hide
+    Class "Gems"
+
 Show
     Quality >= 15
     Class "Gems"
@@ -761,19 +757,6 @@ Hide
     Class "Gems"
 
 # Section: 0600 # RARE ITEM HIGHLIGHTING
-
-Show
-    SocketGroup "RGB"
-    Width = 1
-    SetTextColor 0 0 0
-    SetBackgroundColor 170 158 130
-    SetBorderColor 0 0 0
-
-Show
-    SocketGroup "RGB"
-    SetTextColor 0 0 0
-    SetBackgroundColor 170 158 130
-    SetBorderColor 0 0 0
 
 # 2regals weapons
 Show
@@ -955,12 +938,36 @@ Show
 #    SetBorderColor 0 0 0
 #Disabled Block End
 
+#Disabled Block Start
+#Show
+#    SocketGroup "RGB"
+#    Width = 1
+#    SetTextColor 0 0 0
+#    SetBackgroundColor 170 158 130
+#    SetBorderColor 0 0 0
+#Disabled Block End
+
+#Disabled Block Start
+#Show
+#    SocketGroup "RGB"
+#    SetTextColor 0 0 0
+#    SetBackgroundColor 170 158 130
+#    SetBorderColor 0 0 0
+#Disabled Block End
+
 Hide
     ItemLevel >= 60
     Rarity = Rare
     SetBorderColor 0 0 0
 
 # Section: 0700 # NORMAL AND MAGIC ITEM RULES
+
+Show
+    ItemLevel >= 84
+    BaseType "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Steel Ring" "Opal Ring" "Crystal Belt" "Stygian Vise"
+    SetBorderColor 128 0 128
+    SetFontSize 45
+    PlayAlertSound 7 150
 
 #Disabled Block Start
 #Show
@@ -973,7 +980,7 @@ Hide
 #Disabled Block End
 
 #Disabled Block Start
-#Show #  Endgame: ShowDisabled normal ilvl 60+ rings/amulets
+#Show #            Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 60+ rings/amulets
 #    Rarity = Normal
 #    BaseType "Prophecy Wand" "Occultist's Vestment"
 #    SetTextColor 255 255 255
@@ -989,15 +996,8 @@ Hide
 #    SetFontSize 38
 #Disabled Block End
 
-Show
-    ItemLevel >= 84
-    BaseType "Two-Toned Boots" "Spiked Gloves" "Gripped Gloves" "Fingerless Silk Gloves" "Steel Ring" "Opal Ring" "Crystal Belt" "Stygian Vise"
-    SetBorderColor 128 0 128
-    SetFontSize 45
-    PlayAlertSound 7 150
-
 #Disabled Block Start
-#Show #  Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+#Show #            Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
 #    ItemLevel >= 84
 #    BaseType "Two-Stone Ring" "Diamond Ring" "Hubris Circlet" "Vaal Regalia"
 #    SetTextColor 255 255 255
@@ -1005,12 +1005,14 @@ Show
 #    SetFontSize 38
 #Disabled Block End
 
-Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
-    ItemLevel >= 84
-    BaseType "Diamond Ring"
-    SetTextColor 255 255 255
-    SetBorderColor 255 255 0
-    SetFontSize 38
+#Disabled Block Start
+#Show #    Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisabled normal ilvl 83+ rings/amulets
+#    ItemLevel >= 84
+#    BaseType "Diamond Ring"
+#    SetTextColor 255 255 255
+#    SetBorderColor 255 255 0
+#    SetFontSize 38
+#Disabled Block End
 
 #Disabled Block Start
 #Show
@@ -1037,7 +1039,7 @@ Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisa
 #Disabled Block End
 
 #Disabled Block Start
-#Hide #  Endgame: Show normal ilvl 75+ rings/amulets
+#Hide #            Endgame: Show normal ilvl 75+ rings/amulets
 #    ItemLevel >= 75
 #    Rarity = Normal
 #    Class "Rings" "Amulet" "Belts"
@@ -1047,7 +1049,7 @@ Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisa
 #Disabled Block End
 
 #Disabled Block Start
-#Hide #  Chisel Recipe: Magic Gavels with 12+ qual
+#Hide #            Chisel Recipe: Magic Gavels with 12+ qual
 #    Quality > 11
 #    Rarity = Normal
 #    BaseType "Gavel" "Rock Breaker" "Stone Hammer"
@@ -1057,7 +1059,7 @@ Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisa
 #Disabled Block End
 
 #Disabled Block Start
-#Hide #  Chisel Recipe: White Gavels
+#Hide #            Chisel Recipe: White Gavels
 #    Rarity = Normal
 #    BaseType "Gavel" "Rock Breaker" "Stone Hammer"
 #    SetBackgroundColor 75 75 75
@@ -1085,25 +1087,22 @@ Show # Endgame: ShowDisabledDisabledDisabledDisabledDisabledDisabledDisabledDisa
 #    SetBorderColor 0 0 0
 #Disabled Block End
 
-#Disabled Block Start
-#Show #  $flask, utility, lvl, top %TB - T1 - Leveling - Flask
-#    Quality >= 1
-#    ItemLevel >= 5
-#    Rarity <= Magic
-#    BaseType "Quicksilver Flask" "Silver Flask" "Bismuth Flask" "Basalt Flask" "Granite Flask"
-#    SetTextColor 0 0 0
-#    SetBackgroundColor 184 218 242
-#    SetBorderColor 0 0 0
-#Disabled Block End
+Show #          $flask, utility, lvl, top %TB - T1 - Leveling - Flask
+    Quality >= 1
+    ItemLevel >= 5
+    ItemLevel <= 59
+    Rarity <= Magic
+    BaseType "Quicksilver Flask" "Silver Flask" "Bismuth Flask" "Basalt Flask" "Granite Flask" "Diamond Flask"
+    SetTextColor 0 0 0
+    SetBackgroundColor 184 218 242
+    SetBorderColor 0 0 0
 
-#Disabled Block Start
-#Show
-#    ItemLevel < 60
-#    Class "Utility Flasks"
-#    SetTextColor 255 255 0 144
-#    SetBackgroundColor 62 34 102
-#    SetBorderColor 0 0 0
-#Disabled Block End
+Show
+    ItemLevel < 60
+    Class "Utility Flasks"
+    SetTextColor 255 255 0 144
+    SetBackgroundColor 62 34 102
+    SetBorderColor 0 0 0
 
 Hide
     ItemLevel >= 35
@@ -1307,9 +1306,35 @@ Show
 
 Show
     ItemLevel < 35
+    Rarity = Rare
+    Class "Rings" "Amulets" "Belts"
+    SetTextColor 0 0 0
+    SetBackgroundColor 209 97 13
+    SetBorderColor 169 255 60
+    SetFontSize 38
+
+Show
+    ItemLevel <= 59
+    Rarity = Rare
+    Class "Wands" "Sceptres"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 169 255 60
+    SetFontSize 38
+
+Show
+    ItemLevel <= 59
+    Rarity = Rare
+    Class "Daggers" "Thrusting One Hand Swords"
+    SetTextColor 0 0 0
+    SetBackgroundColor 0 128 0
+    SetBorderColor 169 255 60
+    SetFontSize 38
+
+Show
+    ItemLevel < 35
     Rarity = Normal
     Class "Rings" "Amulets" "Belts"
-    SetTextColor 255 255 255
 
 Show
     ItemLevel < 45
@@ -1319,27 +1344,35 @@ Show
 
 Show
     LinkedSockets >= 4
-    ItemLevel <= 66
+    ItemLevel <= 60
     Rarity = Normal
-    SetTextColor 255 255 255
+    SetTextColor 0 0 0
+    SetBackgroundColor 47 115 145
+    SetBorderColor 210 0 0
 
 Show
     LinkedSockets >= 4
-    ItemLevel <= 68
+    ItemLevel <= 60
     Rarity = Magic
-    SetTextColor 100 100 255
+    SetTextColor 0 0 0
+    SetBackgroundColor 47 115 145
+    SetBorderColor 210 0 0
 
 Show
     LinkedSockets >= 3
     ItemLevel <= 25
     Rarity = Normal
-    SetTextColor 255 255 255
+    SetTextColor 0 0 0
+    SetBackgroundColor 47 115 145
+    SetBorderColor 0 0 0
 
 Show
     LinkedSockets >= 3
     ItemLevel <= 25
     Rarity = Magic
-    SetTextColor 100 100 255
+    SetTextColor 0 0 0
+    SetBackgroundColor 47 115 145
+    SetBorderColor 0 0 0
 
 Show
     ItemLevel < 62
